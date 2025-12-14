@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>Speed Up SharePoint | SharePoint Performance Experts</title>
 <meta name="description" content="Fix slow SharePoint searches, filters, and reporting with SQL-backed hybrid architectures.">
 <meta name="robots" content="index, follow">
 
-<!-- Font Awesome for icons -->
+<!-- Font Awesome -->
 <link rel="stylesheet" href="./assets/css/font-awesome-6.4.0-all.min.css">
 
 <style>
@@ -24,6 +24,7 @@ body {
   color: #333;
   line-height: 1.6;
   scroll-behavior: smooth;
+  scroll-padding-top: 76px; /* Offset for fixed topbar */
 }
 
 /* Topbar */
@@ -181,15 +182,13 @@ ul { margin-left: 40px; padding-left: 0; }
   align-items: center;
 }
 
-.contact-box div { display: flex; flex-direction: column; align-items: center; }
+.contact-box div { display: flex; flex-direction: column; align-items: center; gap: 20px; }
 
 .contact-box a { color: var(--secondary); font-weight: bold; text-decoration: none; }
 
 .contact-icon {
   font-size: 2rem;
   color: var(--secondary);
-  display: block;
-  margin-bottom: 8px;
 }
 
 .contact-icon:hover { color: #fafcc8; }
@@ -335,29 +334,37 @@ function smoothScroll(e) {
   const targetId = this.getAttribute("href").slice(1);
   const targetEl = document.getElementById(targetId);
   if (targetEl) {
-    targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    const topbarHeight = document.querySelector(".topbar").offsetHeight;
+    const offsetTop = targetEl.offsetTop - topbarHeight;
+    window.scrollTo({ top: offsetTop, behavior: "smooth" });
   }
   closeMenu();
 }
 
 // Add smooth scroll to links
-sidebarLinks.forEach(link => link.addEventListener("click", smoothScroll));
-topnavLinks.forEach(link => link.addEventListener("click", smoothScroll));
-ctaButton.addEventListener("click", smoothScroll);
+[...sidebarLinks, ...topnavLinks, ctaButton].forEach(el => {
+  if (el) el.addEventListener("click", smoothScroll);
+});
 
 // Logo scroll
 const logoElements = document.querySelectorAll(".topbar img, .sidebar-logo");
 logoElements.forEach(logo => {
   logo.addEventListener("click", (e) => {
     e.preventDefault();
-    document.getElementById("home").scrollIntoView({ behavior: "smooth", block: "start" });
+    const topbarHeight = document.querySelector(".topbar").offsetHeight;
+    const hero = document.getElementById("home");
+    const offsetTop = hero.offsetTop - topbarHeight;
+    window.scrollTo({ top: offsetTop, behavior: "smooth" });
     closeMenu();
   });
 });
 
 // Helper
 function scrollToHero() {
-  document.getElementById("home").scrollIntoView({ behavior: "smooth", block: "start" });
+  const topbarHeight = document.querySelector(".topbar").offsetHeight;
+  const hero = document.getElementById("home");
+  const offsetTop = hero.offsetTop - topbarHeight;
+  window.scrollTo({ top: offsetTop, behavior: "smooth" });
   closeMenu();
 }
 </script>
