@@ -24,6 +24,11 @@
   padding: 0;
 }
 
+html, body {
+  overscroll-behavior: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
 
 body {
   font-family: Arial, sans-serif;
@@ -258,4 +263,114 @@ footer {
 <div id="overlay" class="overlay" onclick="closeMenu()"></div>
 
 <!-- SIDEBAR -->
-<div id
+<div id="sidebar" class="sidebar">
+  <div class="sidebar-header">
+    <img src="https://mharoot.github.io/SpeedUpSharePoint/sharepoint-rectangle-logo.png"
+         alt="Speed Up SharePoint" />
+    <button class="menu-toggle" onclick="closeMenu()">✕</button>
+  </div>
+
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#services" onclick="closeMenu()">Services</a>
+  <a href="#experience" onclick="closeMenu()">Experience</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+</div>
+
+<!-- HERO -->
+<header>
+  <h1>Speed Up SharePoint</h1>
+  <p>
+    Fix slow SharePoint searches, broken filters, and unstable reporting
+    with enterprise-grade SQL-backed hybrid architectures.
+  </p>
+  <a href="#contact" class="cta">Contact Us</a>
+</header>
+
+<!-- ABOUT -->
+<section id="about">
+  <h2>About</h2>
+  <p>
+    We modernize SharePoint-heavy enterprise systems by keeping SharePoint
+    as the UI layer while offloading data, search, and reporting to
+    performant SQL-backed architectures.
+  </p>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <h2>Services</h2>
+  <ul>
+    <li><strong>SharePoint Architecture Review</strong></li>
+    <li><strong>Hybrid SharePoint–SQL Modernization</strong></li>
+    <li><strong>Search & Filter Performance Optimization</strong></li>
+    <li><strong>Power BI Stability & Performance Fixes</strong></li>
+  </ul>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <h2>Experience</h2>
+
+  <div class="experience">
+    <h3>Houlihan Lokey – M&A Systems</h3>
+    <p>
+      Designed hybrid SharePoint–SQL systems for high-stakes M&A workflows,
+      dramatically improving performance and reliability.
+    </p>
+  </div>
+
+  <div class="experience">
+    <h3>Finance & Professional Services</h3>
+    <p>
+      Modernized legacy WinForms and ASP.NET systems using SharePoint UI
+      layers backed by scalable SQL architectures.
+    </p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <h2>Contact</h2>
+  <div class="contact-box">
+    <p>Phone</p>
+    <p><a href="tel:+15551234567">+1 (555) 123-4567</a></p>
+
+    <p style="margin-top:20px;">Email</p>
+    <p><a href="mailto:speedupsharepoint@gmail.com">
+      speedupsharepoint@gmail.com
+    </a></p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  © 2025 Speed Up SharePoint
+</footer>
+
+<!-- JS -->
+<script>
+const sidebar = document.getElementById("sidebar");
+const overlay = document.getElementById("overlay");
+const toggleBtn = document.getElementById("menuToggle");
+
+function openMenu() {
+  sidebar.classList.add("open");
+  overlay.classList.add("show");
+  document.body.classList.add("menu-open");
+  toggleBtn.textContent = "✕";
+}
+
+function closeMenu() {
+  sidebar.classList.remove("open");
+  overlay.classList.remove("show");
+  document.body.classList.remove("menu-open");
+  toggleBtn.textContent = "☰";
+}
+
+toggleBtn.addEventListener("click", () => {
+  sidebar.classList.contains("open") ? closeMenu() : openMenu();
+});
+</script>
+
+</body>
+</html>
