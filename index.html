@@ -4,173 +4,224 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- SEO Meta Tags -->
-<title>Speed Up SharePoint | SharePoint Search & Filter Optimization</title>
-<meta name="description" content="Speed Up SharePoint with hybrid SQL-backed architectures. Fix slow searches, filters, and reporting issues. Enterprise SharePoint Architecture Review available.">
-<meta name="keywords" content="SharePoint search performance, SharePoint filter issues, SharePoint SQL hybrid, SharePoint architecture review, Power BI SharePoint optimization">
+<title>Speed Up SharePoint | SharePoint Performance Experts</title>
+<meta name="description" content="Fix slow SharePoint searches, filters, and reporting with SQL-backed hybrid architectures.">
 <meta name="robots" content="index, follow">
 
-<!-- Open Graph -->
-<meta property="og:title" content="Speed Up SharePoint – SharePoint Search & Filter Optimization">
-<meta property="og:description" content="Fix slow SharePoint searches and filters with enterprise-level hybrid SQL architectures. Architecture review available.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://www.SpeedUpSharePoint.com/">
-<meta property="og:image" content="https://www.SpeedUpSharePoint.com/assets/og-image.png">
-
-<!-- Styles -->
 <style>
-  :root {
-    --primary-color: #011021; /* Navy Blue */
-    --secondary-color: #fefcc8; /* Gold */
-  }
+:root {
+  --primary: #011021;
+  --secondary: #fefcc8;
+}
 
-  body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    margin: 0;
-    padding: 0;
-    background: #fff;
-  }
+/* Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-  /* Topbar */
-  .topbar {
-    background: var(--primary-color);
-    color: var(--secondary-color);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 20px;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
-  .topbar img { height: 40px; }
-  .menu-toggle {
+body {
+  font-family: Arial, sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* ================= TOPBAR ================= */
+
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  z-index: 1000;
+}
+
+/* Logo */
+.topbar img {
+  max-height: 64px;
+  width: auto;
+}
+
+/* Desktop nav */
+.topnav {
+  display: flex;
+  gap: 20px;
+}
+
+.topnav a {
+  color: var(--secondary);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Hamburger button */
+.menu-toggle {
+  display: none;
+  width: 48px;
+  height: 48px;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: var(--secondary);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: var(--primary);
+  overflow-x: hidden;
+  transition: width 0.3s ease;
+  padding-top: 90px;
+  z-index: 1100;
+}
+
+.sidebar a {
+  display: block;
+  padding: 16px 32px;
+  color: var(--secondary);
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+.sidebar a:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+/* ================= HERO ================= */
+
+header {
+  background: var(--primary);
+  color: var(--secondary);
+  text-align: center;
+  padding: 140px 20px 80px;
+}
+
+header h1 {
+  font-size: 2.6rem;
+  margin-bottom: 20px;
+}
+
+header p {
+  max-width: 820px;
+  margin: 0 auto;
+  font-size: 1.15rem;
+}
+
+.cta {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 14px 30px;
+  background: var(--secondary);
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 6px;
+}
+
+.cta:hover {
+  background: var(--primary);
+  color: var(--secondary);
+  border: 2px solid var(--secondary);
+}
+
+/* ================= CONTENT ================= */
+
+section {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+h2 {
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+
+h3 {
+  margin-top: 20px;
+  color: #02213a;
+}
+
+ul {
+  margin-left: 20px;
+}
+
+.experience {
+  border-left: 4px solid var(--primary);
+  padding-left: 16px;
+  margin-bottom: 24px;
+}
+
+/* ================= CONTACT ================= */
+
+.contact-box {
+  background: #f4f4f4;
+  padding: 30px;
+  max-width: 420px;
+  margin: 0 auto;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.contact-box a {
+  color: var(--primary);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* ================= FOOTER ================= */
+
+footer {
+  background: #f4f4f4;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+  .topnav {
     display: none;
-    font-size: 2em;
-    cursor: pointer;
   }
-  .topnav-links a { color: var(--secondary-color); text-decoration: none; font-weight: bold; margin-left: 15px; }
+  .menu-toggle {
+    display: flex;
+  }
+  .topbar img {
+    max-height: 52px;
+  }
+  header h1 {
+    font-size: 2rem;
+  }
+}
 
-  /* Sidebar */
-  .sidebar {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1100;
-    top: 0;
-    left: 0;
-    background-color: var(--primary-color);
-    overflow-x: hidden;
-    transition: 0.3s;
-    padding-top: 60px;
-  }
-  .sidebar a {
-    padding: 15px 30px;
-    text-decoration: none;
-    font-size: 1.2em;
-    color: var(--secondary-color);
-    display: block;
-    transition: 0.2s;
-  }
-  .sidebar a:hover { background-color: #02213a; }
-  .sidebar .closebtn {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 2em;
-  }
-
-  /* Hero / Header */
-  header {
-    background: var(--primary-color);
-    color: var(--secondary-color);
-    padding: 120px 20px 60px;
-    text-align: center;
-  }
-  header h1 { font-size: 2.5em; margin-bottom: 20px; }
-  header p { font-size: 1.2em; max-width: 800px; margin: 0 auto; }
-  .cta-button {
-    display: inline-block;
-    margin-top: 20px;
-    background: var(--secondary-color);
-    color: var(--primary-color);
-    padding: 15px 30px;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    transition: all 0.3s;
-  }
-  .cta-button:hover {
-    background: var(--primary-color);
-    color: var(--secondary-color);
-    border: 2px solid var(--secondary-color);
-  }
-
-  /* Sections */
-  section {
-    padding: 60px 20px;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-  h2 { color: var(--primary-color); margin-bottom: 20px; }
-  h3 { color: #02213a; margin-top: 15px; }
-  ul { list-style-type: disc; margin-left: 20px; }
-  .experience { border-left: 4px solid var(--primary-color); padding-left: 15px; margin-bottom: 20px; font-style: normal; }
-
-  /* Contact Section */
-  .contact-info {
-    background: #f4f4f4;
-    padding: 30px;
-    border-radius: 8px;
-    max-width: 500px;
-    margin: 0 auto;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
-  .contact-info a {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: bold;
-  }
-  .contact-info a:hover {
-    color: var(--secondary-color);
-  }
-
-  /* Footer */
-  footer {
-    background: #f4f4f4;
-    padding: 20px;
-    text-align: center;
-    font-size: 0.9em;
-    color: #555;
-  }
-
-  /* Responsive Styles */
-  @media (max-width: 768px) {
-    header h1 { font-size: 2em; }
-    header p { font-size: 1em; }
-    section { padding: 40px 15px; }
-    .topnav-links { display: none; }
-    .menu-toggle { display: block; }
-  }
-  @media (max-width: 480px) {
-    header h1 { font-size: 1.6em; }
-    header p { font-size: 0.95em; }
-    .cta-button { padding: 12px 25px; font-size: 0.95em; }
-  }
 </style>
 </head>
+
 <body>
 
-<!-- Topbar -->
+<!-- TOPBAR -->
 <div class="topbar">
-  <img src="https://mharoot.github.io/SpeedUpSharePoint/sharepoint-rectangle-logo.png" alt="Speed Up SharePoint Logo">
-  <span class="menu-toggle" onclick="openSidebar()">&#9776;</span>
-  <nav class="topnav-links">
+  <img src="https://mharoot.github.io/SpeedUpSharePoint/sharepoint-rectangle-logo.png"
+       alt="Speed Up SharePoint">
+
+  <button id="menuToggle" class="menu-toggle" aria-label="Menu">☰</button>
+
+  <nav class="topnav">
     <a href="#about">About</a>
     <a href="#services">Services</a>
     <a href="#experience">Experience</a>
@@ -178,75 +229,99 @@
   </nav>
 </div>
 
-<!-- Sidebar -->
-<div id="mySidebar" class="sidebar">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">×</a>
-  <a href="#about" onclick="closeSidebar()">About</a>
-  <a href="#services" onclick="closeSidebar()">Services</a>
-  <a href="#experience" onclick="closeSidebar()">Experience</a>
-  <a href="#contact" onclick="closeSidebar()">Contact</a>
+<!-- SIDEBAR -->
+<div id="sidebar" class="sidebar">
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#experience" onclick="toggleMenu()">Experience</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
 </div>
 
-<!-- Hero / Home Section -->
-<header id="home">
-  <h1>Speed Up SharePoint — Fix Slow Searches & Filters</h1>
-  <p>Struggling with slow SharePoint lists, broken filters, or unreliable Power BI dashboards? We introduce hybrid SQL-backed architectures that improve performance, reliability, and security, while keeping SharePoint as your UI layer.</p>
-  <a href="#contact" class="cta-button">Contact Us</a>
+<!-- HERO -->
+<header>
+  <h1>Speed Up SharePoint</h1>
+  <p>
+    Fix slow SharePoint searches, broken filters, and unstable reporting
+    with enterprise-grade SQL-backed hybrid architectures.
+  </p>
+  <a href="#contact" class="cta">Contact Us</a>
 </header>
 
-<!-- About Section -->
+<!-- ABOUT -->
 <section id="about">
-  <h2>About Speed Up SharePoint</h2>
-  <p>We specialize in modernizing SharePoint-heavy enterprise systems. Our hybrid SharePoint–SQL architecture fixes slow searches, filter issues, and reporting bottlenecks, ensuring faster, reliable, and secure operations. Backed by experience in high-stakes M&A banking environments.</p>
+  <h2>About</h2>
+  <p>
+    We modernize SharePoint-heavy enterprise systems by keeping SharePoint
+    as the UI layer while moving data, search, and reporting to performant
+    SQL-backed architectures.
+  </p>
 </section>
 
-<!-- Services Section -->
+<!-- SERVICES -->
 <section id="services">
   <h2>Services</h2>
   <ul>
-    <li><strong>SharePoint Architecture Review:</strong> Comprehensive audit, bottleneck analysis, and roadmap for SQL-backed hybrid architecture.</li>
-    <li><strong>Hybrid SharePoint–SQL Modernization:</strong> Improve search, filtering, reporting, and security without disrupting workflows.</li>
-    <li><strong>Performance Optimization:</strong> 50–100× faster queries, stable Power BI dashboards, and elimination of Excel-heavy workarounds.</li>
-    <li><strong>Enterprise Security Hardening:</strong> Role-based access, Azure governance, and compliance-ready systems.</li>
+    <li><strong>SharePoint Architecture Review</strong></li>
+    <li><strong>Hybrid SharePoint–SQL Modernization</strong></li>
+    <li><strong>Search & Filter Performance Optimization</strong></li>
+    <li><strong>Power BI Stability & Performance Fixes</strong></li>
   </ul>
 </section>
 
-<!-- Experience Section -->
+<!-- EXPERIENCE -->
 <section id="experience">
-  <h2>Proven Enterprise Experience</h2>
+  <h2>Experience</h2>
+
   <div class="experience">
     <h3>Houlihan Lokey – M&A Systems</h3>
-    Designed and modernized SharePoint-heavy workflows and reporting platforms for high-stakes M&A transactions. Delivered hybrid SharePoint–SQL architectures that accelerated queries, stabilized dashboards, and ensured enterprise security compliance.
+    <p>
+      Designed hybrid SharePoint–SQL systems for high-stakes M&A workflows,
+      dramatically improving performance, reliability, and security.
+    </p>
   </div>
+
   <div class="experience">
-    <h3>Finance & Professional Services Clients</h3>
-    Modernized legacy WinForms and ASP.NET systems, integrating SharePoint as a UI layer while offloading data to SQL for performance, reliability, and maintainability.
+    <h3>Finance & Professional Services</h3>
+    <p>
+      Modernized legacy WinForms and ASP.NET systems with SharePoint UI
+      layers backed by scalable SQL architectures.
+    </p>
   </div>
 </section>
 
-<!-- Contact Section -->
+<!-- CONTACT -->
 <section id="contact">
-  <h2>Contact Us</h2>
-  <div class="contact-info">
-    <p>Reach us directly at:</p>
-    <p>Phone: <a href="tel:+15551234567">+1 (555) 123-4567</a></p>
-    <p>Email: <a href="mailto:speedupsharepoint@gmail.com">speedupsharepoint@gmail.com</a></p>
+  <h2>Contact</h2>
+
+  <div class="contact-box">
+    <p>Phone</p>
+    <p><a href="tel:+15551234567">+1 (555) 123-4567</a></p>
+
+    <p style="margin-top:20px;">Email</p>
+    <p><a href="mailto:speedupsharepoint@gmail.com">
+      speedupsharepoint@gmail.com
+    </a></p>
   </div>
 </section>
 
-<!-- Footer -->
+<!-- FOOTER -->
 <footer>
-  &copy; 2025 Speed Up SharePoint. All rights reserved.
+  © 2025 Speed Up SharePoint
 </footer>
 
-<!-- JavaScript for Sidebar -->
+<!-- JS -->
 <script>
-function openSidebar() {
-  document.getElementById("mySidebar").style.width = "250px";
+const sidebar = document.getElementById("sidebar");
+const toggleBtn = document.getElementById("menuToggle");
+
+function toggleMenu() {
+  const open = sidebar.style.width === "260px";
+
+  sidebar.style.width = open ? "0" : "260px";
+  toggleBtn.textContent = open ? "☰" : "✕";
 }
-function closeSidebar() {
-  document.getElementById("mySidebar").style.width = "0";
-}
+
+toggleBtn.addEventListener("click", toggleMenu);
 </script>
 
 </body>
