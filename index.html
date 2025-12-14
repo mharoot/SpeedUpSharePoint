@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SEO Meta Tags -->
+<title>Speed Up SharePoint | SharePoint Search & Filter Optimization</title>
+<meta name="description" content="Speed Up SharePoint with hybrid SQL-backed architectures. Fix slow searches, filters, and reporting issues. Enterprise SharePoint Architecture Review available.">
+<meta name="keywords" content="SharePoint search performance, SharePoint filter issues, SharePoint SQL hybrid, SharePoint architecture review, Power BI SharePoint optimization">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Speed Up SharePoint – SharePoint Search & Filter Optimization">
+<meta property="og:description" content="Fix slow SharePoint searches and filters with enterprise-level hybrid SQL architectures. Architecture review available.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.SpeedUpSharePoint.com/">
+<meta property="og:image" content="https://www.SpeedUpSharePoint.com/assets/og-image.png">
+
+<!-- Styles -->
+<style>
+  :root {
+    --primary-color: #011021; /* Navy Blue */
+    --secondary-color: #fefcc8; /* Gold */
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+  }
+
+  /* Topbar */
+  .topbar {
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  .topbar img { height: 40px; }
+  .menu-toggle {
+    display: none;
+    font-size: 2em;
+    cursor: pointer;
+  }
+  .topnav-links a { color: var(--secondary-color); text-decoration: none; font-weight: bold; margin-left: 15px; }
+
+  /* Sidebar */
+  .sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1100;
+    top: 0;
+    left: 0;
+    background-color: var(--primary-color);
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 60px;
+  }
+  .sidebar a {
+    padding: 15px 30px;
+    text-decoration: none;
+    font-size: 1.2em;
+    color: var(--secondary-color);
+    display: block;
+    transition: 0.2s;
+  }
+  .sidebar a:hover { background-color: #02213a; }
+  .sidebar .closebtn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 2em;
+  }
+
+  /* Hero / Header */
+  header {
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 120px 20px 60px;
+    text-align: center;
+  }
+  header h1 { font-size: 2.5em; margin-bottom: 20px; }
+  header p { font-size: 1.2em; max-width: 800px; margin: 0 auto; }
+  .cta-button {
+    display: inline-block;
+    margin-top: 20px;
+    background: var(--secondary-color);
+    color: var(--primary-color);
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s;
+  }
+  .cta-button:hover {
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    border: 2px solid var(--secondary-color);
+  }
+
+  /* Sections */
+  section {
+    padding: 60px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  h2 { color: var(--primary-color); margin-bottom: 20px; }
+  h3 { color: #02213a; margin-top: 15px; }
+  ul { list-style-type: disc; margin-left: 20px; }
+  .experience { border-left: 4px solid var(--primary-color); padding-left: 15px; margin-bottom: 20px; font-style: normal; }
+
+  /* Contact Section */
+  .contact-info {
+    background: #f4f4f4;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  .contact-info a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
+  }
+  .contact-info a:hover {
+    color: var(--secondary-color);
+  }
+
+  /* Footer */
+  footer {
+    background: #f4f4f4;
+    padding: 20px;
+    text-align: center;
+    font-size: 0.9em;
+    color: #555;
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    header h1 { font-size: 2em; }
+    header p { font-size: 1em; }
+    section { padding: 40px 15px; }
+    .topnav-links { display: none; }
+    .menu-toggle { display: block; }
+  }
+  @media (max-width: 480px) {
+    header h1 { font-size: 1.6em; }
+    header p { font-size: 0.95em; }
+    .cta-button { padding: 12px 25px; font-size: 0.95em; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Topbar -->
+<div class="topbar">
+  <img src="/assets/logo.png" alt="Speed Up SharePoint Logo">
+  <span class="menu-toggle" onclick="openSidebar()">&#9776;</span>
+  <nav class="topnav-links">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</div>
+
+<!-- Sidebar -->
+<div id="mySidebar" class="sidebar">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">×</a>
+  <a href="#about" onclick="closeSidebar()">About</a>
+  <a href="#services" onclick="closeSidebar()">Services</a>
+  <a href="#experience" onclick="closeSidebar()">Experience</a>
+  <a href="#contact" onclick="closeSidebar()">Contact</a>
+</div>
+
+<!-- Hero / Home Section -->
+<header id="home">
+  <h1>Speed Up SharePoint — Fix Slow Searches & Filters</h1>
+  <p>Struggling with slow SharePoint lists, broken filters, or unreliable Power BI dashboards? We introduce hybrid SQL-backed architectures that improve performance, reliability, and security, while keeping SharePoint as your UI layer.</p>
+  <a href="#contact" class="cta-button">Contact Us</a>
+</header>
+
+<!-- About Section -->
+<section id="about">
+  <h2>About Speed Up SharePoint</h2>
+  <p>We specialize in modernizing SharePoint-heavy enterprise systems. Our hybrid SharePoint–SQL architecture fixes slow searches, filter issues, and reporting bottlenecks, ensuring faster, reliable, and secure operations. Backed by experience in high-stakes M&A banking environments.</p>
+</section>
+
+<!-- Services Section -->
+<section id="services">
+  <h2>Services</h2>
+  <ul>
+    <li><strong>SharePoint Architecture Review:</strong> Comprehensive audit, bottleneck analysis, and roadmap for SQL-backed hybrid architecture.</li>
+    <li><strong>Hybrid SharePoint–SQL Modernization:</strong> Improve search, filtering, reporting, and security without disrupting workflows.</li>
+    <li><strong>Performance Optimization:</strong> 50–100× faster queries, stable Power BI dashboards, and elimination of Excel-heavy workarounds.</li>
+    <li><strong>Enterprise Security Hardening:</strong> Role-based access, Azure governance, and compliance-ready systems.</li>
+  </ul>
+</section>
+
+<!-- Experience Section -->
+<section id="experience">
+  <h2>Proven Enterprise Experience</h2>
+  <div class="experience">
+    <h3>Houlihan Lokey – M&A Systems</h3>
+    Designed and modernized SharePoint-heavy workflows and reporting platforms for high-stakes M&A transactions. Delivered hybrid SharePoint–SQL architectures that accelerated queries, stabilized dashboards, and ensured enterprise security compliance.
+  </div>
+  <div class="experience">
+    <h3>Finance & Professional Services Clients</h3>
+    Modernized legacy WinForms and ASP.NET systems, integrating SharePoint as a UI layer while offloading data to SQL for performance, reliability, and maintainability.
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact">
+  <h2>Contact Us</h2>
+  <div class="contact-info">
+    <p>Reach us directly at:</p>
+    <p>Phone: <a href="tel:+15551234567">+1 (555) 123-4567</a></p>
+    <p>Email: <a href="mailto:speedupsharepoint@gmail.com">speedupsharepoint@gmail.com</a></p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  &copy; 2025 Speed Up SharePoint. All rights reserved.
+</footer>
+
+<!-- JavaScript for Sidebar -->
+<script>
+function openSidebar() {
+  document.getElementById("mySidebar").style.width = "250px";
+}
+function closeSidebar() {
+  document.getElementById("mySidebar").style.width = "0";
+}
+</script>
+
+</body>
+</html>
