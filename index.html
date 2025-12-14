@@ -335,9 +335,9 @@ function smoothScroll(e) {
   const targetId = this.getAttribute("href").slice(1);
   const targetEl = document.getElementById(targetId);
   if (targetEl) {
-    targetEl.scrollIntoView({ behavior: "smooth" });
+    targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
   }
-  closeMenu();
+  closeMenu(); // close sidebar on mobile
 }
 
 sidebarLinks.forEach(link => link.addEventListener("click", smoothScroll));
@@ -348,10 +348,16 @@ const logoElements = document.querySelectorAll(".topbar img, .sidebar-logo");
 logoElements.forEach(logo => {
   logo.addEventListener("click", (e) => {
     e.preventDefault();
-    document.getElementById("home").scrollIntoView({ behavior: "smooth" });
+    document.getElementById("home").scrollIntoView({ behavior: "smooth", block: "start" });
     closeMenu();
   });
 });
+
+// Helper for inline logo click function
+function scrollToHero() {
+  document.getElementById("home").scrollIntoView({ behavior: "smooth", block: "start" });
+  closeMenu();
+}
 </script>
 
 </body>
