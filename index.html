@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Speed Up SharePoint | SharePoint Performance Experts</title>
-<meta name="description"
-      content="Fix slow SharePoint searches, filters, and reporting with SQL-backed hybrid architectures." />
-<meta name="robots" content="index, follow" />
+<meta name="description" content="Fix slow SharePoint searches, filters, and reporting with SQL-backed hybrid architectures.">
+<meta name="robots" content="index, follow">
 
 <style>
 :root {
@@ -17,31 +14,24 @@
   --secondary: #fefcc8;
 }
 
-/* ===== RESET ===== */
+/* ================= RESET ================= */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html, body {
-  overscroll-behavior: none;
-  -webkit-user-select: none;
-  -webkit-touch-callout: none;
-}
-
 body {
   font-family: Arial, sans-serif;
-  line-height: 1.6;
   color: #333;
+  line-height: 1.6;
 }
 
-/* ===== TOPBAR ===== */
+/* ================= TOPBAR ================= */
 .topbar {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
+  inset: 0 0 auto 0;
+  height: 76px;
   background: var(--primary);
   display: flex;
   align-items: center;
@@ -51,12 +41,13 @@ body {
 }
 
 .topbar img {
-  max-height: 60px;
+  max-height: 56px;
+  width: auto;
 }
 
 .topnav {
   display: flex;
-  gap: 20px;
+  gap: 22px;
 }
 
 .topnav a {
@@ -65,7 +56,7 @@ body {
   font-weight: bold;
 }
 
-/* Hamburger */
+/* Hamburger / X */
 .menu-toggle {
   display: none;
   width: 48px;
@@ -77,7 +68,7 @@ body {
   cursor: pointer;
 }
 
-/* ===== OVERLAY ===== */
+/* ================= OVERLAY ================= */
 .overlay {
   position: fixed;
   inset: 0;
@@ -93,7 +84,7 @@ body {
   visibility: visible;
 }
 
-/* ===== SIDEBAR ===== */
+/* ================= SIDEBAR ================= */
 .sidebar {
   position: fixed;
   top: 0;
@@ -104,23 +95,11 @@ body {
   transform: translateX(-100%);
   transition: transform 0.3s ease;
   z-index: 1100;
+  padding-top: 90px;
 }
 
 .sidebar.open {
   transform: translateX(0);
-}
-
-.sidebar-header {
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 12px 20px;
-  border-bottom: 1px solid rgba(255,255,255,0.15);
-}
-
-.sidebar-header img {
-  max-height: 48px;
 }
 
 .sidebar a {
@@ -135,12 +114,7 @@ body {
   background: rgba(255,255,255,0.08);
 }
 
-/* Lock scroll */
-body.menu-open {
-  overflow: hidden;
-}
-
-/* ===== HERO ===== */
+/* ================= HERO ================= */
 header {
   background: var(--primary);
   color: var(--secondary);
@@ -149,7 +123,7 @@ header {
 }
 
 header h1 {
-  font-size: 2.6rem;
+  font-size: clamp(2rem, 5vw, 2.6rem);
   margin-bottom: 20px;
 }
 
@@ -170,13 +144,7 @@ header p {
   border-radius: 6px;
 }
 
-.cta:hover {
-  background: var(--primary);
-  color: var(--secondary);
-  border: 2px solid var(--secondary);
-}
-
-/* ===== CONTENT ===== */
+/* ================= CONTENT ================= */
 section {
   max-width: 1000px;
   margin: 0 auto;
@@ -188,22 +156,13 @@ h2 {
   margin-bottom: 20px;
 }
 
-h3 {
-  margin-top: 20px;
-  color: #02213a;
-}
-
-ul {
-  margin-left: 20px;
-}
-
 .experience {
   border-left: 4px solid var(--primary);
   padding-left: 16px;
   margin-bottom: 24px;
 }
 
-/* ===== CONTACT ===== */
+/* ================= CONTACT ================= */
 .contact-box {
   background: #f4f4f4;
   padding: 30px;
@@ -219,7 +178,7 @@ ul {
   text-decoration: none;
 }
 
-/* ===== FOOTER ===== */
+/* ================= FOOTER ================= */
 footer {
   background: #f4f4f4;
   text-align: center;
@@ -227,16 +186,13 @@ footer {
   font-size: 0.9rem;
 }
 
-/* ===== RESPONSIVE ===== */
+/* ================= RESPONSIVE ================= */
 @media (max-width: 768px) {
   .topnav {
     display: none;
   }
   .menu-toggle {
-    display: flex;
-  }
-  header h1 {
-    font-size: 2rem;
+    display: block;
   }
 }
 </style>
@@ -247,7 +203,7 @@ footer {
 <!-- TOPBAR -->
 <div class="topbar">
   <img src="https://mharoot.github.io/SpeedUpSharePoint/sharepoint-rectangle-logo.png"
-       alt="Speed Up SharePoint" />
+       alt="Speed Up SharePoint">
 
   <button id="menuToggle" class="menu-toggle" aria-label="Menu">☰</button>
 
@@ -260,20 +216,14 @@ footer {
 </div>
 
 <!-- OVERLAY -->
-<div id="overlay" class="overlay" onclick="closeMenu()"></div>
+<div id="overlay" class="overlay"></div>
 
 <!-- SIDEBAR -->
 <div id="sidebar" class="sidebar">
-  <div class="sidebar-header">
-    <img src="https://mharoot.github.io/SpeedUpSharePoint/sharepoint-rectangle-logo.png"
-         alt="Speed Up SharePoint" />
-    <button class="menu-toggle" onclick="closeMenu()">✕</button>
-  </div>
-
-  <a href="#about" onclick="closeMenu()">About</a>
-  <a href="#services" onclick="closeMenu()">Services</a>
-  <a href="#experience" onclick="closeMenu()">Experience</a>
-  <a href="#contact" onclick="closeMenu()">Contact</a>
+  <a href="#about">About</a>
+  <a href="#services">Services</a>
+  <a href="#experience">Experience</a>
+  <a href="#contact">Contact</a>
 </div>
 
 <!-- HERO -->
@@ -291,8 +241,8 @@ footer {
   <h2>About</h2>
   <p>
     We modernize SharePoint-heavy enterprise systems by keeping SharePoint
-    as the UI layer while offloading data, search, and reporting to
-    performant SQL-backed architectures.
+    as the UI layer while moving data, search, and reporting to performant
+    SQL-backed architectures.
   </p>
 </section>
 
@@ -300,10 +250,10 @@ footer {
 <section id="services">
   <h2>Services</h2>
   <ul>
-    <li><strong>SharePoint Architecture Review</strong></li>
-    <li><strong>Hybrid SharePoint–SQL Modernization</strong></li>
-    <li><strong>Search & Filter Performance Optimization</strong></li>
-    <li><strong>Power BI Stability & Performance Fixes</strong></li>
+    <li>SharePoint Architecture Review</li>
+    <li>Hybrid SharePoint–SQL Modernization</li>
+    <li>Search & Filter Performance Optimization</li>
+    <li>Power BI Stability & Performance Fixes</li>
   </ul>
 </section>
 
@@ -312,19 +262,13 @@ footer {
   <h2>Experience</h2>
 
   <div class="experience">
-    <h3>Houlihan Lokey – M&A Systems</h3>
-    <p>
-      Designed hybrid SharePoint–SQL systems for high-stakes M&A workflows,
-      dramatically improving performance and reliability.
-    </p>
+    <strong>Houlihan Lokey – M&A Systems</strong>
+    <p>Hybrid SharePoint–SQL architectures for high-stakes finance workflows.</p>
   </div>
 
   <div class="experience">
-    <h3>Finance & Professional Services</h3>
-    <p>
-      Modernized legacy WinForms and ASP.NET systems using SharePoint UI
-      layers backed by scalable SQL architectures.
-    </p>
+    <strong>Finance & Professional Services</strong>
+    <p>Modernized legacy systems with scalable SQL-backed designs.</p>
   </div>
 </section>
 
@@ -332,17 +276,13 @@ footer {
 <section id="contact">
   <h2>Contact</h2>
   <div class="contact-box">
-    <p>Phone</p>
     <p><a href="tel:+15551234567">+1 (555) 123-4567</a></p>
-
-    <p style="margin-top:20px;">Email</p>
-    <p><a href="mailto:speedupsharepoint@gmail.com">
-      speedupsharepoint@gmail.com
-    </a></p>
+    <p style="margin-top:16px;">
+      <a href="mailto:speedupsharepoint@gmail.com">speedupsharepoint@gmail.com</a>
+    </p>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   © 2025 Speed Up SharePoint
 </footer>
@@ -356,20 +296,20 @@ const toggleBtn = document.getElementById("menuToggle");
 function openMenu() {
   sidebar.classList.add("open");
   overlay.classList.add("show");
-  document.body.classList.add("menu-open");
   toggleBtn.textContent = "✕";
 }
 
 function closeMenu() {
   sidebar.classList.remove("open");
   overlay.classList.remove("show");
-  document.body.classList.remove("menu-open");
   toggleBtn.textContent = "☰";
 }
 
 toggleBtn.addEventListener("click", () => {
   sidebar.classList.contains("open") ? closeMenu() : openMenu();
 });
+
+overlay.addEventListener("click", closeMenu);
 </script>
 
 </body>
