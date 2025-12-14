@@ -8,7 +8,7 @@
 <meta name="robots" content="index, follow">
 
 <!-- Font Awesome for icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="font-awesome-6.4.0-all.min.css">
 
 <style>
 :root {
@@ -309,6 +309,7 @@ const overlay = document.getElementById("overlay");
 const toggleBtn = document.getElementById("menuToggle");
 const sidebarLinks = sidebar.querySelectorAll("a");
 const topnavLinks = document.querySelectorAll(".topnav a");
+const ctaButton = document.querySelector(".cta");
 
 // Open/close sidebar
 function openMenu() {
@@ -326,7 +327,6 @@ function closeMenu() {
 toggleBtn.addEventListener("click", () => {
   sidebar.classList.contains("open") ? closeMenu() : openMenu();
 });
-
 overlay.addEventListener("click", closeMenu);
 
 // Smooth scroll
@@ -337,11 +337,13 @@ function smoothScroll(e) {
   if (targetEl) {
     targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
   }
-  closeMenu(); // close sidebar on mobile
+  closeMenu();
 }
 
+// Add smooth scroll to links
 sidebarLinks.forEach(link => link.addEventListener("click", smoothScroll));
 topnavLinks.forEach(link => link.addEventListener("click", smoothScroll));
+ctaButton.addEventListener("click", smoothScroll);
 
 // Logo scroll
 const logoElements = document.querySelectorAll(".topbar img, .sidebar-logo");
@@ -353,7 +355,7 @@ logoElements.forEach(logo => {
   });
 });
 
-// Helper for inline logo click function
+// Helper
 function scrollToHero() {
   document.getElementById("home").scrollIntoView({ behavior: "smooth", block: "start" });
   closeMenu();
