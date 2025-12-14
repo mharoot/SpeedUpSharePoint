@@ -25,6 +25,7 @@ body {
   font-family: Arial, sans-serif;
   color: #333;
   line-height: 1.6;
+  scroll-behavior: smooth; /* Smooth scroll */
 }
 
 /* ================= TOPBAR ================= */
@@ -304,6 +305,7 @@ footer {
 const sidebar = document.getElementById("sidebar");
 const overlay = document.getElementById("overlay");
 const toggleBtn = document.getElementById("menuToggle");
+const sidebarLinks = sidebar.querySelectorAll("a");
 
 function openMenu() {
   sidebar.classList.add("open");
@@ -322,6 +324,11 @@ toggleBtn.addEventListener("click", () => {
 });
 
 overlay.addEventListener("click", closeMenu);
+
+// Close sidebar when clicking any link
+sidebarLinks.forEach(link => {
+  link.addEventListener("click", closeMenu);
+});
 </script>
 
 </body>
