@@ -161,16 +161,19 @@ header p {
   border-radius: 6px;
 }
 
-/* Sections */
+/* Sections full width */
 section {
-  max-width: 1000px;
-  margin: 0 auto;
+  width: 100%;
   padding: 60px 20px;
 }
 
-#services, #contact {
+#services {
   background: #fafafa;
-  border-radius: 8px;
+}
+
+#contact {
+  background: var(--primary);
+  color: var(--secondary);
 }
 
 h2 {
@@ -186,29 +189,29 @@ h2 {
 
 /* Contact */
 .contact-box {
-  background: #fafafa;
   padding: 30px;
   max-width: 420px;
   margin: 0 auto;
   border-radius: 8px;
   text-align: center;
+  color: var(--secondary);
 }
 
 .contact-box a {
-  color: var(--primary);
+  color: var(--secondary);
   font-weight: bold;
   text-decoration: none;
 }
 
 .contact-icon {
   font-size: 2rem;
-  color: var(--primary);
+  color: var(--secondary);
   margin-bottom: 8px;
   display: inline-block;
 }
 
 .contact-icon:hover {
-  color: var(--secondary);
+  color: #fafcc8; /* slightly brighter on hover */
 }
 
 /* Footer */
