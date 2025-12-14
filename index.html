@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+<meta charset="UTF-8" />
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0" />
 
 <title>Speed Up SharePoint | SharePoint Performance Experts</title>
-<meta name="description" content="Fix slow SharePoint searches, filters, and reporting with SQL-backed hybrid architectures.">
-<meta name="robots" content="index, follow">
+<meta name="description"
+      content="Fix slow SharePoint searches, filters, and reporting with SQL-backed hybrid architectures." />
+<meta name="robots" content="index, follow" />
 
 <style>
 :root {
@@ -14,28 +17,26 @@
   --secondary: #fefcc8;
 }
 
-/* Reset */
+/* ===== RESET ===== */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
-  html, body {
-  touch-action: none;
+
+html, body {
   overscroll-behavior: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
 }
 
-
 body {
   font-family: Arial, sans-serif;
-  color: #333;
   line-height: 1.6;
+  color: #333;
 }
 
-/* ================= TOPBAR ================= */
-
+/* ===== TOPBAR ===== */
 .topbar {
   position: fixed;
   top: 0;
@@ -49,13 +50,10 @@ body {
   z-index: 1000;
 }
 
-/* Logo */
 .topbar img {
-  max-height: 64px;
-  width: auto;
+  max-height: 60px;
 }
 
-/* Desktop nav */
 .topnav {
   display: flex;
   gap: 20px;
@@ -67,7 +65,7 @@ body {
   font-weight: bold;
 }
 
-/* Hamburger button */
+/* Hamburger */
 .menu-toggle {
   display: none;
   width: 48px;
@@ -77,23 +75,52 @@ body {
   border: none;
   color: var(--secondary);
   cursor: pointer;
-  align-items: center;
-  justify-content: center;
 }
 
-/* ================= SIDEBAR ================= */
+/* ===== OVERLAY ===== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 1050;
+}
 
+.overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* ===== SIDEBAR ===== */
 .sidebar {
   position: fixed;
   top: 0;
   left: 0;
-  width: 0;
+  width: 260px;
   height: 100%;
   background: var(--primary);
-  overflow-x: hidden;
-  transition: width 0.3s ease;
-  padding-top: 90px;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
   z-index: 1100;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+
+.sidebar-header {
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.sidebar-header img {
+  max-height: 48px;
 }
 
 .sidebar a {
@@ -108,8 +135,12 @@ body {
   background: rgba(255,255,255,0.08);
 }
 
-/* ================= HERO ================= */
+/* Lock scroll */
+body.menu-open {
+  overflow: hidden;
+}
 
+/* ===== HERO ===== */
 header {
   background: var(--primary);
   color: var(--secondary);
@@ -145,8 +176,7 @@ header p {
   border: 2px solid var(--secondary);
 }
 
-/* ================= CONTENT ================= */
-
+/* ===== CONTENT ===== */
 section {
   max-width: 1000px;
   margin: 0 auto;
@@ -173,8 +203,7 @@ ul {
   margin-bottom: 24px;
 }
 
-/* ================= CONTACT ================= */
-
+/* ===== CONTACT ===== */
 .contact-box {
   background: #f4f4f4;
   padding: 30px;
@@ -190,8 +219,7 @@ ul {
   text-decoration: none;
 }
 
-/* ================= FOOTER ================= */
-
+/* ===== FOOTER ===== */
 footer {
   background: #f4f4f4;
   text-align: center;
@@ -199,8 +227,7 @@ footer {
   font-size: 0.9rem;
 }
 
-/* ================= RESPONSIVE ================= */
-
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
   .topnav {
     display: none;
@@ -208,14 +235,10 @@ footer {
   .menu-toggle {
     display: flex;
   }
-  .topbar img {
-    max-height: 52px;
-  }
   header h1 {
     font-size: 2rem;
   }
 }
-
 </style>
 </head>
 
@@ -224,7 +247,7 @@ footer {
 <!-- TOPBAR -->
 <div class="topbar">
   <img src="https://mharoot.github.io/SpeedUpSharePoint/sharepoint-rectangle-logo.png"
-       alt="Speed Up SharePoint">
+       alt="Speed Up SharePoint" />
 
   <button id="menuToggle" class="menu-toggle" aria-label="Menu">☰</button>
 
@@ -236,100 +259,8 @@ footer {
   </nav>
 </div>
 
+<!-- OVERLAY -->
+<div id="overlay" class="overlay" onclick="closeMenu()"></div>
+
 <!-- SIDEBAR -->
-<div id="sidebar" class="sidebar">
-  <a href="#about" onclick="toggleMenu()">About</a>
-  <a href="#services" onclick="toggleMenu()">Services</a>
-  <a href="#experience" onclick="toggleMenu()">Experience</a>
-  <a href="#contact" onclick="toggleMenu()">Contact</a>
-</div>
-
-<!-- HERO -->
-<header>
-  <h1>Speed Up SharePoint</h1>
-  <p>
-    Fix slow SharePoint searches, broken filters, and unstable reporting
-    with enterprise-grade SQL-backed hybrid architectures.
-  </p>
-  <a href="#contact" class="cta">Contact Us</a>
-</header>
-
-<!-- ABOUT -->
-<section id="about">
-  <h2>About</h2>
-  <p>
-    We modernize SharePoint-heavy enterprise systems by keeping SharePoint
-    as the UI layer while moving data, search, and reporting to performant
-    SQL-backed architectures.
-  </p>
-</section>
-
-<!-- SERVICES -->
-<section id="services">
-  <h2>Services</h2>
-  <ul>
-    <li><strong>SharePoint Architecture Review</strong></li>
-    <li><strong>Hybrid SharePoint–SQL Modernization</strong></li>
-    <li><strong>Search & Filter Performance Optimization</strong></li>
-    <li><strong>Power BI Stability & Performance Fixes</strong></li>
-  </ul>
-</section>
-
-<!-- EXPERIENCE -->
-<section id="experience">
-  <h2>Experience</h2>
-
-  <div class="experience">
-    <h3>Houlihan Lokey – M&A Systems</h3>
-    <p>
-      Designed hybrid SharePoint–SQL systems for high-stakes M&A workflows,
-      dramatically improving performance, reliability, and security.
-    </p>
-  </div>
-
-  <div class="experience">
-    <h3>Finance & Professional Services</h3>
-    <p>
-      Modernized legacy WinForms and ASP.NET systems with SharePoint UI
-      layers backed by scalable SQL architectures.
-    </p>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <h2>Contact</h2>
-
-  <div class="contact-box">
-    <p>Phone</p>
-    <p><a href="tel:+15551234567">+1 (555) 123-4567</a></p>
-
-    <p style="margin-top:20px;">Email</p>
-    <p><a href="mailto:speedupsharepoint@gmail.com">
-      speedupsharepoint@gmail.com
-    </a></p>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  © 2025 Speed Up SharePoint
-</footer>
-
-<!-- JS -->
-<script>
-const sidebar = document.getElementById("sidebar");
-const toggleBtn = document.getElementById("menuToggle");
-
-function toggleMenu() {
-  const open = sidebar.style.width === "260px";
-
-  sidebar.style.width = open ? "0" : "260px";
-  toggleBtn.textContent = open ? "☰" : "✕";
-}
-
-toggleBtn.addEventListener("click", toggleMenu);
-</script>
-
-</body>
-</html>
+<div id
