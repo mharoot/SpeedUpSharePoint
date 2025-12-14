@@ -201,6 +201,10 @@ ul {
   border-radius: 8px;
   text-align: center;
   color: var(--secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; /* Add spacing between phone and email */
 }
 
 .contact-box a {
@@ -212,12 +216,11 @@ ul {
 .contact-icon {
   font-size: 2rem;
   color: var(--secondary);
-  margin-bottom: 8px;
-  display: inline-block;
+  display: block;
 }
 
 .contact-icon:hover {
-  color: #fafcc8; /* slightly brighter on hover */
+  color: #fafcc8;
 }
 
 /* Footer */
