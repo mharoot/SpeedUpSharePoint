@@ -3,7 +3,6 @@ let basePath = "/"; // Default for localhost
 
 // Define the scrollToHero function globally
 function scrollToHero() {
-  
   if (window.location.hostname === "mharoot.github.io") {
     // If on GitHub Pages, set the correct base path
     basePath = "/SpeedUpSharePoint/";
@@ -28,41 +27,43 @@ function scrollToHero() {
   closeMenu();
 }
 
-  // Utility function to update links for GitHub Pages or localhost
-  function updateLinks() {
-    // Update all links with hrefs starting with /pages/faq/ to use the basePath
-    document.querySelectorAll('a[href^="/pages/faq/"]').forEach(link => {
-      const path = link.getAttribute("href");
+// Utility function to update links for GitHub Pages or localhost
+function updateLinks() {
+  // Update all links with hrefs starting with /pages/faq/ to use the basePath
+  document.querySelectorAll('a[href^="/pages/faq/"]').forEach(link => {
+    const path = link.getAttribute("href");
+    // Only update the link if it's missing the basePath
+    if (!path.startsWith(basePath)) {
       link.setAttribute("href", basePath + path.substring(1));  // Fix links dynamically
-    });
+    }
+  });
 
-    // Update any other relative links based on basePath
-    document.querySelectorAll('a[href^="/"]').forEach(link => {
-      const path = link.getAttribute("href");
+  // Update any other relative links based on basePath
+  document.querySelectorAll('a[href^="/"]').forEach(link => {
+    const path = link.getAttribute("href");
+    // Only update the link if it's missing the basePath
+    if (!path.startsWith(basePath)) {
       link.setAttribute("href", basePath + path.substring(1));  // Add basePath for all root-relative links
-    });
-  }
+    }
+  });
+}
 
-  // Sidebar & Menu toggling functionality
-  const sidebar = document.getElementById("sidebar");
-  const overlay = document.getElementById("overlay");
-  const toggleBtn = document.getElementById("menuToggle");
+// Sidebar & Menu toggling functionality
+const sidebar = document.getElementById("sidebar");
+const overlay = document.getElementById("overlay");
+const toggleBtn = document.getElementById("menuToggle");
 
-  function openMenu() {
-    sidebar.classList.add("open");
-    overlay.classList.add("show");
-    toggleBtn.textContent = "✕";
-  }
+function openMenu() {
+  sidebar.classList.add("open");
+  overlay.classList.add("show");
+  toggleBtn.textContent = "✕";
+}
 
-  function closeMenu() {
-    sidebar.classList.remove("open");
-    overlay.classList.remove("show");
-    toggleBtn.textContent = "☰";
-  }
-
-
-
-
+function closeMenu() {
+  sidebar.classList.remove("open");
+  overlay.classList.remove("show");
+  toggleBtn.textContent = "☰";
+}
 
 // Wait for the DOM to load before executing DOM manipulation logic
 document.addEventListener("DOMContentLoaded", function () {
@@ -77,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   console.log("Base Path: ", basePath); // Log basePath for debugging
 
-   updateLinks();
+  updateLinks();
 
   toggleBtn.addEventListener("click", () => {
     sidebar.classList.contains("open") ? closeMenu() : openMenu();
