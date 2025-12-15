@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   overlay.addEventListener("click", closeMenu);
 
-  // Scroll to Hero section logic
+  // Ensure the scrollToHero function is defined
   function scrollToHero() {
     if (window.location.pathname !== basePath) {
       window.location.href = window.location.origin + basePath;
@@ -70,6 +70,12 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     closeMenu();
+  }
+
+  // Scroll to Hero section logic (called by the header logo click)
+  const logo = document.querySelector('.topbar img');
+  if (logo) {
+    logo.addEventListener("click", scrollToHero); // Attach the scrollToHero function
   }
 
   // Handle anchor links with smooth scrolling or redirect
