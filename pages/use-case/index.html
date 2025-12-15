@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-<title>How We Design SharePoint at Scale</title>
-<meta name="description" content="Discover the methodologies and architectural principles we use to design scalable and high-performance SharePoint systems for enterprise environments.">
+<title>SharePoint Use Cases | Speed Up SharePoint</title>
+<meta name="description" content="Explore SharePoint use cases for enterprise-scale systems, performance optimizations, and best practices for common challenges faced by SharePoint users.">
 <meta name="robots" content="index, follow">
 
 <meta name="theme-color" content="#011021">
@@ -31,6 +31,7 @@
 <link rel="stylesheet" href="./../../assets/css/font-awesome-6.4.0-all.min.css">
 <link rel="stylesheet" href="./../../assets/css/style.css">
 <link rel="stylesheet" href="./../../assets/css/faq.css">
+<link rel="stylesheet" href="./../../assets/css/accordion.css">
 
 <base id="dynamic-base" href="./">
 </head>
@@ -67,37 +68,89 @@
 
 <!-- Hero -->
 <header id="home">
-  <h1>How We Design SharePoint at Scale</h1>
+  <h1>SharePoint Use Cases | Speed Up SharePoint</h1>
   <p>
-    Learn about the methodology we use to architect scalable, high-performance SharePoint solutions for large organizations.
+    Explore practical use cases for SharePoint, including performance optimizations, scalable solutions, and best practices to address common enterprise challenges.
   </p>
   <a href="#contact" class="cta">Contact Us</a>
 </header>
 
+<!-- Call to Action -->
 <section class="cta-section">
   <div class="cta-container">
     <p class="cta-text">
-      We design SharePoint systems that scale seamlessly for enterprise needs, balancing performance, compliance, and flexibility.
+      Discover how SharePoint can scale to meet your enterprise needs, improve performance, and drive business outcomes.
     </p>
+
     <a href="#contact" class="cta-button">
       Schedule Technical Review
     </a>
   </div>
 </section>
 
-<section id="methodology">
-  <h2>Our Design Approach</h2>
-  <p>
-    At Speed Up SharePoint, we focus on creating architectures that support massive datasets, minimize bottlenecks, and maximize performance.
-  </p>
+<!-- Accordion -->
+<section id="accordion-section" class="accordion">
+  <h2>Explore Our SharePoint Use Cases</h2>
 
-  <h3>Key Principles:</h3>
-  <ul>
-    <li>Performance-first architecture for large-scale systems</li>
-    <li>Compliance-aware solutions that follow enterprise best practices</li>
-    <li>Seamless integration with external databases and tools</li>
-    <li>Hybrid SharePoint and SQL architecture to future-proof your system</li>
-  </ul>
+  <!-- SharePoint Lists Used as Databases -->
+  <div class="accordion-item">
+    <div class="accordion-header">
+      SharePoint Lists Used as Databases: Problems and Solutions
+      <i class="fas fa-chevron-down"></i>
+    </div>
+    <div class="accordion-content">
+      <p>
+        Explore the challenges of using SharePoint lists as databases and learn when to move to more appropriate database solutions for larger datasets.
+      </p>
+      <a href="/pages/use-case/sharepoint-lists-used-as-databases.html" class="learn-more">
+        Learn more
+      </a>
+    </div>
+  </div>
+
+  <!-- Power Automate Throttling Failures -->
+  <div class="accordion-item">
+    <div class="accordion-header">
+      Understanding and Mitigating Power Automate Throttling Failures
+      <i class="fas fa-chevron-down"></i>
+    </div>
+    <div class="accordion-content">
+      <p>
+        Learn about Power Automate throttling and how to mitigate failures due to SharePoint's performance limits in automated workflows.
+      </p>
+      <a href="/pages/use-case/power-automate-throttling.html" class="learn-more">Learn more</a>
+    </div>
+  </div>
+
+  <!-- Large List View Threshold Remediation -->
+  <div class="accordion-item">
+    <div class="accordion-header">
+      Remediating Large List View Threshold Issues in SharePoint
+      <i class="fas fa-chevron-down"></i>
+    </div>
+    <div class="accordion-content">
+      <p>
+        Discover best practices for managing large SharePoint lists and preventing list view threshold errors that hinder productivity.
+      </p>
+      <a href="/pages/use-case/large-list-view-threshold.html" class="learn-more">Learn more</a>
+    </div>
+  </div>
+
+  <!-- SharePoint at Scale: Enterprise Performance Solutions -->
+  <div class="accordion-item">
+    <div class="accordion-header">
+      SharePoint at Scale: Achieving High Performance for Enterprises
+      <i class="fas fa-chevron-down"></i>
+    </div>
+    <div class="accordion-content">
+      <p>
+        Learn how to optimize SharePoint performance at scale for large organizations, balancing both speed and reliability.
+      </p>
+      <a href="/pages/use-case/sharepoint-at-scale.html" class="learn-more">Learn more</a>
+    </div>
+  </div>
+
+  <!-- More use cases can be added as needed -->
 </section>
 
 <!-- Contact -->
@@ -139,5 +192,7 @@
 </footer>
 
 <script src="./../../assets/js/main.js"></script>
+<!-- Accordion JS -->
+<script src="./../../assets/js/accordion.js"></script>
 </body>
 </html>

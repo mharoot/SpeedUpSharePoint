@@ -185,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Update the site.webmanifest path
     const manifest = document.querySelector('link[rel="manifest"]');
     if (manifest) {
-      const newHref = basePath + 'site.webmanifest'; // Ensure correct path
+      const newHref = basePath + 'assets/images/site.webmanifest'; // Ensure correct path
       console.log(`Updating site.webmanifest to ${newHref}`); // Log for debugging
       manifest.setAttribute('href', newHref);
     }
