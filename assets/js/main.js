@@ -2,9 +2,13 @@ const sidebar = document.getElementById("sidebar");
 const overlay = document.getElementById("overlay");
 const toggleBtn = document.getElementById("menuToggle");
 
+// Determine base path
+let basePath = "/"; // default for localhost
 if (window.location.hostname === "mharoot.github.io") {
+    // Set <base> for GitHub Pages project site
     const base = document.getElementById('dynamic-base');
-    base.setAttribute('href', '/SpeedUpSharePoint/')
+    base.setAttribute('href', '/SpeedUpSharePoint/');
+    basePath = "/SpeedUpSharePoint/"; // use this for all links
 }
 
 function openMenu() {
@@ -25,7 +29,6 @@ toggleBtn.addEventListener("click", () => {
 overlay.addEventListener("click", closeMenu);
 
 function scrollToHero() {
-  const basePath = "/"; // change if your site lives under a subdirectory
   if (window.location.pathname !== basePath) {
     window.location.href = window.location.origin + basePath;
     return;
@@ -49,7 +52,6 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener("click", e => {
     e.preventDefault();
     const anchor = link.getAttribute("href");
-    const basePath = "/"; // homepage path
 
     // Special case: Contact Us links
     if (anchor === "#contact") {
