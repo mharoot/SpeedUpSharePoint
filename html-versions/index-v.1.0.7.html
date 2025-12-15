@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<title>Speed Up SharePoint | Enterprise SharePoint Performance Experts</title>
+<meta name="description" content="Enterprise SharePoint performance consulting. Hybrid SharePoint–SQL architectures, secure Azure implementations, and 50–100× query performance improvements.">
+<meta name="robots" content="index, follow">
+
+<meta name="theme-color" content="#011021">
+
+<!-- Icons -->
+<link rel="apple-touch-icon" sizes="180x180" href="./assets/images/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+<link rel="shortcut icon" href="./assets/images/favicon.ico">
+
+<meta name="application-name" content="Speed Up SharePoint">
+<meta name="msapplication-TileColor" content="#011021">
+
+<link rel="manifest" href="./assets/images/site.webmanifest">
+
+<link rel="stylesheet" href="./assets/css/font-awesome-6.4.0-all.min.css">
+<link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+
+<!-- Topbar -->
+<div class="topbar">
+  <img src="./assets/images/SpeedUpSharePointLogoRectangle.png" alt="Speed Up SharePoint" onclick="scrollToHero()">
+  <button id="menuToggle" class="menu-toggle">☰</button>
+  <nav class="topnav">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#experience">Experience</a>
+    <a href="#use-case">Use Case</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</div>
+
+<div id="overlay" class="overlay"></div>
+<div id="sidebar" class="sidebar">
+  <img src="./assets/images/SpeedUpSharePointLogoRectangle.png" class="sidebar-logo" onclick="scrollToHero()">
+  <a href="#about">About</a>
+  <a href="#services">Services</a>
+  <a href="#experience">Experience</a>
+  <a href="#use-case">Use Case</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<!-- Hero -->
+<header id="home">
+  <h1>Enterprise SharePoint Performance, Done Right</h1>
+  <p>
+    We help enterprise teams eliminate SharePoint performance bottlenecks
+    through secure, scalable hybrid architectures.
+    Lists, dashboards, and workflows run faster, reporting becomes reliable,
+    and sensitive data remains protected through fine-grained access control.
+  </p>
+  <a href="#contact" class="cta">Contact Us</a>
+</header>
+
+<!-- About -->
+<section id="about">
+  <h2>About</h2>
+  <p>
+    Speed Up SharePoint is a specialized consultancy focused on modernizing
+    SharePoint-heavy enterprise systems. SharePoint remains the UI and
+    collaboration layer while data, search, and reporting are offloaded into
+    secure, high-performance SQL-backed architectures.
+    These solutions enable fast filtering, reliable dashboards,
+    and strict access control across enterprise datasets.
+  </p>
+</section>
+
+<!-- Services -->
+<section id="services">
+  <h2>Services</h2>
+  <div class="services-grid">
+
+    <div class="service">
+      <i class="fas fa-sitemap"></i>
+      <h3>Architecture Review</h3>
+      <p>
+        Deep analysis of SharePoint, SQL, search, and reporting architectures
+        to identify performance bottlenecks, scaling risks, and security gaps.
+      </p>
+    </div>
+
+    <div class="service">
+      <i class="fas fa-database"></i>
+      <h3>Hybrid Modernization</h3>
+      <p>
+        Design of high-performance SharePoint–SQL architectures that retain
+        SharePoint as the UI while offloading performance-critical operations.
+      </p>
+    </div>
+
+    <div class="service">
+      <i class="fas fa-bolt"></i>
+      <h3>Performance Optimization</h3>
+      <p>
+        50–100× faster filtering, search, and analytics on large datasets,
+        ensuring dashboards and workflows remain responsive.
+      </p>
+    </div>
+
+    <div class="service">
+      <i class="fas fa-chart-line"></i>
+      <h3>Power BI Stability</h3>
+      <p>
+        Reliable, SQL-backed reporting pipelines with governed access,
+        delivering accurate and scalable dashboards.
+      </p>
+    </div>
+
+    <div class="service">
+      <i class="fas fa-shield-alt"></i>
+      <h3>Security &amp; Governance</h3>
+      <p>
+        Azure-native security using Managed Identity, Key Vault,
+        secure coding practices, and enterprise access controls.
+      </p>
+    </div>
+
+    <div class="service">
+      <i class="fas fa-chalkboard-teacher"></i>
+      <h3>Mentoring &amp; Training</h3>
+      <p>
+        Architecture-level guidance for enterprise teams on SharePoint best
+        practices, hybrid design patterns, and performance tuning.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- Why Us -->
+<section id="why-us">
+  <h2>Why Enterprise Teams Choose Speed Up SharePoint</h2>
+  <ul class="why-list">
+    <li>50–100× faster queries on enterprise-scale SharePoint lists</li>
+    <li>Hybrid architectures handling tens of millions of records</li>
+    <li>Security-first designs with fine-grained access control</li>
+    <li>Proven delivery in high-stakes enterprise environments</li>
+    <li>Direct engagement with the Principal Architect — no outsourcing</li>
+  </ul>
+</section>
+
+<!-- Experience -->
+<section id="experience">
+  <h2>Enterprise Experience</h2>
+  <div class="experience">
+    <div class="experience-header">
+      <img src="./assets/images/houlihan-lokey.png" alt="Houlihan Lokey">
+    </div>
+    <p>
+      Delivered hybrid SharePoint–SQL architectures supporting high-stakes
+      M&amp;A workflows, enterprise search, and secure document platforms,
+      with fine-grained access control and high-performance dashboards.
+    </p>
+  </div>
+</section>
+
+<!-- Use Case -->
+<section id="use-case" style="background:#fafafa;">
+  <h2>Use Case &amp; SharePoint Analysis</h2>
+
+  <h3>Filtering SharePoint Lists Efficiently</h3>
+  <ul>
+    <li>List View Threshold: 5,000 items per view</li>
+    <li>Indexed columns, filtered views, metadata navigation</li>
+    <li>SQL-backed querying for complex analytics and reporting</li>
+  </ul>
+
+  <h3>Hybrid SharePoint–SQL Architecture</h3>
+  <ul>
+    <li>Azure Functions triggered by SharePoint webhooks</li>
+    <li>Metadata synced directly into SQL for fast querying</li>
+    <li>Private content served securely from SharePoint</li>
+    <li>Non-sensitive assets delivered from Azure Blob Storage</li>
+  </ul>
+
+  <h3>Performance &amp; Scalability</h3>
+  <ul>
+    <li>Incremental sync without throttling</li>
+    <li>50–100× faster than SharePoint-only approaches</li>
+  </ul>
+
+  <h3>Cloud &amp; Security Optimization</h3>
+  <ul>
+    <li>Managed Identity + Key Vault</li>
+    <li>Azure AD SSO</li>
+    <li>Audit logging and governance ready</li>
+  </ul>
+</section>
+
+<!-- Engagement -->
+<section id="engagement">
+  <h2>Typical Engagement</h2>
+  <ul class="engagement-list">
+    <li>Architecture assessment and bottleneck analysis</li>
+    <li>Hybrid SharePoint–SQL reference architecture design</li>
+    <li>Azure Functions and sync strategy definition</li>
+    <li>Performance validation and tuning</li>
+    <li>Knowledge transfer to internal teams</li>
+  </ul>
+  <p class="engagement-note">
+    Most enterprise engagements are completed within <strong>2–3 months</strong>.
+  </p>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <h2>Contact Us</h2>
+  <p class="contact-urgency">
+    Schedule a technical consultation to identify performance bottlenecks
+    before they impact critical workflows.
+  </p>
+
+  <div class="contact-box">
+    <div>
+      <a href="tel:+18182091548"><i class="fas fa-phone"></i><br>(818) 209-1548</a>
+    </div>
+    <div>
+      <a href="mailto:support@speedupsharepoint.com"><i class="fas fa-envelope"></i><br>support@speedupsharepoint.com</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  © 2025 Speed Up SharePoint. All Rights Reserved.
+  <div class="trust-signals">
+    <span>Enterprise-scale delivery</span>
+    <span>Security-first architecture</span>
+    <span>NDA available upon request</span>
+  </div>
+</footer>
+
+<script src="./assets/js/main.js"></script>
+</body>
+</html>
