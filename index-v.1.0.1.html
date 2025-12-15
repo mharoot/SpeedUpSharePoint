@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<title>Speed Up SharePoint | Enterprise SharePoint Performance</title>
+
+<meta name="description" content="Enterprise SharePoint performance optimization using secure, SQL-backed hybrid architectures.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#011021">
+
+<!-- Apple Touch Icons -->
+<link rel="apple-touch-icon" sizes="180x180" href="./assets/images/apple-touch-icon.png">
+
+<!-- Favicons -->
+<link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon-16x16.png">
+<link rel="shortcut icon" href="./assets/images/favicon.ico">
+
+<!-- PWA Manifest -->
+<link rel="manifest" href="./assets/images/site.webmanifest">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="./assets/css/font-awesome-6.4.0-all.min.css">
+
+<style>
+:root {
+  --primary: #011021;
+  --secondary: #fefcc8;
+}
+
+/* Reset */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Arial, sans-serif;
+  color: #333;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+  scroll-padding-top: 76px;
+}
+
+/* Topbar */
+.topbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 76px;
+  background: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  z-index: 1000;
+}
+
+.topbar img { max-height: 56px; cursor: pointer; }
+
+.topnav { display: flex; gap: 22px; }
+
+.topnav a {
+  color: var(--secondary);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Hamburger */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--secondary);
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 100%;
+  background: var(--primary);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 1100;
+  padding-top: 20px;
+}
+
+.sidebar.open { transform: translateX(0); }
+
+.sidebar img {
+  width: 80%;
+  margin: 20px auto;
+  display: block;
+}
+
+.sidebar a {
+  display: block;
+  padding: 16px 32px;
+  color: var(--secondary);
+  text-decoration: none;
+}
+
+/* Hero */
+header {
+  background: var(--primary);
+  color: var(--secondary);
+  text-align: center;
+  padding: 140px 20px 80px;
+}
+
+header h1 { font-size: 2.4rem; margin-bottom: 20px; }
+header p { max-width: 820px; margin: 0 auto; font-size: 1.15rem; }
+
+.cta {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 14px 30px;
+  background: var(--secondary);
+  color: var(--primary);
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+/* Sections */
+section { padding: 70px 20px; width: 100%; }
+#services { background: #fafafa; }
+#contact { background: var(--primary); color: var(--secondary); }
+
+h2 {
+  color: var(--primary);
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* SERVICES GRID */
+.services-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  gap: 30px;
+}
+
+/* Desktop layout */
+@media (min-width: 1024px) {
+  .services-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .service { grid-column: span 2; }
+  .service:nth-child(4),
+  .service:nth-child(5) {
+    grid-column: span 3;
+  }
+}
+
+/* Tablet */
+@media (max-width: 1023px) and (min-width: 600px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .service:last-child {
+    grid-column: span 2;
+  }
+}
+
+/* Mobile */
+@media (max-width: 599px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.service {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+}
+
+.service i {
+  font-size: 2.6rem;
+  color: var(--primary);
+  margin-bottom: 16px;
+}
+
+.service h3 { margin-bottom: 12px; }
+
+/* Experience Blocks */
+.experience {
+  max-width: 820px;
+  margin: 0 auto 30px;
+  border-left: 4px solid var(--primary);
+  padding-left: 20px;
+}
+
+/* Contact */
+.contact-box {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+.contact-box a {
+  color: var(--secondary);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.contact-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+/* Footer */
+footer {
+  background: var(--primary);
+  color: var(--secondary);
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .topnav { display: none; }
+  .menu-toggle { display: block; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <img src="./assets/images/SpeedUpSharePointLogoRectangle.png" alt="Speed Up SharePoint">
+  <button class="menu-toggle" onclick="document.querySelector('.sidebar').classList.toggle('open')">☰</button>
+  <nav class="topnav">
+    <a href="#services">Services</a>
+    <a href="#security">Security</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</div>
+
+<div class="sidebar">
+  <img src="./assets/images/SpeedUpSharePointLogoRectangle.png" alt="">
+  <a href="#services">Services</a>
+  <a href="#security">Security</a>
+  <a href="#experience">Experience</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<header>
+  <h1>Enterprise SharePoint Performance</h1>
+  <p>
+    SQL-backed hybrid architectures that eliminate SharePoint performance
+    bottlenecks while preserving enterprise workflows and governance.
+  </p>
+  <a href="#contact" class="cta">Request an Architecture Review</a>
+</header>
+
+<section id="services">
+  <h2>Services</h2>
+  <div class="services-grid">
+    <div class="service">
+      <i class="fas fa-sitemap"></i>
+      <h3>Architecture Review</h3>
+      <p>Enterprise assessment of SharePoint, data models, and performance risks.</p>
+    </div>
+    <div class="service">
+      <i class="fas fa-database"></i>
+      <h3>Hybrid SQL Integration</h3>
+      <p>Move performance-critical operations to SQL while retaining SharePoint UI.</p>
+    </div>
+    <div class="service">
+      <i class="fas fa-bolt"></i>
+      <h3>Search & Filtering</h3>
+      <p>50–100× faster queries for large datasets and complex filters.</p>
+    </div>
+    <div class="service">
+      <i class="fas fa-chart-line"></i>
+      <h3>Reporting Stability</h3>
+      <p>Reliable Power BI and analytics pipelines backed by structured data.</p>
+    </div>
+    <div class="service">
+      <i class="fas fa-cloud"></i>
+      <h3>Azure Modernization</h3>
+      <p>Secure cloud-native services using App Services, SQL, and managed identity.</p>
+    </div>
+  </div>
+</section>
+
+<section id="security">
+  <h2>Security & Compliance</h2>
+  <div class="experience">
+    <p>
+      Solutions are designed to align with enterprise security, governance,
+      and compliance standards commonly found in regulated environments.
+    </p>
+    <ul>
+      <li>Azure Key Vault for secrets and certificate management</li>
+      <li>Managed Identity for passwordless service authentication</li>
+      <li>Secure coding standards and least-privilege access</li>
+      <li>SSO, conditional access, and role-based authorization</li>
+      <li>WAF, TLS enforcement, and secure edge routing</li>
+    </ul>
+  </div>
+</section>
+
+<section id="experience">
+  <h2>Enterprise Experience</h2>
+  <div class="experience">
+    <strong>Houlihan Lokey – Global Investment Banking</strong>
+    <p>
+      Designed and delivered hybrid SharePoint–SQL architectures supporting
+      high-risk financial workflows, analytics, and governance requirements.
+    </p>
+  </div>
+  <div class="experience">
+    <strong>Legacy System Modernization</strong>
+    <p>
+      Replaced performance-limited platforms with scalable, secure,
+      cloud-native solutions.
+    </p>
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Contact</h2>
+  <div class="contact-box">
+    <div>
+      <i class="fas fa-phone contact-icon"></i>
+      <a href="tel:+18182091548">(818) 209-1548</a>
+    </div>
+    <div>
+      <i class="fas fa-envelope contact-icon"></i>
+      <a href="mailto:support@speedupsharepoint.com">support@speedupsharepoint.com</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2025 Speed Up SharePoint. All Rights Reserved.
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Speed Up SharePoint | Enterprise SharePoint Performance & Architecture</title>
+
+<meta name="description" content="Enterprise SharePoint performance specialists. We modernize SharePoint with SQL-backed architectures, secure Azure services, and scalable reporting systems.">
+<meta name="robots" content="index, follow">
+
+<meta name="theme-color" content="#011021">
+
+<!-- Icons -->
+<link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./assets/images/apple-touch-icon.png">
+<link rel="shortcut icon" href="./assets/images/favicon.ico">
+<link rel="manifest" href="./assets/images/site.webmanifest">
+
+<link rel="stylesheet" href="./assets/css/font-awesome-6.4.0-all.min.css">
+
+<style>
+:root {
+  --primary: #011021;
+  --secondary: #fefcc8;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: Arial, sans-serif;
+  color: #333;
+  line-height: 1.6;
+  scroll-behavior: smooth;
+  scroll-padding-top: 76px;
+}
+
+/* Topbar */
+.topbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 76px;
+  background: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  z-index: 1000;
+}
+
+.topbar img { max-height: 56px; cursor: pointer; }
+
+.topnav { display: flex; gap: 22px; }
+.topnav a {
+  color: var(--secondary);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--secondary);
+  font-size: 2rem;
+}
+
+/* Sidebar */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  opacity: 0;
+  visibility: hidden;
+  transition: .3s;
+  z-index: 900;
+}
+.overlay.show { opacity: 1; visibility: visible; }
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 260px;
+  height: 100%;
+  background: var(--primary);
+  transform: translateX(-100%);
+  transition: .3s;
+  z-index: 1000;
+  padding-top: 20px;
+}
+.sidebar.open { transform: translateX(0); }
+
+.sidebar-logo {
+  width: 80%;
+  margin: 20px auto;
+  display: block;
+}
+
+.sidebar a {
+  display: block;
+  padding: 16px 32px;
+  color: var(--secondary);
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+/* Hero */
+header {
+  background: var(--primary);
+  color: var(--secondary);
+  text-align: center;
+  padding: 140px 20px 80px;
+}
+
+header h1 { font-size: clamp(2.2rem, 5vw, 2.8rem); margin-bottom: 20px; }
+header p { max-width: 900px; margin: auto; font-size: 1.15rem; }
+
+.cta {
+  margin-top: 30px;
+  display: inline-block;
+  background: var(--secondary);
+  color: var(--primary);
+  padding: 14px 30px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 6px;
+}
+
+/* Sections */
+section { padding: 70px 20px; width: 100%; }
+
+h2 { margin-bottom: 20px; }
+
+/* About */
+#about p { max-width: 900px; margin: auto; }
+
+/* Services Grid */
+#services { background: #fafafa; }
+
+.services-grid {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+}
+
+.service-card {
+  text-align: center;
+  padding: 20px;
+}
+
+.service-card i {
+  font-size: 2.4rem;
+  color: var(--primary);
+  margin-bottom: 15px;
+}
+
+.service-card h3 { margin-bottom: 10px; }
+
+/* Experience */
+.experience {
+  max-width: 900px;
+  margin: auto;
+  border-left: 4px solid var(--primary);
+  padding-left: 20px;
+  margin-bottom: 30px;
+}
+
+/* Contact */
+#contact {
+  background: var(--primary);
+  color: var(--secondary);
+}
+
+.contact-box {
+  max-width: 500px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  text-align: center;
+}
+
+.contact-box i {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: var(--secondary);
+}
+
+.contact-box a { color: var(--secondary); text-decoration: none; }
+
+/* Footer */
+footer {
+  background: var(--primary);
+  color: var(--secondary);
+  text-align: center;
+  padding: 20px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .topnav { display: none; }
+  .menu-toggle { display: block; }
+  .services-grid { grid-template-columns: 1fr; }
+  .contact-box { flex-direction: column; gap: 30px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <img src="./assets/images/SpeedUpSharePointLogoRectangle.png" onclick="scrollToHero()">
+  <button class="menu-toggle" id="menuToggle">☰</button>
+  <nav class="topnav">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="sidebar" id="sidebar">
+  <img src="./assets/images/SpeedUpSharePointLogoRectangle.png" class="sidebar-logo" onclick="scrollToHero()">
+  <a href="#about">About</a>
+  <a href="#services">Services</a>
+  <a href="#experience">Experience</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<header id="home">
+  <h1>Enterprise SharePoint Performance & Architecture</h1>
+  <p>
+    Speed Up SharePoint helps organizations eliminate performance bottlenecks by
+    redesigning SharePoint-heavy systems with secure, scalable, SQL-backed architectures
+    built on Azure.
+  </p>
+  <a href="#contact" class="cta">Contact Us</a>
+</header>
+
+<section id="about">
+  <h2>About Speed Up SharePoint</h2>
+  <p>
+    Speed Up SharePoint is a specialized consulting firm focused on modernizing
+    enterprise SharePoint environments. We retain SharePoint as the collaboration
+    and UI layer while offloading data, search, and reporting workloads to secure,
+    high-performance backend systems.
+    <br><br>
+    Our leadership has delivered these architectures inside global financial institutions,
+    supporting mission-critical workflows with strict security, governance, and performance requirements.
+  </p>
+</section>
+
+<section id="services">
+  <h2>Services</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <i class="fas fa-sitemap"></i>
+      <h3>Architecture Review</h3>
+      <p>Deep analysis of SharePoint lists, data models, and performance bottlenecks.</p>
+    </div>
+
+    <div class="service-card">
+      <i class="fas fa-database"></i>
+      <h3>Hybrid SharePoint–SQL</h3>
+      <p>SQL-backed architectures delivering 50–100× faster querying and filtering.</p>
+    </div>
+
+    <div class="service-card">
+      <i class="fas fa-search"></i>
+      <h3>Search Optimization</h3>
+      <p>Reliable enterprise search with scalable indexing and filtering.</p>
+    </div>
+
+    <div class="service-card">
+      <i class="fas fa-chart-line"></i>
+      <h3>Power BI Performance</h3>
+      <p>Stable reporting pipelines backed by clean, governed data models.</p>
+    </div>
+
+    <div class="service-card">
+      <i class="fas fa-lock"></i>
+      <h3>Azure Security</h3>
+      <p>Key Vault, Managed Identity, WAF, Front Door, and secure CI/CD practices.</p>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <h2>Enterprise Experience</h2>
+
+  <div class="experience">
+    <strong>Houlihan Lokey — Global Investment Bank</strong>
+    <p>
+      Designed and delivered hybrid SharePoint–SQL platforms supporting M&A workflows,
+      enterprise search, governance, and analytics at global scale.
+    </p>
+  </div>
+
+  <div class="experience">
+    <strong>Legacy Modernization Programs</strong>
+    <p>
+      Migrated on-prem systems to Azure, improved application performance, and reduced
+      operational costs through modern cloud architectures.
+    </p>
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Contact Us</h2>
+  <div class="contact-box">
+    <div>
+      <i class="fas fa-phone"></i>
+      <a href="tel:+18182091548">(818) 209-1548</a>
+    </div>
+    <div>
+      <i class="fas fa-envelope"></i>
+      <a href="mailto:support@speedupsharepoint.com">support@speedupsharepoint.com</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2025 Speed Up SharePoint. All Rights Reserved.
+</footer>
+
+<script>
+const sidebar = document.getElementById("sidebar");
+const overlay = document.getElementById("overlay");
+const toggleBtn = document.getElementById("menuToggle");
+
+toggleBtn.onclick = () => {
+  sidebar.classList.toggle("open");
+  overlay.classList.toggle("show");
+};
+
+overlay.onclick = () => {
+  sidebar.classList.remove("open");
+  overlay.classList.remove("show");
+};
+
+function scrollToHero() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+</script>
+
+</body>
+</html>
