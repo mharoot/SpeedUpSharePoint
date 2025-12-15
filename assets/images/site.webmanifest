@@ -2,29 +2,39 @@
   "name": "Speed Up SharePoint",
   "short_name": "SpeedUpSP",
   "description": "Fix slow SharePoint searches, filters, and reporting with SQL-backed hybrid architectures.",
-  "start_url": "/index.html",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#011021",
-  "theme_color": "#fefcc8",
+  "theme_color": "#011021",
+  "orientation": "portrait",
   "icons": [
     {
-      "src": "/assets/images/android-chrome-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/assets/images/android-chrome-192x192.png",
+      "src": "./assets/images/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/assets/images/favicon-32x32.png",
+      "src": "./assets/images/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/images/favicon-128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/images/favicon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/images/favicon-32x32.png",
       "sizes": "32x32",
       "type": "image/png"
     },
     {
-      "src": "/assets/images/favicon-16x16.png",
+      "src": "./assets/images/favicon-16x16.png",
       "sizes": "16x16",
       "type": "image/png"
     }
