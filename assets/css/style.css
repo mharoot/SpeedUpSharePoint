@@ -483,3 +483,16 @@ footer a {
   max-width:900px;
   margin:0 auto;
 }
+
+.experience-note {
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+  color: #4b5563; /* muted slate */
+  font-style: italic;
+  line-height: 1.5;
+}
+.experience-note::before {
+  content: "• ";
+  color: var(--primary);
+  font-weight: 600;
+}
