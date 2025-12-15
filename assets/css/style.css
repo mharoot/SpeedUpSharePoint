@@ -496,3 +496,55 @@ footer a {
   color: var(--primary);
   font-weight: 600;
 }
+
+
+.principles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.principle {
+  background: var(--secondary);
+  color: var(--primary);
+  padding: 1.5rem;
+  border-radius: 1rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.principle i {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--primary);
+}
+
+.principle h3 {
+  margin: 0.5rem 0;
+  font-size: 1.25rem;
+}
+
+.principle p {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Hover effect */
+.principle:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive breakpoints */
+@media (max-width: 1024px) {
+  .principles-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .principles-grid {
+    grid-template-columns: 1fr;
+  }
+}
