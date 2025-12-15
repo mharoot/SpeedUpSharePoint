@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<title>Why do my Power Automate flows fail due to throttling? | Speed Up SharePoint</title>
+<meta name="description" content="Learn why Power Automate flows fail due to throttling, the limits in SharePoint connectors, and best practices to prevent workflow interruptions.">
+<meta name="robots" content="index, follow">
+
+<meta name="theme-color" content="#011021">
+
+<!-- Favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="./../../assets/images/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="./../../assets/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="./../../assets/images/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="128x128" href="./../../assets/images/favicon-128.png">
+<link rel="icon" type="image/png" sizes="196x196" href="./../../assets/images/favicon-196x196.png">
+<link rel="shortcut icon" href="./../../assets/images/favicon.ico">
+
+<meta property="og:image" content="https://mharoot.github.io/SpeedUpSharePoint/assets/images/SpeedUpSharePointLogoSquare.png">
+<meta property="og:image:width" content="382">
+<meta property="og:image:height" content="382">
+
+<meta name="application-name" content="Speed Up SharePoint">
+<meta name="msapplication-TileColor" content="#011021">
+<meta name="msapplication-TileImage" content="./../../assets/images/mstile-144x144.png">
+
+<link rel="manifest" href="./../../assets/images/site.webmanifest">
+
+<link rel="stylesheet" href="./../../assets/css/font-awesome-6.4.0-all.min.css">
+<link rel="stylesheet" href="./../../assets/css/style.css">
+<link rel="stylesheet" href="./../../assets/css/faq.css">
+</head>
+
+<body>
+
+<!-- Topbar & Sidebar same as previous pages -->
+<div class="topbar">
+  <img src="./../../assets/images/SpeedUpSharePointLogoRectangle.png" alt="Speed Up SharePoint" onclick="scrollToHero()">
+  <button id="menuToggle" class="menu-toggle">☰</button>
+  <nav class="topnav">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#experience">Experience</a>
+    <a href="#use-case">Use Case</a>
+    <a href="/pages/faq/">FAQ</a>
+    <a href="#principles">Principles</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</div>
+<div id="overlay" class="overlay"></div>
+<div id="sidebar" class="sidebar">
+  <img src="./../../assets/images/SpeedUpSharePointLogoRectangle.png" class="sidebar-logo" onclick="scrollToHero()">
+  <a href="#about">About</a>
+  <a href="#services">Services</a>
+  <a href="#experience">Experience</a>
+  <a href="#use-case">Use Case</a>
+  <a href="/pages/faq/">FAQ</a>
+  <a href="#principles">Principles</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<!-- Hero -->
+<header id="home">
+  <h1>Why do my Power Automate flows fail due to throttling?</h1>
+  <p>
+    Learn why Power Automate flows fail due to throttling, what SharePoint connector limits exist, and how to prevent workflow interruptions at scale.
+  </p>
+  <a href="#contact" class="cta">Contact Us</a>
+</header>
+
+<!-- Call to Action -->
+<section class="cta-section">
+  <div class="cta-container">
+    <p class="cta-text">
+      Power Automate is powerful, but improper design can result in frequent failures. Ensure your flows remain reliable even with large SharePoint lists.
+    </p>
+    <a href="#contact" class="cta-button">
+      Schedule Technical Review
+    </a>
+  </div>
+</section>
+
+<!-- FAQ Content -->
+<section id="faq">
+  <h2>FAQ — Why do my Power Automate flows fail due to throttling?</h2>
+
+  <div class="faq-content">
+    <h3>Short Answer</h3>
+    <p class="faq-lead">
+      Flows fail because SharePoint and Power Automate enforce throttling to protect performance and stability.
+    </p>
+
+    <h3>Why Throttling Happens</h3>
+    <ul>
+      <li>SharePoint limits large batch operations to prevent server overload.</li>
+      <li>API call limits in Power Automate restrict rapid or repeated actions.</li>
+      <li>Excessive concurrent workflows increase risk of throttling.</li>
+    </ul>
+
+    <h3>Common Symptoms</h3>
+    <ul>
+      <li>Flow failures with error: "Request was throttled."</li>
+      <li>Delayed approvals or notifications</li>
+      <li>Partial or skipped updates on large lists</li>
+    </ul>
+
+    <h3>Best Practices</h3>
+    <ol>
+      <li>Break large lists into smaller chunks.</li>
+      <li>Use delay or concurrency control in flows.</li>
+      <li>Index columns used for filters to improve query efficiency.</li>
+      <li>Consider hybrid architectures for large data operations.</li>
+      <li>Monitor flow run history to detect patterns of throttling.</li>
+    </ol>
+
+    <h3>Final Answer</h3>
+    <p class="faq-conclusion">
+      Power Automate is reliable when flows are designed with SharePoint limits in mind. Avoid throttling by batching operations, controlling concurrency, and following architecture best practices.
+    </p>
+
+    <blockquote class="faq-quote">
+      “Understanding SharePoint limits prevents Power Automate from failing silently at scale.”
+    </blockquote>
+  </div>
+</section>
+
+<!-- Contact & Footer same as previous pages -->
+<section id="contact">
+  <h2>Contact Us</h2>
+  <p>Call or email today for a technical consultation.</p>
+  <div class="contact-box">
+    <div>
+      <img src="./../../assets/images/SpeedUpSharePointLogoSquare.png" alt="Speed Up SharePoint" onclick="scrollToHero()">
+    </div>
+    <div>
+      <a href="tel:+18182091548"><i class="fas fa-phone"></i><br>(818) 209-1548</a>
+    </div>
+    <div>
+      <a href="mailto:support@speedupsharepoint.com"><i class="fas fa-envelope"></i><br>support@speedupsharepoint.com</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2025 <span onclick="scrollToHero()">Speed Up SharePoint</span>. All Rights Reserved.
+</footer>
+
+<script src="./../../assets/js/main.js"></script>
+</body>
+</html>

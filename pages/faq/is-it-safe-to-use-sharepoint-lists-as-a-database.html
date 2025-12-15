@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<title>Is it safe to use SharePoint lists as a database? | Speed Up SharePoint</title>
+<meta name="description" content="Learn why using SharePoint lists as databases often causes performance issues, and how to design proper hybrid architectures for structured data.">
+<meta name="robots" content="index, follow">
+
+<meta name="theme-color" content="#011021">
+
+<link rel="stylesheet" href="./../../assets/css/style.css">
+<link rel="stylesheet" href="./../../assets/css/faq.css">
+</head>
+<body>
+
+<!-- Topbar & Sidebar same -->
+
+<header id="home">
+  <h1>Is it safe to use SharePoint lists as a database?</h1>
+  <p>
+    Learn why using SharePoint lists as databases often causes performance issues, and how to design proper hybrid architectures for structured data.
+  </p>
+  <a href="#contact" class="cta">Contact Us</a>
+</header>
+
+<section class="cta-section">
+  <div class="cta-container">
+    <p class="cta-text">
+      Misusing SharePoint lists as databases can lead to slow queries, throttling, and unreliable applications.
+    </p>
+    <a href="#contact" class="cta-button">Schedule Technical Review</a>
+  </div>
+</section>
+
+<section id="faq">
+  <h2>FAQ — Is it safe to use SharePoint lists as a database?</h2>
+
+  <div class="faq-content">
+    <h3>Short Answer</h3>
+    <p class="faq-lead">
+      SharePoint lists are not databases. At scale, structured data should live in SQL, Dataverse, or other relational systems.
+    </p>
+
+    <h3>Key Issues</h3>
+    <ul>
+      <li>Performance degradation with thousands of items</li>
+      <li>Limited query and aggregation capabilities</li>
+      <li>Workflow and automation throttling</li>
+      <li>High maintenance and risk of data loss</li>
+    </ul>
+
+    <h3>Recommended Approach</h3>
+    <ol>
+      <li>Keep documents and metadata in SharePoint.</li>
+      <li>Move structured data to relational systems for large-scale operations.</li>
+      <li>Use APIs to connect SharePoint UI with external databases.</li>
+    </ol>
+
+    <h3>Final Answer</h3>
+    <p class="faq-conclusion">
+      SharePoint lists are great for collaboration, but they are not a replacement for a database at scale.
+    </p>
+
+    <blockquote class="faq-quote">
+      “Lists store collaboration data; databases store structured data. Mixing them without architecture planning creates risk.”
+    </blockquote>
+  </div>
+</section>
+
+<!-- Contact & Footer same as previous -->
+
+<script src="./../../assets/js/main.js"></script>
+</body>
+</html>
