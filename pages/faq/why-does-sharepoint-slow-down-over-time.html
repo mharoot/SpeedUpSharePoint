@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<title>Why Does SharePoint Slow Down Over Time? Causes & Best Practices</title>
+<meta name="description" content="Learn why SharePoint performance slows over time, common technical limits, and best practices to keep SharePoint fast and scalable.">
+<meta name="robots" content="index, follow">
+
+<meta name="theme-color" content="#011021">
+
+<!-- Favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="./../../assets/images/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="./../../assets/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="./../../assets/images/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="128x128" href="./../../assets/images/favicon-128.png">
+<link rel="icon" type="image/png" sizes="196x196" href="./../../assets/images/favicon-196x196.png">
+
+<link rel="shortcut icon" href="./../../assets/images/favicon.ico">
+
+<meta property="og:image" content="https://mharoot.github.io/SpeedUpSharePoint/assets/images/SpeedUpSharePointLogoSquare.png">
+<meta property="og:image:width" content="382">
+<meta property="og:image:height" content="382">
+
+<meta name="application-name" content="Speed Up SharePoint">
+<meta name="msapplication-TileColor" content="#011021">
+<meta name="msapplication-TileImage" content="./../../assets/images/mstile-144x144.png">
+
+<link rel="manifest" href="./../../assets/images/site.webmanifest">
+
+<link rel="stylesheet" href="./../../assets/css/font-awesome-6.4.0-all.min.css">
+<link rel="stylesheet" href="./../../assets/css/style.css">
+<link rel="stylesheet" href="./../../assets/css/faq.css">
+</head>
+
+<body>
+
+<!-- Topbar -->
+<div class="topbar">
+  <img src="./../../assets/images/SpeedUpSharePointLogoRectangle.png" alt="Speed Up SharePoint" onclick="scrollToHero()">
+  <button id="menuToggle" class="menu-toggle">☰</button>
+  <nav class="topnav">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#experience">Experience</a>
+    <a href="#use-case">Use Case</a>
+    <a href="/pages/faq/">FAQ</a>
+    <a href="#principles">Principles</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</div>
+
+<div id="overlay" class="overlay"></div>
+
+<div id="sidebar" class="sidebar">
+  <img src="./../../assets/images/SpeedUpSharePointLogoRectangle.png" class="sidebar-logo" onclick="scrollToHero()">
+  <a href="#about">About</a>
+  <a href="#services">Services</a>
+  <a href="#experience">Experience</a>
+  <a href="#use-case">Use Case</a>
+  <a href="/pages/faq/">FAQ</a>
+  <a href="#principles">Principles</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<!-- Hero -->
+<header id="home">
+  <h1>Why Does SharePoint Slow Down Over Time?</h1>
+  <p>
+    Learn the root causes of SharePoint performance degradation and best practices to keep your environment fast, scalable, and reliable.
+  </p>
+  <a href="#contact" class="cta">Contact Us</a>
+</header>
+
+<section class="cta-section">
+  <div class="cta-container">
+    <p class="cta-text">
+      Enterprise teams typically see measurable performance gains within weeks.
+      Schedule a technical review to identify architectural bottlenecks and next steps.
+    </p>
+
+    <a href="#contact" class="cta-button">
+      Schedule Technical Review
+    </a>
+  </div>
+</section>
+
+<!-- FAQ Content -->
+<section id="faq">
+  <h2>FAQ — Why Does SharePoint Slow Down Over Time?</h2>
+
+  <div class="faq-content">
+
+    <h3>Short Answer</h3>
+    <p class="faq-lead">
+      SharePoint slows down over time due to growing data, unoptimized lists, and inefficient usage patterns.
+    </p>
+    <p>
+      Without proactive governance, even small systems can become slow and unreliable. 
+      Large lists, heavy metadata usage, and complex workflows all contribute to degraded performance.
+    </p>
+
+    <h3>Why This Question Comes Up</h3>
+    <p>Teams notice slowdowns because:</p>
+    <ul>
+      <li>Lists and libraries exceed 5,000–30,000 items</li>
+      <li>Metadata, lookups, and calculated columns are overused</li>
+      <li>Multiple workflows, alerts, and automations operate on the same data</li>
+      <li>Concurrent user activity increases without monitoring</li>
+    </ul>
+    <p class="faq-warning">
+      What works at small scale often becomes a bottleneck as usage grows.
+    </p>
+
+    <h3>Key Technical Limits</h3>
+    <ol>
+      <li><strong>List View Thresholds</strong> — exceeding 5,000 items per view can slow filtering and sorting.</li>
+      <li><strong>API & Throttling</strong> — high-volume operations may trigger throttling errors.</li>
+      <li><strong>Metadata Overhead</strong> — excessive lookups, calculated fields, and managed metadata impact load times.</li>
+      <li><strong>Search Indexing</strong> — large libraries take longer to index, delaying search results.</li>
+    </ol>
+
+    <h3>Common Causes of Slowdowns</h3>
+    <div class="faq-columns">
+      <div>
+        <h4>Data Growth</h4>
+        <ul>
+          <li>Large lists exceeding view thresholds</li>
+          <li>Complex nested folders</li>
+          <li>Unindexed columns causing slow queries</li>
+        </ul>
+      </div>
+      <div>
+        <h4>Workflows & Automations</h4>
+        <ul>
+          <li>Excessive Flow / Power Automate triggers</li>
+          <li>Alerts on high-volume lists</li>
+          <li>Event receivers running on every update</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Recommended Practices to Avoid Slowdowns</h3>
+    <ol class="faq-steps">
+      <li>Use indexes and filtered views for large lists</li>
+      <li>Archive old documents and metadata regularly</li>
+      <li>Minimize unnecessary workflows on large lists</li>
+      <li>Consider hybrid architectures (SharePoint + SQL / Azure Blob)</li>
+      <li>Monitor usage and set alerts for high-volume lists</li>
+    </ol>
+
+    <ul class="faq-benefits">
+      <li>Predictable performance</li>
+      <li>Reduced throttling errors</li>
+      <li>Faster search results</li>
+      <li>Better long-term maintainability</li>
+    </ul>
+
+    <h3>Performance Comparison</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Scenario</th>
+            <th>SharePoint</th>
+            <th>SQL / Optimized Storage</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>List view with 1k items</td><td>Instant / OK</td><td>Instant</td></tr>
+          <tr><td>List view with 10k items</td><td>Slow (~2–5s)</td><td>Instant</td></tr>
+          <tr><td>List view with 50k+ items</td><td>Often fails / throttled</td><td>Instant / Indexed</td></tr>
+          <tr><td>Concurrent users (50+)</td><td>Throttling likely</td><td>Scales normally</td></tr>
+          <tr><td>Aggregations / COUNT / GROUP BY</td><td>Not viable</td><td>Fast</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Final Answer</h3>
+    <p class="faq-conclusion">
+      SharePoint slows down over time due to data growth, workflows, and architectural limitations. 
+      Planning, indexing, and hybrid storage architectures prevent long-term performance degradation.
+    </p>
+
+    <blockquote class="faq-quote">
+      “SharePoint works best when it’s small and focused. Scale requires governance, optimization, and sometimes hybrid solutions.”
+    </blockquote>
+
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <h2>Contact Us</h2>
+  <p>Call or email today for a technical consultation. Enterprise bottlenecks won’t fix themselves.</p>
+  <div class="contact-box">
+    <div>
+      <img src="./../../assets/images/SpeedUpSharePointLogoSquare.png"
+           alt="Speed Up SharePoint" onclick="scrollToHero()">
+    </div>
+    <div>
+      <a href="tel:+18182091548">
+        <i class="fas fa-phone"></i><br>
+        (818) 209-1548
+      </a>
+    </div>
+    <div>
+      <a href="mailto:support@speedupsharepoint.com">
+        <i class="fas fa-envelope"></i><br>
+        support@speedupsharepoint.com
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  © 2025 <span onclick="scrollToHero()">Speed Up SharePoint</span>. All Rights Reserved.
+  <a href="https://www.linkedin.com/in/michael-harootoonyan-b77064313/"
+     target="_blank" rel="noopener">
+    <i class="fab fa-linkedin"></i>
+  </a>
+  <span>Principal Architect</span>
+
+  <div class="trust-signals">
+    <span>Security-first architecture</span>
+    <span>Enterprise-scale delivery</span>
+    <span>NDA available upon request</span>
+  </div>
+</footer>
+
+<script src="./../../assets/js/main.js"></script>
+</body>
+</html>

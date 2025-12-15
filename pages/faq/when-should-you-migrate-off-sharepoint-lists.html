@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-<title>SharePoint Performance & Architecture FAQs | Speed Up SharePoint</title>
-<meta name="description" content="Frequently asked questions about SharePoint performance, list limits, database usage, and hybrid SharePoint–SQL architectures for enterprise systems.">
+<title>When Should You Migrate Off SharePoint Lists? | Speed Up SharePoint</title>
+<meta name="description" content="Learn when it’s time to migrate from SharePoint lists to a proper database or hybrid architecture. Discover the warning signs, limitations, and best practices for large-scale enterprise environments.">
 <meta name="robots" content="index, follow">
 
 <meta name="theme-color" content="#011021">
@@ -31,7 +31,6 @@
 <link rel="stylesheet" href="./../../assets/css/font-awesome-6.4.0-all.min.css">
 <link rel="stylesheet" href="./../../assets/css/style.css">
 <link rel="stylesheet" href="./../../assets/css/faq.css">
-<link rel="stylesheet" href="./../../assets/css/accordion.css">
 </head>
 
 <body>
@@ -45,8 +44,8 @@
     <a href="#services">Services</a>
     <a href="#experience">Experience</a>
     <a href="#use-case">Use Case</a>
-    <a href="#principles">Principles</a>
     <a href="/pages/faq/">FAQ</a>
+    <a href="#principles">Principles</a>
     <a href="#contact">Contact</a>
   </nav>
 </div>
@@ -66,9 +65,9 @@
 
 <!-- Hero -->
 <header id="home">
-  <h1>SharePoint Performance & Architecture FAQs | Speed Up SharePoint</h1>
+  <h1>When Should You Migrate Off SharePoint Lists?</h1>
   <p>
-    Frequently asked questions about SharePoint performance, list limits, database usage, and hybrid SharePoint–SQL architectures for enterprise systems.
+    SharePoint lists are convenient for small datasets and lightweight collaboration, but as usage scales, they may become a bottleneck. Learn the signs that it’s time to migrate to a more robust data platform and best practices for a smooth transition.
   </p>
   <a href="#contact" class="cta">Contact Us</a>
 </header>
@@ -77,85 +76,81 @@
 <section class="cta-section">
   <div class="cta-container">
     <p class="cta-text">
-      Enterprise teams typically see measurable performance gains within weeks.
-      Schedule a technical review to identify architectural bottlenecks and next steps.
+      Enterprise teams often see performance and reliability gains within weeks after migrating critical data from SharePoint lists to a proper database. Schedule a technical review to evaluate your SharePoint environment and plan an optimal architecture.
     </p>
-
     <a href="#contact" class="cta-button">
       Schedule Technical Review
     </a>
   </div>
 </section>
 
-<!-- Accordion -->
-<section id="accordion-section" class="accordion">
-  <h2>Frequently Asked Questions</h2>
+<!-- FAQ Content -->
+<section id="faq">
+  <h2>FAQ — When Should You Migrate Off SharePoint Lists?</h2>
 
-  <!-- Can SharePoint Be Used as a Database? Pros, Limits & Best Practices -->
-  <div class="accordion-item">
-    <div class="accordion-header active">
-      Can SharePoint Be Used as a Database? Pros, Limits & Best Practices
-      <i class="fas fa-chevron-down"></i>
-    </div>
-    <div class="accordion-content">
-      <p>
-        SharePoint is a collaboration and document management platform. Using it as a database can lead to performance, reliability, and architectural issues at scale. While SharePoint Lists allow structured data, they are not optimized for large datasets, complex queries, or reporting.
-      </p>
-      <a href="/pages/faq/can-sharepoint-be-used-as-a-database.html" class="learn-more">
-        Learn more
-      </a>
-    </div>
-  </div>
+  <div class="faq-content">
 
-  <!-- Why Does SharePoint Slow Down Over Time? -->
-  <div class="accordion-item">
-    <div class="accordion-header">
-      Why Does SharePoint Slow Down Over Time?
-      <i class="fas fa-chevron-down"></i>
-    </div>
-    <div class="accordion-content">
-      <p>
-        Learn the root causes of SharePoint performance degradation and best practices to keep your environment fast, scalable, and reliable.
-      </p>
-      <a href="/pages/faq/why-does-sharepoint-slow-down-over-time.html" class="learn-more">
-        Learn more
-      </a>
-    </div>
-  </div>
-
-  <!-- When Should You Migrate Off SharePoint Lists? -->
-  <div class="accordion-item">
-    <div class="accordion-header">
-      When Should You Migrate Off SharePoint Lists?
-      <i class="fas fa-chevron-down"></i>
-    </div>
-    <div class="accordion-content">
-      <p>
-        SharePoint lists are convenient for small-scale collaboration, but as datasets grow or relational/analytical requirements increase, migration to a proper database or hybrid architecture becomes necessary. Look for signs like slow queries, frequent throttling, or complex reporting needs.
-      </p>
-      <a href="/pages/faq/when-should-you-migrate-off-sharepoint-lists.html" class="learn-more">
-        Learn more
-      </a>
-    </div>
-  </div>
-
-  <!-- Why Does SharePoint Break at 50k Items? -->
-  <div class="accordion-item">
-  <div class="accordion-header">
-    Why Does SharePoint Break at 50k Items?
-    <i class="fas fa-chevron-down"></i>
-  </div>
-  <div class="accordion-content">
-    <p>
-      Learn why SharePoint experiences performance issues around 50,000 items, the technical limits behind it, and strategies to avoid throttling and slowdowns.
+    <h3>Short Answer</h3>
+    <p class="faq-lead">
+      There is no strict threshold, but consider migrating if you routinely exceed a few thousand list items, experience slow queries or views, or need complex reporting or relational data.
     </p>
-    <a href="/pages/faq/why-does-sharepoint-break-at-50k-items.html" class="learn-more">
-      Learn more
-    </a>
-  </div>
-</div>
 
-  <!-- Add more accordion items as needed -->
+    <h3>Why This Question Comes Up</h3>
+    <p>
+      Many teams start with SharePoint lists because they are quick to deploy, free with Microsoft 365, and integrate with collaboration workflows. Problems arise when usage grows beyond intended scale.
+    </p>
+
+    <h3>Common Symptoms of Overuse</h3>
+    <ul>
+      <li>Views regularly exceed 5,000 items</li>
+      <li>Frequent throttling errors or failed background jobs</li>
+      <li>Slow page loads or search queries</li>
+      <li>Difficulty enforcing relational integrity or aggregating data</li>
+    </ul>
+
+    <h3>Recommended Architecture When Exceeding Limits</h3>
+    <ul>
+      <li>Keep SharePoint for document storage and collaboration metadata</li>
+      <li>Move structured, high-volume data to SQL Database, Azure SQL, or Dataverse</li>
+      <li>Use hybrid queries to merge SharePoint and database data for reporting and UI</li>
+    </ul>
+
+    <h3>Advantages of Migration</h3>
+    <ul>
+      <li>Predictable query performance</li>
+      <li>Scalable APIs for enterprise apps</li>
+      <li>Robust reporting and analytics</li>
+      <li>Reduced risk of throttling and downtime</li>
+    </ul>
+
+    <h3>When to Migrate Immediately</h3>
+    <ul>
+      <li>Public-facing applications</li>
+      <li>Mission-critical dashboards</li>
+      <li>APIs consumed by multiple systems</li>
+      <li>Large datasets (10,000+ records or rapidly growing)</li>
+      <li>Complex relational requirements</li>
+    </ul>
+
+    <h3>Migration Best Practices</h3>
+    <ul>
+      <li>Plan incremental migration to avoid disruption</li>
+      <li>Keep SharePoint for collaboration-focused content</li>
+      <li>Establish proper indexing and relational schema in the database</li>
+      <li>Test queries and reports in a staging environment</li>
+      <li>Implement ongoing monitoring and performance tuning</li>
+    </ul>
+
+    <h3>Final Answer</h3>
+    <p class="faq-conclusion">
+      SharePoint lists are not a long-term solution for high-volume or relational data. Migration should be considered proactively based on usage patterns, performance metrics, and the business-critical nature of the data.
+    </p>
+
+    <blockquote class="faq-quote">
+      “SharePoint lists are great for lightweight collaboration, but high-volume or relational data belongs in a database. Migrating at the right time avoids performance headaches and ensures reliability.”
+    </blockquote>
+
+  </div>
 </section>
 
 <!-- Contact -->
@@ -199,7 +194,5 @@
 </footer>
 
 <script src="./../../assets/js/main.js"></script>
-<!-- Accordion JS -->
-<script src="./../../assets/js/accordion.js"></script>
 </body>
 </html>
