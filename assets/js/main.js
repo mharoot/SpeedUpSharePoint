@@ -25,22 +25,6 @@ function scrollToHero() {
   closeMenu();
 }
 
-// Wait for the DOM to load before executing DOM manipulation logic
-document.addEventListener("DOMContentLoaded", function () {
-  // Determine the base path for GitHub Pages
-  let basePath = "/"; // Default for localhost
-
-  if (window.location.hostname === "mharoot.github.io") {
-    // If on GitHub Pages, set the correct base path
-    basePath = "/SpeedUpSharePoint/";
-    const base = document.getElementById('dynamic-base');
-    if (base) {
-      base.setAttribute('href', basePath);
-    }
-  }
-
-  console.log("Base Path: ", basePath); // Log basePath for debugging
-
   // Utility function to update links for GitHub Pages or localhost
   function updateLinks() {
     // Update all links with hrefs starting with /pages/faq/ to use the basePath
@@ -55,8 +39,6 @@ document.addEventListener("DOMContentLoaded", function () {
       link.setAttribute("href", basePath + path.substring(1));  // Add basePath for all root-relative links
     });
   }
-
-  updateLinks();
 
   // Sidebar & Menu toggling functionality
   const sidebar = document.getElementById("sidebar");
@@ -74,6 +56,28 @@ document.addEventListener("DOMContentLoaded", function () {
     overlay.classList.remove("show");
     toggleBtn.textContent = "☰";
   }
+
+
+
+
+
+// Wait for the DOM to load before executing DOM manipulation logic
+document.addEventListener("DOMContentLoaded", function () {
+  // Determine the base path for GitHub Pages
+  let basePath = "/"; // Default for localhost
+
+  if (window.location.hostname === "mharoot.github.io") {
+    // If on GitHub Pages, set the correct base path
+    basePath = "/SpeedUpSharePoint/";
+    const base = document.getElementById('dynamic-base');
+    if (base) {
+      base.setAttribute('href', basePath);
+    }
+  }
+
+  console.log("Base Path: ", basePath); // Log basePath for debugging
+
+   updateLinks();
 
   toggleBtn.addEventListener("click", () => {
     sidebar.classList.contains("open") ? closeMenu() : openMenu();
