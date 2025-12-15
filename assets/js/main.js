@@ -103,6 +103,48 @@ document.querySelectorAll('a[href^="/pages/faq/"]').forEach(link => {
   link.addEventListener("click", function(e) {
     e.preventDefault();
     const href = link.getAttribute("href");
-    window.location.href = window.location.origin + basePath + href.substring(1);
+
+    // Check if href already contains basePath
+    if (!href.startsWith(basePath)) {
+      window.location.href = window.location.origin + basePath + href.substring(1);
+    } else {
+      window.location.href = window.location.origin + href;  // Already correct path
+    }
   });
 });
+
+// Update asset paths (favicons, js, css)
+function updateAssets() {
+  // Favicons
+  const favicons = [
+    'favicon-16x16.png', 'favicon-32x32.png', 'favicon-96x96.png', 
+    'favicon-128.png', 'favicon-196x196.png', 'favicon.ico'
+  ];
+  
+  favicons.forEach(favicon => {
+    const link = document.querySelector(`link[rel="icon"][href="assets/images/${favicon}"]`);
+    if (link) {
+      link.setAttribute('href', basePath + 'assets/images/' + favicon);
+    }
+  });
+
+  // JavaScript files
+  const jsFiles = ['main.js'];
+  jsFiles.forEach(jsFile => {
+    const script = document.querySelector(`script[src="assets/js/${jsFile}"]`);
+    if (script) {
+      script.setAttribute('src', basePath + 'assets/js/' + jsFile);
+    }
+  });
+
+  // CSS files
+  const cssFiles = ['style.css'];
+  cssFiles.forEach(cssFile => {
+    const link = document.querySelector(`link[href="assets/css/${cssFile}"]`);
+    if (link) {
+      link.setAttribute('href', basePath + 'assets/css/' + cssFile);
+    }
+  });
+}
+
+updateAssets();
