@@ -104,9 +104,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const h = document.querySelector(".topbar").offsetHeight;
         window.scrollTo({ top: target.offsetTop - h, behavior: "smooth" });
         closeMenu();
-
-        // Update the URL fragment
-        history.pushState(null, null, basePath + anchor); // Change URL without reload
         return;
       }
 
@@ -118,9 +115,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const h = document.querySelector(".topbar").offsetHeight;
         window.scrollTo({ top: target.offsetTop - h, behavior: "smooth" });
         closeMenu();
-
-        // Update the URL fragment dynamically
-        history.pushState(null, null, basePath + anchor); // Change URL without reload
       } else {
         // Not on homepage: redirect with hash
         window.location.href = window.location.origin + basePath + anchor;
@@ -143,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  // Update asset paths (favicons, js, css, site.webmanifest)
+  // Update asset paths (favicons, js, css)
   function updateAssets() {
     // Favicons
     const favicons = [
@@ -181,14 +175,6 @@ document.addEventListener("DOMContentLoaded", function () {
         link.setAttribute('href', newHref);
       }
     });
-
-    // Update the site.webmanifest path
-    const manifest = document.querySelector('link[rel="manifest"]');
-    if (manifest) {
-      const newHref = basePath + 'site.webmanifest'; // Ensure correct path
-      console.log(`Updating site.webmanifest to ${newHref}`); // Log for debugging
-      manifest.setAttribute('href', newHref);
-    }
   }
 
   updateAssets();
