@@ -1,15 +1,34 @@
+// Determine the base path for GitHub Pages
+let basePath = "/"; // Default for localhost
+
+if (window.location.hostname === "mharoot.github.io") {
+  // If on GitHub Pages, set the correct base path
+  basePath = "/SpeedUpSharePoint/";
+  const base = document.getElementById('dynamic-base');
+  base.setAttribute('href', basePath);
+}
+
+// Utility function to update links for GitHub Pages or localhost
+function updateLinks() {
+  // Update all links with hrefs starting with /pages/faq/ to use the basePath
+  document.querySelectorAll('a[href^="/pages/faq/"]').forEach(link => {
+    const path = link.getAttribute("href");
+    link.setAttribute("href", basePath + path.substring(1));  // Fix links dynamically
+  });
+
+  // Update any other relative links based on basePath
+  document.querySelectorAll('a[href^="/"]').forEach(link => {
+    const path = link.getAttribute("href");
+    link.setAttribute("href", basePath + path.substring(1));  // Add basePath for all root-relative links
+  });
+}
+
+updateLinks();
+
+// Sidebar & Menu toggling functionality
 const sidebar = document.getElementById("sidebar");
 const overlay = document.getElementById("overlay");
 const toggleBtn = document.getElementById("menuToggle");
-
-// Determine base path
-let basePath = "/"; // default for localhost
-if (window.location.hostname === "mharoot.github.io") {
-    // Set <base> for GitHub Pages project site
-    const base = document.getElementById('dynamic-base');
-    base.setAttribute('href', '/SpeedUpSharePoint/');
-    basePath = "/SpeedUpSharePoint/"; // use this for all links
-}
 
 function openMenu() {
   sidebar.classList.add("open");
@@ -28,6 +47,7 @@ toggleBtn.addEventListener("click", () => {
 });
 overlay.addEventListener("click", closeMenu);
 
+// Scroll to Hero section logic
 function scrollToHero() {
   if (window.location.pathname !== basePath) {
     window.location.href = window.location.origin + basePath;
@@ -47,7 +67,7 @@ function scrollToHero() {
   closeMenu();
 }
 
-// Handle all anchor links
+// Handle anchor links with smooth scrolling or redirect
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener("click", e => {
     e.preventDefault();
@@ -75,5 +95,14 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
       // Not on homepage: redirect with hash
       window.location.href = window.location.origin + basePath + anchor;
     }
+  });
+});
+
+// Handling redirect on FAQ link based on basePath
+document.querySelectorAll('a[href^="/pages/faq/"]').forEach(link => {
+  link.addEventListener("click", function(e) {
+    e.preventDefault();
+    const href = link.getAttribute("href");
+    window.location.href = window.location.origin + basePath + href.substring(1);
   });
 });
