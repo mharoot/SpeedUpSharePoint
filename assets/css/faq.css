@@ -1,0 +1,121 @@
+/* FAQ */
+#faq {
+  background: #ffffff;
+}
+
+.faq-content {
+  max-width: 900px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.faq-lead {
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+
+.faq-warning {
+  font-style: italic;
+  color: #7c2d12;
+  margin-top: 10px;
+}
+
+.faq-columns {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  margin: 30px 0;
+}
+
+@media (max-width: 768px) {
+  .faq-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+.faq-steps {
+  margin-left: 24px;
+}
+
+.faq-benefits {
+  margin-top: 16px;
+  font-weight: 500;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  margin: 30px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+th, td {
+  border: 1px solid #e5e7eb;
+  padding: 12px;
+  text-align: left;
+}
+
+th {
+  background: var(--primary);
+  color: var(--secondary);
+}
+
+.faq-danger li {
+  font-weight: 600;
+  color: #7c2d12;
+}
+
+.faq-conclusion {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.faq-quote {
+  margin-top: 30px;
+  padding-left: 20px;
+  border-left: 4px solid var(--primary);
+  font-style: italic;
+  color: #374151;
+}
+
+
+#faq ul, #faq ol{
+    margin-left:40px;
+}
+
+
+/* Performance comparison table */
+.table-wrapper table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.95rem;
+}
+
+.table-wrapper th,
+.table-wrapper td {
+  border: 1px solid #ddd;
+  padding: 0.6em 1em;
+  text-align: left;
+}
+
+.table-wrapper th {
+  background-color: #011021;
+  color: #fff;
+  font-weight: 600;
+}
+
+.table-wrapper tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table-wrapper tbody tr:hover {
+  background-color: #e0e0e0;
+}
+
+#faq h3{ margin-top:32px;}
+#faq h4{ margin:0px;}

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<title>Can SharePoint Be Used as a Database? Pros, Limits & Best Practices</title>
+<meta name="description" content="Can SharePoint be used as a database? Learn when SharePoint lists work well, their limitations, performance considerations, and when Azure SQL is a better choice.">
+<meta name="robots" content="index, follow">
+
+<meta name="theme-color" content="#011021">
+
+
+<!-- Favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="./../../assets/images/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="./../../assets/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="./../../assets/images/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="128x128" href="./../../assets/images/favicon-128.png">
+<link rel="icon" type="image/png" sizes="196x196" href="./../../assets/images/favicon-196x196.png">
+
+<link rel="shortcut icon" href="./../../assets/images/favicon.ico">
+
+<meta property="og:image" content="https://mharoot.github.io/SpeedUpSharePoint/assets/images/SpeedUpSharePointLogoSquare.png">
+<meta property="og:image:width" content="382">
+<meta property="og:image:height" content="382">
+
+<meta name="application-name" content="Speed Up SharePoint">
+<meta name="msapplication-TileColor" content="#011021">
+<meta name="msapplication-TileImage" content="./../../assets/images/mstile-144x144.png">
+
+<link rel="manifest" href="./../../assets/images/site.webmanifest">
+
+<link rel="stylesheet" href="./../../assets/css/font-awesome-6.4.0-all.min.css">
+<link rel="stylesheet" href="./../../assets/css/style.css">
+<link rel="stylesheet" href="./../../assets/css/faq.css">
+</head>
+
+<body>
+
+<!-- Topbar -->
+<div class="topbar">
+  <img src="./../../assets/images/SpeedUpSharePointLogoRectangle.png" alt="Speed Up SharePoint" onclick="scrollToHero()">
+  <button id="menuToggle" class="menu-toggle">☰</button>
+  <nav class="topnav">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#experience">Experience</a>
+    <a href="#use-case">Use Case</a>
+    <a href="/pages/faq/">FAQ</a>
+    <a href="#principles">Principles</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</div>
+
+<div id="overlay" class="overlay"></div>
+
+<div id="sidebar" class="sidebar">
+  <img src="./../../assets/images/SpeedUpSharePointLogoRectangle.png" class="sidebar-logo" onclick="scrollToHero()">
+  <a href="#about">About</a>
+  <a href="#services">Services</a>
+  <a href="#experience">Experience</a>
+  <a href="#use-case">Use Case</a>
+  <a href="/pages/faq/">FAQ</a>
+  <a href="#principles">Principles</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<!-- Hero -->
+<header id="home">
+  <h1>Can SharePoint Be Used as a Database? Pros, Limits & Best Practices</h1>
+  <p>
+    Learn when SharePoint lists work well, their limitations, performance considerations, and when Azure SQL is a better choice.
+  </p>
+  <a href="#contact" class="cta">Contact Us</a>
+</header>
+
+<section class="cta-section">
+  <div class="cta-container">
+    <p class="cta-text">
+      Enterprise teams typically see measurable performance gains within weeks.
+      Schedule a technical review to identify architectural bottlenecks and next steps.
+    </p>
+
+    <a href="#contact" class="cta-button">
+      Schedule Technical Review
+    </a>
+  </div>
+</section>
+
+
+
+<!-- FAQ -->
+<section id="faq">
+  <h2>FAQ — Can SharePoint Be Used as a Database?</h2>
+
+  <div class="faq-content">
+
+    <h3>Short Answer</h3>
+    <p class="faq-lead">
+      <strong>No.</strong> SharePoint should not be used as a database.
+      It is a collaboration and document management platform — not a
+      transactional or analytical data store.
+    </p>
+    <p>
+      You can store structured data in SharePoint Lists, but doing so at scale
+      introduces performance, reliability, and architectural risks that grow over time.
+    </p>
+
+    <h3>Why This Question Comes Up</h3>
+    <p>Many teams start using SharePoint Lists as a database because:</p>
+    <ul>
+      <li>It’s already licensed</li>
+      <li>It’s easy to create lists quickly</li>
+      <li>It supports columns, loose relationships, and attachments</li>
+      <li>It works “well enough” at small scale</li>
+    </ul>
+    <p class="faq-warning">
+      What works at 1,000 rows often collapses at 50,000+ rows.
+    </p>
+
+    <h3>What SharePoint Is Actually Designed For</h3>
+    <div class="faq-columns">
+      <div>
+        <h4>SharePoint Excels At</h4>
+        <ul>
+          <li>Document storage and versioning</li>
+          <li>Collaboration workflows</li>
+          <li>Metadata tagging and search</li>
+          <li>Permissions and compliance</li>
+          <li>Content-centric experiences</li>
+        </ul>
+      </div>
+      <div>
+        <h4>SharePoint Does <em>Not</em> Excel At</h4>
+        <ul>
+          <li>High-volume structured data</li>
+          <li>Complex querying</li>
+          <li>Aggregations and reporting</li>
+          <li>Transactional integrity</li>
+          <li>Predictable performance at scale</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>The Recommended Architecture (Instead)</h3>
+    <ol class="faq-steps">
+      <li>Keep files in SharePoint (private, permissioned assets)</li>
+      <li>Extract metadata and thumbnails into a real database</li>
+      <li>Query the database for UI, APIs, and reporting</li>
+      <li>Download files from SharePoint only when access-controlled</li>
+      <li>Use Blob Storage or on-prem storage for high-throughput or public assets</li>
+    </ol>
+
+    <ul class="faq-benefits">
+      <li>Fast queries</li>
+      <li>Scalable APIs</li>
+      <li>Clean separation of concerns</li>
+      <li>Lower long-term risk</li>
+    </ul>
+
+    <h3>SharePoint Lists vs SQL Databases</h3>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Capability</th>
+            <th>SharePoint Lists</th>
+            <th>SQL Database</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Intended use</td><td>Collaboration metadata</td><td>Structured data storage</td></tr>
+          <tr><td>Row count tolerance</td><td>~5,000–30,000 practical</td><td>Millions+</td></tr>
+          <tr><td>Query performance</td><td>Degrades quickly</td><td>Predictable & indexed</td></tr>
+          <tr><td>Joins</td><td>Limited / awkward</td><td>Native & efficient</td></tr>
+          <tr><td>Aggregations</td><td>Slow / restricted</td><td>Fast</td></tr>
+          <tr><td>Transactions</td><td>None</td><td>ACID-compliant</td></tr>
+          <tr><td>API reliability</td><td>Throttled</td><td>Stable</td></tr>
+          <tr><td>Schema evolution</td><td>Painful</td><td>Controlled</td></tr>
+          <tr><td>Reporting</td><td>Weak</td><td>Strong</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Key Technical Limits of SharePoint Lists</h3>
+    <ol>
+      <li><strong>List View Threshold</strong> — 5,000 items per view is a hard boundary</li>
+      <li><strong>API Throttling</strong> — background jobs fail unpredictably</li>
+      <li><strong>No True Relationships</strong> — lookups are not joins</li>
+      <li><strong>Poor Query Patterns</strong> — no grouping, windowing, or complex sorting</li>
+    </ol>
+
+    <h3>When SharePoint Lists Are Acceptable</h3>
+    <ul>
+      <li>Fewer than ~2,000–5,000 items</li>
+      <li>Simple filters only</li>
+      <li>No joins or aggregations</li>
+      <li>Human-driven usage</li>
+      <li>No performance guarantees</li>
+    </ul>
+
+    <h3>When You Should Use SQL</h3>
+    <ul class="faq-danger">
+      <li>More than 10,000 records</li>
+      <li>Public-facing applications</li>
+      <li>APIs consumed by multiple systems</li>
+      <li>Reporting or dashboards</li>
+      <li>Business-critical performance</li>
+    </ul>
+
+    <h3>Performance Comparison: SharePoint vs SQL</h3>
+<p>
+  Real-world, order-of-magnitude metrics for filtering, sorting, and searching multiple columns at scale.
+  SharePoint Lists degrade quickly as row counts increase, while SQL databases remain predictable and indexed.
+</p>
+
+<div class="table-wrapper">
+  <table>
+    <thead>
+      <tr>
+        <th>Operation / Scenario</th>
+        <th>SharePoint List</th>
+        <th>SQL Database</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Filter 1 indexed column (1k rows)</td><td>~100–300 ms</td><td>~5–15 ms</td></tr>
+      <tr><td>Filter 3 columns (5k rows)</td><td>~300–800 ms</td><td>~10–25 ms</td></tr>
+      <tr><td>Filter 5 columns (10k rows)</td><td>1–3 seconds</td><td>~15–40 ms</td></tr>
+      <tr><td>Filter + sort (20k rows)</td><td>3–8 seconds</td><td>~20–60 ms</td></tr>
+      <tr><td>Text search (non-indexed)</td><td>Often unusable</td><td>~30–80 ms</td></tr>
+      <tr><td>Aggregation (COUNT, GROUP BY)</td><td>Not viable</td><td>~20–100 ms</td></tr>
+      <tr><td>Concurrent users (50+)</td><td>Throttling likely</td><td>Normal</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+    <h3>Final Answer</h3>
+    <p class="faq-conclusion">
+      SharePoint is not a database. It should not be treated like one.
+      The correct architecture is <strong>hybrid</strong>, not all-in-SharePoint.
+    </p>
+
+    <blockquote class="faq-quote">
+      “SharePoint stores files well. Databases store data well.
+      Mixing the two creates long-term risk.”
+    </blockquote>
+
+  </div>
+</section>
+
+
+
+
+<!-- Contact -->
+<section id="contact">
+  <h2>Contact Us</h2>
+  <p>Call or email today for a technical consultation. Enterprise bottlenecks won’t fix themselves.</p>
+  <div class="contact-box">
+    <div>
+      <img src="./../../assets/images/SpeedUpSharePointLogoSquare.png"
+           alt="Speed Up SharePoint" onclick="scrollToHero()">
+    </div>
+    <div>
+      <a href="tel:+18182091548">
+        <i class="fas fa-phone"></i><br>
+        (818) 209-1548
+      </a>
+    </div>
+    <div>
+      <a href="mailto:support@speedupsharepoint.com">
+        <i class="fas fa-envelope"></i><br>
+        support@speedupsharepoint.com
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  © 2025 <span onclick="scrollToHero()">Speed Up SharePoint</span>. All Rights Reserved.
+  <a href="https://www.linkedin.com/in/michael-harootoonyan-b77064313/"
+     target="_blank" rel="noopener">
+    <i class="fab fa-linkedin"></i>
+  </a>
+  <span>Principal Architect</span>
+
+  <div class="trust-signals">
+    <span>Security-first architecture</span>
+    <span>Enterprise-scale delivery</span>
+    <span>NDA available upon request</span>
+  </div>
+
+</footer>
+
+<script src="./../../assets/js/main.js"></script>
+</body>
+</html>
