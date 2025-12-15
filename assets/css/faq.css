@@ -83,7 +83,7 @@ th {
 }
 
 
-#faq ul, #faq ol{
+#faq ul, #faq ol, #content ul, #content ol{
     margin-left:40px;
 }
 
@@ -119,3 +119,5 @@ th {
 
 #faq h3{ margin-top:32px;}
 #faq h4{ margin:0px;}
+#content h3{ margin-top:32px;}
+#content h4 { margin:0px;}

@@ -2,6 +2,11 @@ const sidebar = document.getElementById("sidebar");
 const overlay = document.getElementById("overlay");
 const toggleBtn = document.getElementById("menuToggle");
 
+if (window.location.hostname === "mharoot.github.io") {
+    const base = document.getElementById('dynamic-base');
+    base.setAttribute('href', '/SpeedUpSharePoint/')
+}
+
 function openMenu() {
   sidebar.classList.add("open");
   overlay.classList.add("show");
