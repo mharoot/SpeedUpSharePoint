@@ -1,6 +1,9 @@
+// Determine the base path for GitHub Pages
+let basePath = "/"; // Default for localhost
+
 // Define the scrollToHero function globally
 function scrollToHero() {
-  let basePath = "/"; // Default for localhost
+  
   if (window.location.hostname === "mharoot.github.io") {
     // If on GitHub Pages, set the correct base path
     basePath = "/SpeedUpSharePoint/";
@@ -63,9 +66,6 @@ function scrollToHero() {
 
 // Wait for the DOM to load before executing DOM manipulation logic
 document.addEventListener("DOMContentLoaded", function () {
-  // Determine the base path for GitHub Pages
-  let basePath = "/"; // Default for localhost
-
   if (window.location.hostname === "mharoot.github.io") {
     // If on GitHub Pages, set the correct base path
     basePath = "/SpeedUpSharePoint/";
