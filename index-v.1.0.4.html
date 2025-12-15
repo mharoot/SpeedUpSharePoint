@@ -39,6 +39,7 @@
 
 <!-- Font Awesome -->
 <link rel="stylesheet" href="./assets/css/font-awesome-6.4.0-all.min.css">
+
 <link rel="stylesheet" href="./assets/css/style.css">
 
 </head>
@@ -69,127 +70,111 @@
   <a href="#contact">Contact</a>
 </div>
 
-<!-- Hero Section -->
 <header id="home">
   <h1>Enterprise SharePoint Performance, Done Right</h1>
   <p>
     We help enterprise teams eliminate SharePoint performance bottlenecks by
     designing secure, scalable hybrid architectures that actually perform at scale.
-    SharePoint lists, dashboards, and workflows run faster, reporting is reliable,
-    and sensitive data remains secure through fine-grained access controls.
   </p>
   <a href="#contact" class="cta">Contact Us</a>
 </header>
 
-<!-- About Section -->
 <section id="about">
   <h2>About</h2>
   <p>
     Speed Up SharePoint is a specialized consultancy focused on modernizing
-    SharePoint-heavy enterprise systems. SharePoint remains the UI and
-    collaboration layer while data, search, and reporting are moved into
-    secure, high-performance SQL-backed architectures. Solutions enable
-    fast filtering, reliable dashboards, and strict access control across
-    enterprise datasets.
-    Founded and led by Michael Harootoonyan, Principal Architect 
+    SharePoint-heavy enterprise systems. We retain SharePoint as the UI and
+    collaboration layer while moving data, search, and reporting into
+    secure, high-performance SQL-backed architectures. Founded and led by 
+    Michael Harootoonyan, Principal Architect 
     <a href="https://www.linkedin.com/in/michael-harootoonyan-b77064313/" target="_blank" rel="noopener">
       <i class="fab fa-linkedin"></i>
     </a>
   </p>
 </section>
 
-<!-- Services Section -->
+
 <section id="services">
   <h2>Services</h2>
   <div class="services-grid">
     <div class="service">
       <i class="fas fa-sitemap"></i>
       <h3>Architecture Review</h3>
-      <p>Deep analysis of SharePoint, SQL, search, and reporting bottlenecks. Identifies performance and security risks across enterprise environments.</p>
+      <p>Deep analysis of SharePoint, SQL, search, and reporting bottlenecks.</p>
     </div>
     <div class="service">
       <i class="fas fa-database"></i>
       <h3>Hybrid Modernization</h3>
-      <p>High-performance SharePoint–SQL architectures designed for scale. Retains SharePoint UI while offloading heavy operations to SQL.</p>
+      <p>High-performance SharePoint–SQL architectures designed for scale.</p>
     </div>
     <div class="service">
       <i class="fas fa-bolt"></i>
       <h3>Performance Optimization</h3>
-      <p>50–100× faster filtering, search, and analytics on large datasets. Ensures dashboards and operational workflows run reliably.</p>
+      <p>50–100× faster filtering, search, and analytics on large datasets.</p>
     </div>
     <div class="service">
       <i class="fas fa-chart-line"></i>
       <h3>Power BI Stability</h3>
-      <p>Reliable reporting pipelines backed by SQL and governed access, ensuring dashboards are accurate and scalable.</p>
+      <p>Reliable reporting pipelines backed by SQL and governed access.</p>
     </div>
     <div class="service">
       <i class="fas fa-shield-alt"></i>
       <h3>Security & Governance</h3>
-      <p>Azure Key Vault, Managed Identity, secure code practices, and WAF. Fine-grained access ensures sensitive data is protected.</p>
+      <p>Azure Key Vault, Managed Identity, secure code practices, and WAF.</p>
     </div>
     <div class="service">
       <i class="fas fa-chalkboard-teacher"></i>
       <h3>Mentoring & Training</h3>
-      <p>Guidance for development teams on SharePoint best practices, hybrid architecture, performance tuning, and secure design patterns.</p>
+      <p>Guidance for developers on SharePoint best practices, hybrid architecture, and performance tuning.</p>
     </div>
   </div>
 </section>
 
-<!-- Experience Section -->
 <section id="experience">
   <h2>Enterprise Experience</h2>
   <div class="experience">
     <strong>Houlihan Lokey</strong>
     <p>Designed and delivered hybrid SharePoint–SQL systems supporting
-       high-stakes M&A workflows, enterprise search, and secure document platforms. Implemented fine-grained access control, incremental sync, and high-performance dashboards.</p>
+       high-stakes M&A workflows, enterprise search, and secure document platforms.</p>
   </div>
 </section>
 
-<!-- Use Case Section -->
-<section id="use-case" style="background: #fafafa;">
+<section id="use-case">
   <h2>Use Case & SharePoint Analysis</h2>
   <div class="use-case">
     <h3>Filtering SharePoint Lists Efficiently</h3>
     <p>SharePoint can handle large lists (up to 30 million items) but has performance constraints:</p>
     <ul>
-      <li>List View Threshold: 5,000 items per view</li>
+      <li>List View Threshold: 5,000 items per view.</li>
       <li>Best Practices:
         <ul>
-          <li>Indexed Columns for frequently filtered data (Created, Status)</li>
-          <li>Filtered Views returning fewer than 5,000 items</li>
-          <li>Folders or Metadata Navigation</li>
-          <li>Modern Experience UI</li>
-          <li>Use Search, Power Platform, or external SQL for heavy queries</li>
+          <li>Indexed Columns for frequently filtered data (Created, Status).</li>
+          <li>Filtered Views returning fewer than 5,000 items.</li>
+          <li>Folders or Metadata Navigation.</li>
+          <li>Modern Experience UI.</li>
+          <li>Use Search or Power Platform for heavy queries.</li>
         </ul>
       </li>
     </ul>
 
-    <h3>Hybrid SharePoint–SQL Architecture</h3>
-    <p>
-      SharePoint is retained as the collaboration and UI layer, while performance-critical operations are offloaded to SQL.
-      Incremental sync via Azure Functions, Power Automate, or PnP PowerShell ensures up-to-date metadata without throttling.
-    </p>
+    <h3>Using a Database for Metadata</h3>
     <ul>
-      <li>Centralized Vault metadata service consolidates SharePoint metadata into SQL with dashboards, incremental sync, and ownership-based access</li>
-      <li>Fine-grained access control ensures bankers can securely share pitchbooks; private assets download from SharePoint, public assets from Blob Storage</li>
-      <li>Supports complex queries, joins, reporting, and BI integration for large datasets</li>
-      <li>Performance: 50–100× faster queries and filtering for large lists and datasets</li>
-      <li>Legacy modernization: PowerPresent2 (VB WinForms), PowerPresent3 (React + .NET 9), and Logo Architect (Blazor + .NET 9) access shared SQL + Vault backend for enterprise dashboards</li>
-      <li>Enterprise-grade security: SSO via Azure AD, Key Vault, Managed Identities, and WAF enforcement across all apps</li>
+      <li>SQL/External DB handles millions of records without throttling.</li>
+      <li>Supports complex joins, aggregations, reporting, and BI integration.</li>
+      <li>Use when datasets exceed 100k items, need heavy analytics, or complex relationships.</li>
     </ul>
 
+    <h3>Hybrid Strategy</h3>
+    <p>Keep SharePoint as the collaboration UI and sync metadata to SQL for performance-critical operations. Incremental sync can be implemented with Power Automate, Azure Functions, or PnP PowerShell.</p>
+
     <h3>Azure Blob & Large File Handling</h3>
-    <p>
-      Files larger than 100MB or enterprise assets are uploaded to SharePoint, triggering Azure Functions to process them to Blob Storage while keeping SharePoint as the UI.
-    </p>
+    <p>For files larger than 100MB or enterprise asset management, SharePoint triggers a webhook on upload/update, and an Azure Function processes the file to Blob Storage while maintaining SharePoint as the UI.</p>
   </div>
 </section>
 
-<!-- Contact Section -->
 <section id="contact">
   <h2>Contact Us</h2>
   <div class="contact-box">
-    <div> <img src="./assets/images/SpeedUpSharePointLogoSquare.png" alt="Speed Up SharePoint" onclick="scrollToHero()"></div>
     <div>
       <a href="tel:+18182091548">
         <i class="fas fa-phone"></i>
@@ -208,13 +193,13 @@
       <a href="https://www.linkedin.com/in/michael-harootoonyan-b77064313/" target="_blank" rel="noopener">
         <i class="fab fa-linkedin"></i>
         <br>
-        Principal Architect
+        Founded and led by Michael Harootoonyan, Principal Architect
       </a>
     </div>
   </div>
 </section>
 
-<!-- Footer -->
+
 <footer>
   © 2025 Speed Up SharePoint. All Rights Reserved.
 </footer>
