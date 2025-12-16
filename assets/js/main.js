@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (manifest) manifest.setAttribute('href', basePath + 'assets/images/site.webmanifest');
   
     // Hero background image done in css
-    const heroSection = document.getElementById('hero');
+    const heroSection = document.getElementById('home');
     if (heroSection) 
     {
         heroSection.style = 'background-image:linear-gradient(rgba(0, 0, 0, 0.55),rgba(0, 0, 0, 0.55)),url("/SpeedUpSharePoint/assets/images/speed-up-sharepoint-hero-image.jpg")';
