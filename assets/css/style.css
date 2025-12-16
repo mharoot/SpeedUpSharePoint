@@ -619,12 +619,12 @@ header#home {
   align-items: center;
   text-align: center;
 
-  background-image:
+  /* background-image:
     linear-gradient(
       rgba(0, 0, 0, 0.55),
       rgba(0, 0, 0, 0.55)
     ),
-    url("/assets/images/speed-up-sharepoint-hero-image.jpg");
+    url("/assets/images/speed-up-sharepoint-hero-image.jpg"); */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

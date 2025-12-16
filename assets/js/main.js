@@ -157,7 +157,15 @@ document.addEventListener("DOMContentLoaded", function () {
   
     // Hero background image done in css
     const heroSection = document.getElementById('hero');
-    if (heroSection) heroSection.style = 'background-image:linear-gradient(rgba(0, 0, 0, 0.55),rgba(0, 0, 0, 0.55)),url("/assets/images/speed-up-sharepoint-hero-image.jpg")';
+    if (heroSection) 
+    {
+        heroSection.style = 'background-image:linear-gradient(rgba(0, 0, 0, 0.55),rgba(0, 0, 0, 0.55)),url("/SpeedUpSharePoint/assets/images/speed-up-sharepoint-hero-image.jpg")';
+        if (basePath === "/") 
+        {
+            heroSection.style = 'background-image:linear-gradient(rgba(0, 0, 0, 0.55),rgba(0, 0, 0, 0.55)),url("/assets/images/speed-up-sharepoint-hero-image.jpg")';
+        }
+    }
+      
   }
 
   updateAssets();
