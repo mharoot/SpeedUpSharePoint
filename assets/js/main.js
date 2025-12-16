@@ -2,8 +2,6 @@
 let basePath = "/"; // Default for localhost
 if (window.location.hostname === "mharoot.github.io") {
   basePath = "/SpeedUpSharePoint/";
-  var heroSection = document.getElementById('hero');
-  heroSection.style = 'background-image:linear-gradient(rgba(0, 0, 0, 0.55),rgba(0, 0, 0, 0.55)),url("/assets/images/speed-up-sharepoint-hero-image.jpg")';
 }
 
 // Define the scrollToHero function globally
@@ -156,6 +154,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // Manifest
     const manifest = document.querySelector('link[rel="manifest"]');
     if (manifest) manifest.setAttribute('href', basePath + 'assets/images/site.webmanifest');
+  
+    // Hero background image done in css
+    const heroSection = document.getElementById('hero');
+    if (heroSection) heroSection.style = 'background-image:linear-gradient(rgba(0, 0, 0, 0.55),rgba(0, 0, 0, 0.55)),url("/assets/images/speed-up-sharepoint-hero-image.jpg")';
   }
 
   updateAssets();
