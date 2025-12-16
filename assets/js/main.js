@@ -6,6 +6,32 @@ if (window.location.hostname === "mharoot.github.io") {
 
 // Define the scrollToHero function globally
 function scrollToHero() {
+  if (window.location.hostname === "mharoot.github.io") {
+    // If on GitHub Pages, set the correct base path
+    basePath = "/SpeedUpSharePoint/";
+  }
+
+  if (window.location.pathname !== basePath) {
+    window.location.href = window.location.origin + basePath;
+    return;
+  }
+
+  const topbar = document.querySelector(".topbar");
+  const home = document.getElementById("home");
+  if (!topbar || !home) return;
+
+  const h = topbar.offsetHeight;
+  window.scrollTo({
+    top: home.offsetTop - h,
+    behavior: "smooth"
+  });
+
+  // Close menu if open (can be defined elsewhere in your code)
+  closeMenu();
+}
+
+// Define the scrollToHero function globally
+function scrollToHeroThisIsDifferent() {
   const topbar = document.querySelector(".topbar");
   const home = document.getElementById("home");
   if (!topbar || !home) return;
