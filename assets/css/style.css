@@ -611,24 +611,21 @@ footer a {
 /* Hero Header */
 header#home {
   position: relative;
-  min-height: 90vh;
   padding: 6rem 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
+}
 
-  /* background-image:
-    linear-gradient(
-      rgba(0, 0, 0, 0.55),
-      rgba(0, 0, 0, 0.55)
-    ),
-    url("/assets/images/speed-up-sharepoint-hero-image.jpg"); */
+header#home.hero-enabled {
+  min-height: 90vh;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }
+
 
 /* Hero text */
 header#home h1 {
@@ -637,7 +634,7 @@ header#home h1 {
 }
 
 header#home p {
-  max-width: 848px;
+  max-width: 758px;
   margin-bottom: 2rem;
 }
 
@@ -653,3 +650,14 @@ header#home .cta {
     padding: 4rem 1.25rem;
   }
 }
+
+/* Responsive adjustment */
+@media (max-width: 995px) {
+  header#home h1 {
+    max-width: 500px;
+    margin-bottom: 1rem;
+  }
+}
+
+
+

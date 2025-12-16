@@ -156,15 +156,32 @@ document.addEventListener("DOMContentLoaded", function () {
     if (manifest) manifest.setAttribute('href', basePath + 'assets/images/site.webmanifest');
   
     // Hero background image done in css
-    const heroSection = document.getElementById('home');
-    if (heroSection) 
-    {
-        heroSection.style = 'background-image:linear-gradient(rgba(0, 0, 0, 0.55),rgba(0, 0, 0, 0.55)),url("/SpeedUpSharePoint/assets/images/speed-up-sharepoint-hero-image.jpg")';
-        if (basePath === "/") 
-        {
-            heroSection.style = 'background-image:linear-gradient(rgba(0, 0, 0, 0.55),rgba(0, 0, 0, 0.55)),url("/assets/images/speed-up-sharepoint-hero-image.jpg")';
-        }
+    const heroSection = document.getElementById("home");
+    if (heroSection) {
+      // Are we on the homepage?
+    const isHomePage =
+      window.location.pathname === basePath ||
+      window.location.pathname === basePath + "index.html";
+
+    if (isHomePage) {
+      heroSection.classList.add("hero-enabled");
+
+      const imagePath =
+        basePath === "/"
+          ? "/assets/images/speed-up-sharepoint-hero-image.jpg"
+          : "/SpeedUpSharePoint/assets/images/speed-up-sharepoint-hero-image.jpg";
+
+      heroSection.style.backgroundImage = `
+        linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+        url("${imagePath}")
+      `;
+    } else {
+      // Remove hero background on non-home pages
+      heroSection.style.backgroundImage = "none";
     }
+    }
+
+    
       
   }
 
