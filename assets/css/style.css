@@ -601,3 +601,9 @@ footer a {
     display: none;
   }
 }
+
+@media (max-width: 809px) {
+  .topnav a[href="#contact"] {
+    display: none;
+  }
+}
