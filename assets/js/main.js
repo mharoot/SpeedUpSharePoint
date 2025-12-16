@@ -1,49 +1,35 @@
 // Determine the base path for GitHub Pages
 let basePath = "/"; // Default for localhost
+if (window.location.hostname === "mharoot.github.io") {
+  basePath = "/SpeedUpSharePoint/";
+}
 
 // Define the scrollToHero function globally
 function scrollToHero() {
-  if (window.location.hostname === "mharoot.github.io") {
-    // If on GitHub Pages, set the correct base path
-    basePath = "/SpeedUpSharePoint/";
-  }
-
-  if (window.location.pathname !== basePath) {
-    window.location.href = window.location.origin + basePath;
-    return;
-  }
-
   const topbar = document.querySelector(".topbar");
   const home = document.getElementById("home");
   if (!topbar || !home) return;
 
-  const h = topbar.offsetHeight;
-  window.scrollTo({
-    top: home.offsetTop - h,
-    behavior: "smooth"
-  });
+  const offset = topbar.offsetHeight;
 
-  // Close menu if open (can be defined elsewhere in your code)
+  // If not on the homepage, redirect first
+  if (!window.location.pathname.endsWith("/index.html") && window.location.pathname !== basePath) {
+    window.location.href = window.location.origin + basePath + "#home";
+    return;
+  }
+
+  window.scrollTo({ top: home.offsetTop - offset, behavior: "smooth" });
+
+  // Close menu if open
   closeMenu();
 }
 
 // Utility function to update links for GitHub Pages or localhost
 function updateLinks() {
-  // Update all links with hrefs starting with /pages/faq/ to use the basePath
-  document.querySelectorAll('a[href^="/pages/faq/"]').forEach(link => {
-    const path = link.getAttribute("href");
-    // Only update the link if it's missing the basePath
-    if (!path.startsWith(basePath)) {
-      link.setAttribute("href", basePath + path.substring(1));  // Fix links dynamically
-    }
-  });
-
-  // Update any other relative links based on basePath
   document.querySelectorAll('a[href^="/"]').forEach(link => {
     const path = link.getAttribute("href");
-    // Only update the link if it's missing the basePath
     if (!path.startsWith(basePath)) {
-      link.setAttribute("href", basePath + path.substring(1));  // Add basePath for all root-relative links
+      link.setAttribute("href", basePath + path.replace(/^\/+/, ""));
     }
   });
 }
@@ -54,146 +40,95 @@ const overlay = document.getElementById("overlay");
 const toggleBtn = document.getElementById("menuToggle");
 
 function openMenu() {
-  sidebar.classList.add("open");
-  overlay.classList.add("show");
-  toggleBtn.textContent = "✕";
+  sidebar?.classList.add("open");
+  overlay?.classList.add("show");
+  if (toggleBtn) toggleBtn.textContent = "✕";
 }
 
 function closeMenu() {
-  sidebar.classList.remove("open");
-  overlay.classList.remove("show");
-  toggleBtn.textContent = "☰";
+  sidebar?.classList.remove("open");
+  overlay?.classList.remove("show");
+  if (toggleBtn) toggleBtn.textContent = "☰";
 }
 
-// Wait for the DOM to load before executing DOM manipulation logic
+// Wait for DOM content to load
 document.addEventListener("DOMContentLoaded", function () {
-  if (window.location.hostname === "mharoot.github.io") {
-    // If on GitHub Pages, set the correct base path
-    basePath = "/SpeedUpSharePoint/";
-    const base = document.getElementById('dynamic-base');
-    if (base) {
-      base.setAttribute('href', basePath);
-    }
-  }
+  // Update <base> tag dynamically
+  const baseEl = document.getElementById('dynamic-base');
+  if (baseEl) baseEl.setAttribute('href', basePath);
 
-  console.log("Base Path: ", basePath); // Log basePath for debugging
+  console.log("Base Path: ", basePath);
 
   updateLinks();
 
-  toggleBtn.addEventListener("click", () => {
+  toggleBtn?.addEventListener("click", () => {
     sidebar.classList.contains("open") ? closeMenu() : openMenu();
   });
-  overlay.addEventListener("click", closeMenu);
 
-  // Attach the scrollToHero function to the header logo click event
-  const logo = document.querySelector('.topbar img');
-  if (logo) {
-    logo.addEventListener("click", scrollToHero); // Attach the scrollToHero function
-  }
+  overlay?.addEventListener("click", closeMenu);
 
-  // Handle anchor links with smooth scrolling or redirect
+  // Attach scrollToHero to all logos
+  document.querySelectorAll('.topbar img, .sidebar-logo').forEach(img => {
+    img.addEventListener("click", scrollToHero);
+  });
+
+  // Smooth scrolling for anchor links
   document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener("click", e => {
+    link.addEventListener("click", function (e) {
       e.preventDefault();
-      const anchor = link.getAttribute("href");
+      const anchor = this.getAttribute("href");
+      const target = document.querySelector(anchor);
 
-      // Special case: Contact Us links
-      if (anchor === "#contact") {
-        const target = document.querySelector(anchor);
-        if (!target) return;
-        const h = document.querySelector(".topbar").offsetHeight;
-        window.scrollTo({ top: target.offsetTop - h, behavior: "smooth" });
-        closeMenu();
-
-        // Update the URL fragment
-        history.pushState(null, null, basePath + anchor); // Change URL without reload
+      if (!target) {
+        // If element not on current page, redirect
+        window.location.href = basePath + anchor;
         return;
       }
 
-      // Other anchors
-      if (window.location.pathname === basePath) {
-        // On homepage: smooth scroll
-        const target = document.querySelector(anchor);
-        if (!target) return;
-        const h = document.querySelector(".topbar").offsetHeight;
-        window.scrollTo({ top: target.offsetTop - h, behavior: "smooth" });
-        closeMenu();
+      const offset = document.querySelector(".topbar")?.offsetHeight || 0;
+      window.scrollTo({ top: target.offsetTop - offset, behavior: "smooth" });
+      closeMenu();
 
-        // Update the URL fragment dynamically
-        history.pushState(null, null, basePath + anchor); // Change URL without reload
-      } else {
-        // Not on homepage: redirect with hash
-        window.location.href = window.location.origin + basePath + anchor;
-      }
+      history.pushState(null, null, basePath + anchor);
     });
   });
 
-  // Handling redirect on FAQ link based on basePath
+  // FAQ links redirect properly
   document.querySelectorAll('a[href^="/pages/faq/"]').forEach(link => {
     link.addEventListener("click", function (e) {
       e.preventDefault();
       const href = link.getAttribute("href");
-
-      // Check if href already contains basePath
-      if (!href.startsWith(basePath)) {
-        window.location.href = window.location.origin + basePath + href.substring(1);
-      } else {
-        window.location.href = window.location.origin + href;  // Already correct path
-      }
+      window.location.href = href.startsWith(basePath) ? window.location.origin + href : window.location.origin + basePath + href.replace(/^\/+/, "");
     });
   });
 
-  // Update asset paths (favicons, js, css, site.webmanifest)
+  // Update asset paths: favicons, JS, CSS, manifest
   function updateAssets() {
     // Favicons
-    const favicons = [
-      'favicon-16x16.png', 'favicon-32x32.png', 'favicon-96x96.png',
-      'favicon-128.png', 'favicon-196x196.png', 'favicon.ico'
-    ];
-
+    const favicons = ['favicon-16x16.png','favicon-32x32.png','favicon-96x96.png','favicon-128.png','favicon-196x196.png','favicon.ico'];
     favicons.forEach(favicon => {
-      const link = document.querySelector(`link[rel="icon"][href="assets/images/${favicon}"]`);
-      if (link) {
-        const newHref = basePath + 'assets/images/' + favicon;
-        console.log(`Updating favicon: ${favicon} to ${newHref}`); // Log for debugging
-        link.setAttribute('href', newHref);
-      }
+      const link = document.querySelector(`link[rel="icon"][href$="${favicon}"]`);
+      if (link) link.setAttribute('href', basePath + 'assets/images/' + favicon);
     });
 
-    // JavaScript files
-    const jsFiles = ['main.js'];
-    jsFiles.forEach(jsFile => {
-      const script = document.querySelector(`script[src="assets/js/${jsFile}"]`);
-      if (script) {
-        const newSrc = basePath + 'assets/js/' + jsFile;
-        console.log(`Updating script: ${jsFile} to ${newSrc}`); // Log for debugging
-        script.setAttribute('src', newSrc);
-      }
+    // CSS
+    const cssFiles = ['style.css','faq.css','accordion.css','font-awesome-6.4.0-all.min.css'];
+    cssFiles.forEach(css => {
+      const link = document.querySelector(`link[href$="${css}"]`);
+      if (link) link.setAttribute('href', basePath + 'assets/css/' + css);
     });
 
-    // CSS files
-    const cssFiles = ['style.css'];
-    cssFiles.forEach(cssFile => {
-      const link = document.querySelector(`link[href="assets/css/${cssFile}"]`);
-      if (link) {
-        const newHref = basePath + 'assets/css/' + cssFile;
-        console.log(`Updating CSS: ${cssFile} to ${newHref}`); // Log for debugging
-        link.setAttribute('href', newHref);
-      }
+    // JS
+    const jsFiles = ['main.js','accordion.js'];
+    jsFiles.forEach(js => {
+      const script = document.querySelector(`script[src$="${js}"]`);
+      if (script) script.setAttribute('src', basePath + 'assets/js/' + js);
     });
 
-    // Update the site.webmanifest path
+    // Manifest
     const manifest = document.querySelector('link[rel="manifest"]');
-    if (manifest) {
-      const newHref = basePath + 'assets/images/site.webmanifest'; // Ensure correct path
-      console.log(`Updating site.webmanifest to ${newHref}`); // Log for debugging
-      manifest.setAttribute('href', newHref);
-    }
+    if (manifest) manifest.setAttribute('href', basePath + 'assets/images/site.webmanifest');
   }
 
   updateAssets();
-
-  // Clear cache to ensure changes are reflected
-  // (you might also want to test this by disabling cache in dev tools temporarily)
-  // window.location.reload(true); // Uncomment if assets are still not updating
 });
