@@ -607,3 +607,49 @@ footer a {
     display: none;
   }
 }
+
+/* Hero Header */
+header#home {
+  position: relative;
+  min-height: 90vh;
+  padding: 6rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  background-image:
+    linear-gradient(
+      rgba(0, 0, 0, 0.55),
+      rgba(0, 0, 0, 0.55)
+    ),
+    url("/assets/images/speed-up-sharepoint-hero-image.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Hero text */
+header#home h1 {
+  max-width: 948px;
+  margin-bottom: 1rem;
+}
+
+header#home p {
+  max-width: 848px;
+  margin-bottom: 2rem;
+}
+
+/* CTA button spacing safeguard */
+header#home .cta {
+  margin-top: 1rem;
+}
+
+/* Responsive adjustment */
+@media (max-width: 768px) {
+  header#home {
+    min-height: 80vh;
+    padding: 4rem 1.25rem;
+  }
+}
