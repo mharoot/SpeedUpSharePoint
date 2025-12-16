@@ -593,3 +593,11 @@ footer a {
     grid-template-columns: 1fr;
   }
 }
+
+
+
+@media (max-width: 899px) {
+  .topnav a[href="#about"] {
+    display: none;
+  }
+}
