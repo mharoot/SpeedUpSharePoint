@@ -687,3 +687,22 @@ header#home .cta {
 .sidebar a:first-of-type {
   margin-top: 16px; /* pushes first link down a bit so it's not flush with logo */
 }
+
+
+/* Company social icons */
+.footer-company-social {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin: 12px 0 20px 0;
+}
+
+.footer-company-social a {
+  color: var(--secondary);
+  font-size: 1.5rem;
+  transition: color 0.3s;
+}
+
+.footer-company-social a:hover {
+  color: #ffffff; /* Slightly lighter gold on hover */
+}
