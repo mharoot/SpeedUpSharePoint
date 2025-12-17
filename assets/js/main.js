@@ -228,3 +228,38 @@ window.addEventListener("load", () => {
 window.addEventListener("hashchange", () => {
   scrollToHashWithOffset(window.location.hash);
 });
+
+
+
+// Debounce helper: runs function after user stops resizing
+function debounce(func, wait = 150) {
+  let timeout;
+  return function () {
+    clearTimeout(timeout);
+    timeout = setTimeout(func, wait);
+  };
+}
+
+// Handle responsive sidebar on resize
+function handleSidebarResize() {
+  const mobileBreakpoint = 768; // matches your CSS
+  if (window.innerWidth > mobileBreakpoint) {
+    // Desktop: close sidebar & overlay if open
+    if (sidebar?.classList.contains("open")) {
+      closeMenu();
+    }
+  } 
+  // Optional: mobile side scrolling adjustments could go here
+}
+
+// Attach resize event with debounce
+window.addEventListener("resize", debounce(handleSidebarResize, 200));
+
+// ------------------------
+// Optional: reset scroll position if sidebar content changes
+// (keeps scrollable sidebar usable on resize)
+function resetSidebarScroll() {
+  if (sidebar) {
+    sidebar.scrollTop = 0;
+  }
+}
