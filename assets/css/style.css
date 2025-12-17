@@ -663,23 +663,27 @@ header#home .cta {
 
 
 
-/* Make sidebar fill viewport and scrollable */
+/* Sidebar scrollable */
 .sidebar {
   height: 100vh;                       /* fill full viewport height */
   overflow-y: auto;                     /* scroll if content is taller */
   -webkit-overflow-scrolling: touch;    /* smooth scrolling on iOS */
-  padding-top: 24px;                     /* optional spacing at top */
-  padding-bottom: 24px;                  /* optional spacing at bottom */
+  padding-bottom: 24px;                 /* optional bottom spacing */
 }
 
-/* Keep sidebar logo visible while scrolling */
+/* Sticky sidebar logo */
 .sidebar-logo {
   position: sticky;
-  top: 0;                               /* sticks to top */
+  top: 0;                               /* sticks to very top */
   z-index: 10;
-  background: var(--primary);           /* match sidebar background */
+  background: var(--primary);           /* match sidebar */
   display: block;
   width: 80%;
   margin: 0 auto 16px auto;            /* spacing below logo */
-  padding: 16px 0;                      /* optional padding */
+  padding: 16px 0;                      /* optional logo padding */
+}
+
+/* Optional: add spacing between logo and links */
+.sidebar a:first-of-type {
+  margin-top: 16px; /* pushes first link down a bit so it's not flush with logo */
 }
