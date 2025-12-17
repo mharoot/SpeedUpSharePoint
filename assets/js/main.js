@@ -187,3 +187,44 @@ document.addEventListener("DOMContentLoaded", function () {
 
   updateAssets();
 });
+
+
+// ------------------------------------------------------------
+// FIX: Handle direct hash loads & back/forward navigation
+// (Does NOT modify existing click or redirect behavior)
+// ------------------------------------------------------------
+
+function scrollToHashWithOffset(hash) {
+  if (!hash) return;
+
+  const target = document.querySelector(hash);
+  if (!target) return;
+
+  const topbar = document.querySelector(".topbar");
+  const offset = topbar ? topbar.offsetHeight : 0;
+
+  const top =
+    target.getBoundingClientRect().top +
+    window.pageYOffset -
+    offset;
+
+  window.scrollTo({
+    top,
+    behavior: "smooth"
+  });
+}
+
+// When page loads WITH a hash (paste / refresh / external link)
+window.addEventListener("load", () => {
+  if (window.location.hash) {
+    // Delay ensures layout, fonts, hero, CSS are fully applied
+    setTimeout(() => {
+      scrollToHashWithOffset(window.location.hash);
+    }, 80);
+  }
+});
+
+// When navigating via back/forward buttons
+window.addEventListener("hashchange", () => {
+  scrollToHashWithOffset(window.location.hash);
+});
