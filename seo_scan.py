@@ -1,3 +1,9 @@
+#
+# HOW TO USE: 
+# source venv/bin/activate 
+# python seo_scan.py   
+#
+
 import os
 from bs4 import BeautifulSoup
 
@@ -36,37 +42,40 @@ def scan_html(file_path):
     h1 = soup.find("h1")
     h1_text = h1.get_text(strip=True) if h1 else None
 
-    # Images missing alt
+    # Images
     imgs = soup.find_all("img")
-    imgs_missing_alt = [img.get("src") for img in imgs if not img.get("alt")]
+    imgs_missing_alt = [img.get("src") 
+                    for img in imgs 
+                    if not img.get("alt") or not img.get("alt").strip()]
 
-    # Check for images missing title
-    imgs_missing_title = [img.get("src") for img in imgs if not img.get("title")]
+    imgs_missing_title = [(img.get("src"), str(img)) 
+                      for img in imgs 
+                      if not img.get("title") or not img.get("title").strip()]
 
-    # Keyword counts
+
+    # Keywords
     text = soup.get_text().lower()
     keyword_counts = {kw: text.count(kw.lower()) for kw in KEYWORDS}
 
     # ----------------------------
-    # Simple SEO Score Calculation
+    # Weighted SEO Score (0-100)
     # ----------------------------
     score = 0
-    total_checks = 4 + len(imgs)  # title, meta, h1, at least one keyword, plus images
-    # Title, meta, H1
-    score += 1 if title else 0
-    score += 1 if meta_desc else 0
-    score += 1 if h1_text else 0
-    # At least one keyword present?
-    score += 1 if sum(keyword_counts.values()) > 0 else 0
-    # Images alt/title (bonus points)
-    if imgs:
-        img_score = sum(1 for img in imgs if img.get("alt") and img.get("title"))
-        score += img_score / len(imgs)  # proportion of correctly tagged images
-    else:
-        total_checks -= len(imgs)  # no images, don’t penalize
+    # Main elements (20 each)
+    score += 20 if title else 0
+    score += 20 if meta_desc else 0
+    score += 20 if h1_text else 0
+    score += 20 if sum(keyword_counts.values()) > 0 else 0
 
-    # Convert to 100 scale
-    seo_score = round((score / total_checks) * 100)
+    # Images (total 20 points distributed evenly)
+    if imgs:
+        correct_imgs = sum(1 for img in imgs if img.get("alt") and img.get("title"))
+        img_score = (correct_imgs / len(imgs)) * 20
+        score += img_score
+    else:
+        score += 20  # no images, give full points
+
+    seo_score = round(score)
 
     return {
         "file": os.path.relpath(file_path, HTML_DIR),
@@ -85,20 +94,33 @@ def scan_html(file_path):
 if __name__ == "__main__":
     html_files = []
 
+    if not os.path.exists(HTML_DIR):
+        print(f"❌ Directory not found: {HTML_DIR}")
+        exit(1)
+
     # Recursively scan pages folder
     for root, dirs, files in os.walk(HTML_DIR):
+        # Optional: skip hidden folders
+        dirs[:] = [d for d in dirs if not d.startswith(".")]
+
         for file in files:
-            if file.endswith(".html"):
-                html_files.append(os.path.join(root, file))
+            if file.lower().endswith(".html"):
+                full_path = os.path.join(root, file)
+                html_files.append(full_path)
 
     if not html_files:
         print(f"No HTML files found in {HTML_DIR}")
         exit()
 
+    print(f"🔍 Found {len(html_files)} HTML files\n")
+
     report = []
     for file in html_files:
-        result = scan_html(file)
-        report.append(result)
+        try:
+            result = scan_html(file)
+            report.append(result)
+        except Exception as e:
+            print(f"⚠️ Error scanning {file}: {e}")
 
     # Print summary per page
     for page in report:
@@ -107,12 +129,14 @@ if __name__ == "__main__":
         print(f"Title: {page['title']}")
         print(f"Meta description: {page['meta_description']}")
         print(f"H1: {page['h1']}")
+
         if page['imgs_missing_alt']:
             print("Images missing alt:")
             for img in page['imgs_missing_alt']:
                 print(f"  - {img}")
         else:
             print("All images have alt text ✅")
+
         if page['imgs_missing_title']:
             print("Images missing title:")
             for img in page['imgs_missing_title']:
@@ -120,11 +144,10 @@ if __name__ == "__main__":
         else:
             print("All images have title ✅")
 
-        # Keyword counts (only show >0)
-        keywords_found = {k:v for k,v in page['keyword_counts'].items() if v>0}
+        keywords_found = {k: v for k, v in page['keyword_counts'].items() if v > 0}
         if keywords_found:
             print("Keyword counts:")
-            for k,v in keywords_found.items():
+            for k, v in keywords_found.items():
                 print(f"  {k}: {v}")
         else:
             print("No keywords found on this page.")
