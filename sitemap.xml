@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://www.speedupsharepoint.com/</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Use Case Pages -->
+  <url>
+    <loc>https://www.speedupsharepoint.com/pages/use-case/architecting-sharepoint-lists-for-performance-and-reliability.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.speedupsharepoint.com/pages/use-case/mitigating-power-automate-throttling-in-large-sharepoint-environments.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.speedupsharepoint.com/pages/use-case/optimizing-large-sharepoint-lists-beyond-the-5000-item-threshold.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://www.speedupsharepoint.com/pages/use-case/power-automate-throttling-failures.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Authority Pages -->
+  <url>
+    <loc>https://www.speedupsharepoint.com/pages/authority/index.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.speedupsharepoint.com/pages/authority/how-we-design-sharepoint-at-scale.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.speedupsharepoint.com/pages/authority/our-performance-first-methodology.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.speedupsharepoint.com/pages/authority/compliance-aware-sharepoint-architecture.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- FAQ Pages -->
+  <url>
+    <loc>https://www.speedupsharepoint.com/pages/faq/index.html</loc>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.speedupsharepoint.com/pages/faq/can-sharepoint-be-used-as-a-database.html</loc>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.speedupsharepoint.com/pages/faq/why-does-sharepoint-slow-down-over-time.html</loc>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.speedupsharepoint.com/pages/faq/when-should-you-migrate-off-sharepoint-lists.html</loc>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.speedupsharepoint.com/pages/faq/why-does-sharepoint-break-at-50k-items.html</loc>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.speedupsharepoint.com/pages/faq/why-do-my-power-automate-flows-fail-due-to-throttling.html</loc>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.speedupsharepoint.com/pages/faq/how-can-i-prevent-sharepoint-list-view-threshold-errors-on-large-lists.html</loc>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://www.speedupsharepoint.com/pages/faq/is-it-safe-to-use-sharepoint-lists-as-a-database.html</loc>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Legal Pages -->
+  <url>
+    <loc>https://www.speedupsharepoint.com/pages/privacy-policy.html</loc>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://www.speedupsharepoint.com/pages/terms-conditions.html</loc>
+    <priority>0.4</priority>
+  </url>
+
+  <url>
+    <loc>https://www.speedupsharepoint.com/pages/nda.html</loc>
+    <priority>0.4</priority>
+  </url>
+
+</urlset>
