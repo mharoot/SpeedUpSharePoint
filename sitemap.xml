@@ -53,6 +53,26 @@
     <priority>0.7</priority>
   </url>
 
+  <url>
+    <loc>https://www.speedupsharepoint.com/pages/authority/enterprise-sharepoint-architecture-for-performance-security-and-scale.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.speedupsharepoint.com/pages/authority/sharepoint-performance-risks-banking-finance.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.speedupsharepoint.com/pages/authority/sharepoint-scaling-limitations-law-firms.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://www.speedupsharepoint.com/pages/authority/why-sharepoint-search-slows-down-enterprise.html</loc>
+    <priority>0.7</priority>
+  </url>
+
   <!-- FAQ Pages -->
   <url>
     <loc>https://www.speedupsharepoint.com/pages/faq/index.html</loc>

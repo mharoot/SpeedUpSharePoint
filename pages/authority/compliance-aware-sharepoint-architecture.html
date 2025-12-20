@@ -11,11 +11,11 @@
 <meta name="theme-color" content="#011021">
 
 <!-- Favicons -->
-<link rel="icon" type="image/png" sizes="16x16" href="./../../assets/images/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="./../../assets/images/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="96x96" href="./../../assets/images/favicon-96x96.png">
-<link rel="icon" type="image/png" sizes="128x128" href="./../../assets/images/favicon-128.png">
-<link rel="icon" type="image/png" sizes="196x196" href="./../../assets/images/favicon-196x196.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/images/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="128x128" href="/assets/images/favicon-128.png">
+<link rel="icon" type="image/png" sizes="196x196" href="/assets/images/favicon-196x196.png">
 <link rel="shortcut icon" href="./../../favicon.ico">
 
 <meta property="og:image" content="https://mharoot.github.io/SpeedUpSharePoint/assets/images/SpeedUpSharePointLogoSquare.png">
@@ -26,13 +26,13 @@
 <meta name="msapplication-TileColor" content="#011021">
 <meta name="msapplication-TileImage" content="./../../assets/images/mstile-144x144.png">
 
-<link rel="manifest" href="./../../assets/images/site.webmanifest">
+<link rel="manifest" href="/assets/images/site.webmanifest">
 
-<link rel="stylesheet" href="./../../assets/css/font-awesome-6.4.0-all.min.css">
-<link rel="stylesheet" href="./../../assets/css/style.css">
-<link rel="stylesheet" href="./../../assets/css/faq.css">
+<link rel="stylesheet" href="/assets/css/font-awesome-6.4.0-all.min.css">
+<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/faq.css">
 
-<base id="dynamic-base" href="./">
+<base id="dynamic-base" href="/">
 </head>
 
 <body>
@@ -46,8 +46,8 @@
     <a href="#services">Services</a>
     <a href="#experience">Experience</a>
     <a href="#use-case">Use Case</a>
-  <a href="#authority">Authority</a>
-  <a href="/pages/faq/">FAQ</a>
+    <a href="#authority">Authority</a>
+    <a href="/pages/faq/">FAQ</a>
     <a href="#principles">Principles</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -56,19 +56,19 @@
 <div id="overlay" class="overlay"></div>
 
 <div id="sidebar" class="sidebar">
-  <img src="./../../assets/images/SpeedUpSharePointLogoRectangle.png"  alt="Speed Up SharePoint" title="Speed Up SharePoint" class="sidebar-logo" onclick="scrollToHero()">
+  <img src="./../../assets/images/SpeedUpSharePointLogoRectangle.png" alt="Speed Up SharePoint" title="Speed Up SharePoint" class="sidebar-logo" onclick="scrollToHero()">
   <a href="#about">About</a>
   <a href="#services">Services</a>
   <a href="#experience">Experience</a>
   <a href="#use-case">Use Case</a>
   <a href="#authority">Authority</a>
-<a href="/pages/faq/">FAQ</a>
+  <a href="/pages/faq/">FAQ</a>
   <a href="#principles">Principles</a>
   <a href="#contact">Contact</a>
 </div>
 
 <!-- Hero -->
-<header id="home">
+<header id="home" style="background-image: none;">
   <h1>Compliance-Aware SharePoint Architecture</h1>
   <p>
     Learn how to design SharePoint architectures that meet enterprise compliance standards, data governance policies, and regulatory requirements.
@@ -88,18 +88,83 @@
 </section>
 
 <section id="content">
-  <h2>Compliance and Governance</h2>
-  <p>
-    Our approach ensures that every SharePoint deployment complies with industry regulations, reducing risk and ensuring that enterprise data governance is maintained.
-  </p>
+  <div class="content-wrapper">
 
-  <h3>Key Compliance Features:</h3>
-  <ul>
-    <li>Data privacy and security controls for sensitive information</li>
-    <li>Built-in audit trails and compliance reporting</li>
-    <li>Disaster recovery and business continuity planning</li>
-    <li>Enabling GDPR, HIPAA, and other regulatory compliance</li>
-  </ul>
+    <h2>Compliance and Governance</h2>
+
+    <p>
+      Enterprise SharePoint environments frequently slow down or fail to scale not because of content volume, but because compliance, identity, and governance controls were treated as afterthoughts.
+      Our architecture embeds compliance and governance directly into the platform design, ensuring security, auditability, and regulatory alignment without degrading performance.
+    </p>
+
+    <img
+      id="compliance-and-governance-architecture-diagram"
+      src="./../../assets/images/compliance-and-governance-architecture-diagram.png"
+      alt="Compliance and Governance Architecture Diagram"
+      title="Compliance and Governance Architecture Diagram"
+    >
+
+    <h3>Identity, Access, and Zero Trust</h3>
+    <p>
+      Authentication and authorization are enforced using <strong>Microsoft Entra ID</strong>, enabling conditional access, MFA, device compliance checks, and tenant-wide identity governance.
+      SharePoint access is never trusted implicitly—every request is evaluated against identity, context, and policy.
+    </p>
+
+    <ul>
+      <li>Microsoft Entra ID–backed Single Sign-On (SSO)</li>
+      <li>Conditional Access and least-privilege enforcement</li>
+      <li>Support for legal, finance, and regulated enterprise tenants</li>
+    </ul>
+
+    <h3>Secure Data Plane and Private Connectivity</h3>
+    <p>
+      While SharePoint Online remains the system of record for documents, sensitive workflows, metadata, and structured data are isolated behind private Azure networking.
+      Azure Virtual Networks, Private DNS Zones, and Network Security Groups ensure data never traverses public endpoints unnecessarily.
+    </p>
+
+    <ul>
+      <li>Private Azure Virtual Network segmentation (App + SQL subnets)</li>
+      <li>Network Security Groups (NSGs) enforcing east–west traffic controls</li>
+      <li>Private DNS resolution for internal service communication</li>
+    </ul>
+
+    <h3>Secrets, Credentials, and Managed Identity</h3>
+    <p>
+      No credentials are embedded in code or configuration. All services authenticate using <strong>Azure Managed Identity</strong>, with secrets and keys centrally governed through <strong>Azure Key Vault</strong>.
+      This eliminates credential sprawl and reduces breach impact.
+    </p>
+
+    <ul>
+      <li>Managed Identity authentication between SharePoint-integrated services</li>
+      <li>Centralized secret rotation and access policies via Azure Key Vault</li>
+      <li>No hard-coded credentials or connection strings</li>
+    </ul>
+
+    <h3>Auditability, Legal Hold, and Regulatory Readiness</h3>
+    <p>
+      Compliance is not just about prevention—it is about proof. All access, queries, and data movements are logged and retained to support audits, investigations, and legal discovery.
+      This architecture aligns naturally with regulations such as GDPR, HIPAA, SOX, and financial industry retention requirements.
+    </p>
+
+    <ul>
+      <li>Unified audit logging via Azure Monitor and Log Analytics</li>
+      <li>SharePoint audit logs integrated into centralized monitoring</li>
+      <li>Support for legal hold, eDiscovery, and retention policies</li>
+    </ul>
+
+    <h3>Why This Matters to CTOs</h3>
+    <p>
+      Compliance-driven throttling, search degradation, and administrative overhead often emerge when SharePoint is asked to scale beyond its original design.
+      By separating concerns—identity, governance, storage, and compute—this architecture allows SharePoint to remain compliant without becoming a bottleneck.
+    </p>
+
+    <ul>
+      <li>Reduced risk of tenant-wide throttling</li>
+      <li>Clear separation of compliance responsibilities</li>
+      <li>Predictable scaling for regulated enterprises</li>
+    </ul>
+
+  </div>
 </section>
 
 <!-- Contact -->
@@ -136,21 +201,19 @@
     <a href="/pages/nda.html">NDA</a>
   </nav>
 
-  <!-- Principal Architect LinkedIn -->
   <a href="https://www.linkedin.com/in/michael-harootoonyan-b77064313/" target="_blank" rel="noopener">
     <i class="fab fa-linkedin"></i>
   </a>
   <span>Principal Architect</span>
 
-  <!-- Company Social Media Links -->
   <div class="footer-company-social">
-    <a href="https://www.instagram.com/speedupsharepoint?igsh=NWxxNHgzeWhiOTB4&utm_source=qr" target="_blank" rel="noopener">
+    <a href="https://www.instagram.com/speedupsharepoint?igsh=NWxxNHgzeWhiOTB4&amp;utm_source=qr" target="_blank" rel="noopener">
       <i class="fab fa-instagram"></i>
     </a>
     <a href="https://x.com/speedupsp?s=21" target="_blank" rel="noopener">
       <i class="fab fa-twitter"></i>
     </a>
-    <a href="https://www.facebook.com/profile.php?id=61585423434447&mibextid=wwXIfr" target="_blank" rel="noopener">
+    <a href="https://www.facebook.com/profile.php?id=61585423434447&amp;mibextid=wwXIfr" target="_blank" rel="noopener">
       <i class="fab fa-facebook-f"></i>
     </a>
     <a href="https://www.linkedin.com/company/speed-up-sharepoint/" target="_blank" rel="noopener">
@@ -165,7 +228,7 @@
   </div>
 </footer>
 
+<script src="/assets/js/main.js"></script>
 
-<script src="./../../assets/js/main.js"></script>
 </body>
 </html>

@@ -45,13 +45,12 @@ def scan_html(file_path):
     # Images
     imgs = soup.find_all("img")
     imgs_missing_alt = [img.get("src") 
-                    for img in imgs 
-                    if not img.get("alt") or not img.get("alt").strip()]
+                        for img in imgs 
+                        if not img.get("alt") or not img.get("alt").strip()]
 
     imgs_missing_title = [(img.get("src"), str(img)) 
-                      for img in imgs 
-                      if not img.get("title") or not img.get("title").strip()]
-
+                          for img in imgs 
+                          if not img.get("title") or not img.get("title").strip()]
 
     # Keywords
     text = soup.get_text().lower()
@@ -122,10 +121,14 @@ if __name__ == "__main__":
         except Exception as e:
             print(f"⚠️ Error scanning {file}: {e}")
 
+    # Sort report by SEO score descending
+    report.sort(key=lambda x: x['seo_score'], reverse=True)
+
     # Print summary per page
     for page in report:
+        score_icon = "✅" if page['seo_score'] == 100 else "❌"
         print(f"\nPage: {page['file']}")
-        print(f"SEO Score: {page['seo_score']}/100")
+        print(f"SEO Score: {page['seo_score']}/100 {score_icon}")
         print(f"Title: {page['title']}")
         print(f"Meta description: {page['meta_description']}")
         print(f"H1: {page['h1']}")

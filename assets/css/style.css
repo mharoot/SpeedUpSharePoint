@@ -146,7 +146,8 @@ h2 {
 /* About */
 #about p {
   max-width: 900px;
-  margin: auto;
+  margin-left:auto;
+  margin-right:auto;
 }
 
 .leadership {
@@ -706,3 +707,85 @@ header#home .cta {
 .footer-company-social a:hover {
   color: #ffffff; /* Slightly lighter gold on hover */
 }
+
+
+/* ===============================
+   Architecture Diagram Styling
+   =============================== */
+
+.architecture-diagram {
+  max-width: 1200px;
+  margin: 3rem auto;
+  text-align: center;
+}
+
+.architecture-diagram img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.architecture-diagram figcaption {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #b8c2cc;
+  line-height: 1.4;
+}
+
+.architecture-diagram em {
+  font-style: normal;
+  color: #6fa8ff;
+}
+
+
+/* ===============================
+   Content Width Control
+   =============================== */
+
+#content {
+  width: 100%;
+}
+
+.content-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+
+p {margin-bottom:16px;}
+
+
+/* .img-800-by-533 {
+  width:100%;
+  max-width: 800px;
+} */
+ #compliance-and-governance-architecture-diagram {
+  width:100%;
+  max-width: 800px;
+  /* the img got generated with a 1px right sold black border, so to fix it we are adding the other borders with css*/
+  border-left:1px solid;
+  border-top:1px solid;
+  border-bottom: 1px solid;
+ }
+
+ .profile-photo{
+  border-radius:100px;   
+  object-fit:cover; 
+  width: 200px;
+  height: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px var(--primary) solid;
+ }
+
+ .about-content-wrapper{
+  display:flex;align-items:center;gap:20px;flex-wrap: nowrap;
+ }
+
+ @media(max-width:767px){
+  .about-content-wrapper{
+    flex-wrap: wrap;
+  }
+ }

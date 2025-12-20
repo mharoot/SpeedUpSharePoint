@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<title>Enterprise SharePoint Architecture for Performance, Security, and Scale</title>
+<meta name="description" content="Learn how enterprise SharePoint architectures are designed for performance, security, and scale using Azure Front Door, App Services, Functions, Blob Storage, and Azure SQL.">
+<meta name="robots" content="index, follow">
+
+<meta name="theme-color" content="#011021">
+
+<!-- Favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/images/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="128x128" href="/assets/images/favicon-128.png">
+<link rel="icon" type="image/png" sizes="196x196" href="/assets/images/favicon-196x196.png">
+<link rel="shortcut icon" href="/favicon.ico">
+
+<meta property="og:image" content="https://mharoot.github.io/SpeedUpSharePoint/assets/images/SpeedUpSharePointLogoSquare.png">
+<meta property="og:image:width" content="382">
+<meta property="og:image:height" content="382">
+
+<meta name="application-name" content="Speed Up SharePoint">
+<meta name="msapplication-TileColor" content="#011021">
+<meta name="msapplication-TileImage" content="/assets/images/mstile-144x144.png">
+
+<link rel="manifest" href="/assets/images/site.webmanifest">
+
+<link rel="stylesheet" href="/assets/css/font-awesome-6.4.0-all.min.css">
+<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/faq.css">
+
+<base id="dynamic-base" href="./">
+</head>
+
+<body>
+
+<!-- Topbar -->
+<div class="topbar">
+  <img src="/assets/images/SpeedUpSharePointLogoRectangle.png" alt="Speed Up SharePoint" title="Speed Up SharePoint" onclick="scrollToHero()">
+  <button id="menuToggle" class="menu-toggle">☰</button>
+  <nav class="topnav">
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#experience">Experience</a>
+    <a href="#use-case">Use Case</a>
+    <a href="#authority">Authority</a>
+    <a href="/pages/faq/">FAQ</a>
+    <a href="#principles">Principles</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</div>
+
+<div id="overlay" class="overlay"></div>
+
+<div id="sidebar" class="sidebar">
+  <img src="/assets/images/SpeedUpSharePointLogoRectangle.png" alt="Speed Up SharePoint" title="Speed Up SharePoint" class="sidebar-logo" onclick="scrollToHero()">
+  <a href="#about">About</a>
+  <a href="#services">Services</a>
+  <a href="#experience">Experience</a>
+  <a href="#use-case">Use Case</a>
+  <a href="#authority">Authority</a>
+  <a href="/pages/faq/">FAQ</a>
+  <a href="#principles">Principles</a>
+  <a href="#contact">Contact</a>
+</div>
+
+<!-- Hero -->
+<header id="home">
+  <h1>Enterprise SharePoint Architecture for Performance and Scale</h1>
+  <p>
+    When SharePoint performance degrades at enterprise scale, the root cause is almost always architectural.
+    Discover how high-performing SharePoint environments are designed for security, scalability, and compliance.
+  </p>
+  <a href="#contact" class="cta">Contact Us</a>
+</header>
+
+<section class="cta-section">
+  <div class="cta-container">
+    <p class="cta-text">
+      Enterprise SharePoint performance is not solved with tuning — it requires a performance-first architecture.
+    </p>
+    <a href="#contact" class="cta-button">
+      Schedule Technical Review
+    </a>
+  </div>
+</section>
+
+<section id="content">
+ <div class="content-wrapper">
+    <h2>Why Architecture Determines SharePoint Performance</h2>
+
+    <p>
+      SharePoint excels at document management, permissions, governance, and compliance.
+      It was never designed to act as a high-frequency transactional system for large-scale querying,
+      real-time filtering, or high-traffic asset delivery.
+    </p>
+    
+    <p>
+      In large enterprises — especially law firms, financial institutions, and M&A teams —
+      performance issues emerge when SharePoint is forced to handle workloads better suited
+      for scalable application and data platforms.
+    </p>
+    <br>
+    <br>
+
+    <h2>High-Level Enterprise SharePoint Architecture</h2>
+
+    <figure class="architecture-diagram">
+      <a href="/assets/images/enterprise-sharepoint-architecture-azure-performance.webp" target="_blank">
+        <img
+          src="/assets/images/enterprise-sharepoint-architecture-azure-performance.webp"
+          alt="Enterprise SharePoint architecture using Azure Front Door, App Services, Azure Functions, Blob Storage, and Azure SQL for scalable performance"
+          title="Enterprise SharePoint architecture using Azure Front Door, App Services, Azure Functions, Blob Storage, and Azure SQL for scalable performance"
+          loading="lazy">
+      </a>
+      <figcaption>
+        Enterprise SharePoint architecture separating edge, application, data, and security layers for performance and scale.
+        <br><em>Click to view full-size diagram.</em>
+      </figcaption>
+    </figure>
+
+    <h2>Public Access & Edge Layer</h2>
+
+    <p>
+      All user traffic enters through Azure Front Door, which acts as the single global entry point.
+      This layer provides Web Application Firewall (WAF) protection, DDoS mitigation,
+      SSL termination, and intelligent routing.
+    </p>
+
+    <ul>
+      <li>Global CDN caching for static assets</li>
+      <li>Host- and path-based routing to backend services</li>
+      <li>Edge-level security enforcement before traffic reaches applications</li>
+    </ul>
+
+    <br>
+    <br>
+    <h2>Production Domains & Workload Separation</h2>
+
+    <p>
+      Each production hostname maps to a dedicated backend workload.
+      This separation allows independent scaling, deployment, and optimization.
+    </p>
+
+    <ul>
+      <li><strong>Static Web Apps:</strong> React SPA for fast global UI delivery</li>
+      <li><strong>Azure App Services:</strong> Blazor web application and .NET 9 APIs</li>
+      <li><strong>Azure Function Apps:</strong> Serverless, event-driven API workloads</li>
+      <li><strong>Azure Blob Storage:</strong> High-traffic public CDN assets</li>
+    </ul>
+
+    <br>
+    <br>
+    <h2>Application Layer Design</h2>
+
+    <p>
+      The application layer is optimized for performance and security.
+      Lightweight frontends authenticate users and call backend APIs using bearer tokens.
+      Business logic is isolated from UI concerns.
+    </p>
+
+    <p>
+      Serverless functions handle background processing and performance-critical workloads,
+      allowing horizontal scaling without infrastructure overhead.
+    </p>
+
+    <br>
+    <br>
+    <h2>Authentication & Zero-Trust Security</h2>
+
+    <p>
+      Enterprise single sign-on (SSO) is enforced across all applications.
+      Azure Managed Identity eliminates stored secrets and embedded credentials.
+    </p>
+
+    <ul>
+      <li>No secrets in source code</li>
+      <li>Azure Key Vault for certificates and sensitive configuration</li>
+      <li>Strict identity-based access controls</li>
+    </ul>
+
+    <br>
+    <br>
+    <h2>Data & Networking Isolation</h2>
+
+    <p>
+      Backend services operate within a protected Azure Virtual Network (VNet).
+      Azure SQL Managed Instance runs in a private subnet and is not publicly accessible.
+    </p>
+
+    <p>
+      This design ensures enterprise-grade data isolation, regulatory compliance,
+      and reduced attack surface.
+    </p>
+
+    <br>
+    <br>
+    <h2>Storage Offloading Strategy</h2>
+
+    <p>
+      Non-sensitive, high-traffic assets are offloaded from SharePoint and stored in Azure Blob Storage.
+      These assets are delivered globally through Azure Front Door CDN.
+    </p>
+
+    <p>
+      This dramatically reduces SharePoint load, API calls, and page load times —
+      a critical optimization for large enterprises.
+    </p>
+
+    <br>
+    <br>
+    <h2>Monitoring & Observability</h2>
+
+    <p>
+      Every layer feeds into Azure Monitor, Application Insights, and Log Analytics.
+      This provides end-to-end visibility into performance, security, and system health.
+    </p>
+
+    <ul>
+      <li>Request tracing across services</li>
+      <li>Bottleneck and latency detection</li>
+      <li>Centralized audit and security logging</li>
+    </ul>
+
+    <br>
+    <br>
+    <h2>Why This Architecture Works</h2>
+
+    <ul>
+      <li>Performance-first design</li>
+      <li>Zero-trust security model</li>
+      <li>Enterprise SSO and compliance readiness</li>
+      <li>Independent scaling of components</li>
+      <li>Optimized SharePoint offloading strategy</li>
+      <li>Designed for law firms, banks, and M&A teams</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <h2>Contact Us</h2>
+  <p>Enterprise SharePoint performance problems are architectural. Let’s review yours.</p>
+  <div class="contact-box">
+    <div>
+      <img src="/assets/images/SpeedUpSharePointLogoSquare.png" alt="Speed Up SharePoint" title="Speed Up SharePoint" onclick="scrollToHero()">
+    </div>
+    <div>
+      <a href="tel:+18182091548">
+        <i class="fas fa-phone"></i><br>(818) 209-1548
+      </a>
+    </div>
+    <div>
+      <a href="mailto:support@speedupsharepoint.com">
+        <i class="fas fa-envelope"></i><br>support@speedupsharepoint.com
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2025 <span onclick="scrollToHero()">Speed Up SharePoint</span>. All Rights Reserved.
+  <nav class="footer-nav">
+    <a href="/pages/privacy-policy.html">Privacy Policy</a> |
+    <a href="/pages/terms-conditions.html">Terms &amp; Conditions</a> |
+    <a href="/pages/sitemap.html">Sitemap</a> |
+    <a href="/pages/nda.html">NDA</a>
+  </nav>
+
+  <a href="https://www.linkedin.com/in/michael-harootoonyan-b77064313/" target="_blank" rel="noopener">
+    <i class="fab fa-linkedin"></i>
+  </a>
+  <span>Principal Architect</span>
+
+  <div class="footer-company-social">
+    <a href="https://www.instagram.com/speedupsharepoint?igsh=NWxxNHgzeWhiOTB4&utm_source=qr" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://x.com/speedupsp?s=21" target="_blank"><i class="fab fa-twitter"></i></a>
+    <a href="https://www.facebook.com/profile.php?id=61585423434447" target="_blank"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://www.linkedin.com/company/speed-up-sharepoint/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+  </div>
+
+  <div class="trust-signals">
+    <span>Security-first architecture</span>
+    <span>Enterprise-scale delivery</span>
+    <span>NDA available upon request</span>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js"></script>
+</body>
+</html>
