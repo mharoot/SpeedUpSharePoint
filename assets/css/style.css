@@ -831,3 +831,8 @@ p {margin-bottom:16px;}
 
     .sidebar-logo{display:block;}
 }
+
+
+ .menu_title{
+  cursor: pointer;
+ }
