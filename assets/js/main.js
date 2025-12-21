@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
   overlay?.addEventListener("click", closeMenu);
 
   // Attach scrollToHero to all logos
-  document.querySelectorAll('.topbar img, .sidebar-logo').forEach(img => {
+  document.querySelectorAll('.topbar img, .sidebar-logo, .menu_title').forEach(img => {
     img.addEventListener("click", scrollToHero);
   });
 
