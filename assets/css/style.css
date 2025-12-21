@@ -14,12 +14,6 @@ body {
   scroll-padding-top: 76px;
 }
 
-<!--
-Source - https://stackoverflow.com/a
-Posted by Alicia, modified by community. See post 'Timeline' for change history
-Retrieved 2025-12-20, License - CC BY-SA 4.0
--->
-
 body {
  height: 100vh; 
  height: -webkit-fill-available; 
