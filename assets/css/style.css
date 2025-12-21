@@ -14,12 +14,6 @@ body {
   scroll-padding-top: 76px;
 }
 
-<!--
-Source - https://stackoverflow.com/a
-Posted by Alicia, modified by community. See post 'Timeline' for change history
-Retrieved 2025-12-20, License - CC BY-SA 4.0
--->
-
 body {
  height: 100vh; 
  height: -webkit-fill-available; 
@@ -64,7 +58,7 @@ body {
   display: none;
   background: none;
   border: none;
-  font-size: 2rem;
+  font-size: 20px;
   color: var(--secondary);
   cursor: pointer;
 }
@@ -350,7 +344,7 @@ footer a {
 }
 
 /* Responsive Nav */
-@media (max-width: 768px) {
+@media (max-width: 961px) {
   .topnav { display: none; }
   .menu-toggle { display: block; }
 }
@@ -803,3 +797,37 @@ p {margin-bottom:16px;}
     flex-wrap: wrap;
   }
  }
+
+ span.menu_title {
+      display: none;
+ }
+
+
+
+  @media only screen and (max-width: 961px) {
+    .topbar {
+      padding: 10px 16px;
+      height: 42px;
+      background: var(--primary);
+
+    }
+
+    .topbar img, .sidebar img  {
+      display:none;
+    }
+
+    span.menu_title {
+      display: block;
+      color:var(--secondary);
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 20px;
+    }
+    
+    .sidebar span.menu_title {
+      padding-top: 10px;
+      padding-left: 16px;
+    }
+
+    .sidebar-logo{display:block;}
+}
