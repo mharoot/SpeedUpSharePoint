@@ -46,7 +46,7 @@
     adhd:'fa-solid fa-lightbulb',
     cognitive:'fa-solid fa-book',
     motor:'fa-solid fa-keyboard',
-    blind:'fa-solid fa-universal-access',
+    blind:'fa-solid fa-wheelchair',
     zoom:'fa-solid fa-magnifying-glass-plus',
     readableFont:'fa-solid fa-font',
     emphasizeTitles:'fa-solid fa-heading',
@@ -199,7 +199,7 @@
       var trigger = document.createElement('div');
       trigger.id='accessibilityTrigger';
       trigger.className='accessibility-no-scale';
-      trigger.innerHTML='<i class="fa-solid fa-universal-access fa-lg"></i>';
+      trigger.innerHTML='<i class="fa-solid fa-wheelchair fa-lg"></i>';
       document.body.appendChild(trigger);
       var self=this;
       trigger.addEventListener('click', function(){ 
