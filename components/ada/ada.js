@@ -135,6 +135,7 @@
     speechSynthesis: null,
     focusTrackingActive: false,
     focusTrackingListener: null,
+    translating: false,
   
     init:function(){
       // Store original computed line-height
@@ -1443,6 +1444,14 @@
   
     // ---------------- TRIGGER GOOGLE TRANSLATE ----------------
     triggerGoogleTranslate:function(langCode){
+      // Prevent multiple simultaneous calls
+      if(this.translating){
+        console.log('⚠️ Translation already in progress');
+        return;
+      }
+      
+      this.translating = true;
+      var self = this;
       var attempts = 0;
       var maxAttempts = 30;
       
@@ -1454,6 +1463,13 @@
         
         if(selectElement){
           clearInterval(checkInterval);
+          self.translating = false;
+          
+          // Don't translate if already in the target language
+          if(selectElement.value === langCode){
+            console.log('✅ Already in language:', langCode);
+            return;
+          }
           
           // Set language
           selectElement.value = langCode;
@@ -1461,14 +1477,10 @@
           // Trigger change event
           selectElement.dispatchEvent(new Event('change', { bubbles: true }));
           
-          // Force trigger if first didn't work
-          if(selectElement.onchange) {
-            selectElement.onchange();
-          }
-          
           console.log('✅ Translated to:', langCode);
         } else if(attempts >= maxAttempts){
           clearInterval(checkInterval);
+          self.translating = false;
           console.warn('⚠️ Google Translate not ready yet. Please wait a moment and try again.');
         }
       }, 200);
@@ -1860,8 +1872,14 @@
           currentFlagSpan.textContent = LANGUAGES[savedLang].flag;
         }
         
-        // Trigger translation
-        this.triggerGoogleTranslate(savedLang);
+        // Only trigger translation if not English (default)
+        if(savedLang !== 'en'){
+          // Delay to ensure Google Translate is fully loaded
+          var self = this;
+          setTimeout(function(){
+            self.triggerGoogleTranslate(savedLang);
+          }, 2000);
+        }
       }
     },
   
