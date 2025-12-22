@@ -661,8 +661,41 @@ body.profile-vision *:not(#accessibilityWidget):not(#accessibilityWidget *):not(
     /* Zoom handled by JS - removed filter here */
 }
 
-body.profile-adhd:not(#accessibilityWidget) {
-    background: #fff !important;
+body.profile-adhd {
+    position: relative;
+}
+
+/* Dark overlay that covers entire page */
+body.profile-adhd::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    pointer-events: none;
+    z-index: 9990;
+}
+
+/* Clear focus window that follows mouse - uses clip-path to cut out the focus area */
+body.profile-adhd::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    pointer-events: none;
+    z-index: 9990;
+    /* This will be dynamically updated by JS to cut out the focus window */
+}
+
+/* Ensure widget and trigger stay above ADHD overlay */
+body.profile-adhd #accessibilityWidget,
+body.profile-adhd #accessibilityTrigger {
+    z-index: 10000 !important;
 }
 
 body.profile-cognitive *:not(#accessibilityWidget):not(#accessibilityWidget *):not(#accessibilityTrigger):not(#accessibilityTrigger *) {
@@ -670,7 +703,15 @@ body.profile-cognitive *:not(#accessibilityWidget):not(#accessibilityWidget *):n
 }
 
 body.profile-motor *:focus:not(#accessibilityWidget):not(#accessibilityWidget *):not(#accessibilityTrigger):not(#accessibilityTrigger *) {
-    outline: 2px solid #0076B4;
+    outline: 3px solid #0076B4 !important;
+    outline-offset: 3px !important;
+    box-shadow: 0 0 0 6px rgba(0, 118, 180, 0.3) !important;
+}
+
+body.profile-motor *:focus-visible:not(#accessibilityWidget):not(#accessibilityWidget *):not(#accessibilityTrigger):not(#accessibilityTrigger *) {
+    outline: 3px solid #0076B4 !important;
+    outline-offset: 3px !important;
+    box-shadow: 0 0 0 6px rgba(0, 118, 180, 0.3) !important;
 }
 
 body.profile-blind:not(#accessibilityWidget) {
@@ -746,7 +787,7 @@ body.big-black-cursor input[type="submit"]:not(#accessibilityWidget *):not(#acce
 body.big-black-cursor input[type="button"]:not(#accessibilityWidget *):not(#accessibilityTrigger *),
 body.big-black-cursor select:not(#accessibilityWidget *):not(#accessibilityTrigger *),
 body.big-black-cursor .clickable:not(#accessibilityWidget *):not(#accessibilityTrigger *) {
-    cursor: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiI+PHBhdGggZD0iTTQzLjQgMjEuM2MwLS4yLS4xLTEuNS0xLjMtMi44LTEuMi0xLjQtMy4yLTIuMS01LjctMi4zLS4yLS40LS42LS44LTEuMS0xLjEtMS40LTEtMy43LTEuNi02LjUtMS43LS4yLS4zLS43LS43LTEuMi0xLTEuMy0uOS0yLjktMS40LTQuOS0xLjZ2LTVjMC0uNSAwLTIuNi0xLjQtNC4xLS43LS43LTEuOS0xLjUtNC0xLjVzLTMuNC44LTQuMSAxLjVjLTEuNCAxLjQtMS40IDMuMy0xLjQgMy44djE3LjljLTEuMi0xLjItMi42LTIuNi0zLjQtMy4xLTEuNi0xLjItNC43LS42LTYuNS43LTEuNyAxLjItMi4zIDMtMS42IDQuOCAxLjIgMy4xIDQuMSA2LjMgNC44IDcgLjcgMS4yIDMuNiA2LjQgNi4yIDguMyAxLjQgMSAyLjQgNS4xIDIuNyA3LjhsLjEgMS40aDI0LjZ2LTYuMmMuMy0uOSAxLjEtMi44IDItMy42IDItMiAyLjctNi45IDIuNy04LjNWMjEuM3oiIHN0eWxlPSJzdHJva2U6I2ZmZjtzdHJva2Utd2lkdGg6MjtzdHJva2UtbWl0ZXJsaW1pdDoxMDt0cmFuc2Zvcm06c2NhbGUoLjY0KSIvPjwvc3ZnPg==") 20 -5, pointer !important;
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="40" viewBox="0 0 32 40"><path d="M8 0 L8 16 L4 16 L12 24 L20 16 L16 16 L16 8 L24 8 L24 12 L32 4 L24 -4 L24 0 Z" fill="black" stroke="white" stroke-width="1"/><path d="M6 14 L6 18 L10 22 L14 22 L10 18 L10 14 Z M18 6 L18 10 L22 10 L22 6 Z" fill="black"/></svg>') 8 0, pointer !important;
 }
 
 /* Big White Cursor */
@@ -763,8 +804,7 @@ body.big-white-cursor input[type="submit"]:not(#accessibilityWidget *):not(#acce
 body.big-white-cursor input[type="button"]:not(#accessibilityWidget *):not(#accessibilityTrigger *),
 body.big-white-cursor select:not(#accessibilityWidget *):not(#accessibilityTrigger *),
 body.big-white-cursor .clickable:not(#accessibilityWidget *):not(#accessibilityTrigger *) {
-    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiI+PHBhdGggZD0iTTQ1LjQgMTguNWMtMS4yLTEuNC0zLjItMi4xLTUuNy0yLjMtLjItLjQtLjYtLjgtMS4xLTEuMS0xLjQtMS0zLjctMS42LTYuNS0xLjctLjItLjMtLjctLjctMS4yLTEtMS4zLS45LTIuOS0xLjQtNC45LTEuNnYtNWMwLS41IDAtMi42LTEuNC00LjEtLjctLjctMS45LTEuNS00LTEuNXMtMy40LjgtNC4xIDEuNWMtMS40IDEuNC0xLjQgMy4zLTEuNCAzLjh2MTcuOWMtMS4yLTEuMi0yLjYtMi42LTMuNC0zLjEtMS42LTEuMi00LjctLjYtNi41LjctMS43IDEuMi0yLjMgMy0xLjYgNC44IDEuMiAzLjEgNC4xIDYuMyA0LjggNyAuNyAxLjIgMy42IDYuNCA2LjIgOC4zIDEuNCAxIDIuNCA1LjEgMi43IDcuOGwuMSAxLjRINDJ2LTYuMmMuMy0uOSAxLjEtMi44IDItMy42IDItMiAyLjctNi45IDIuNy04LjNWMjEuM2MwLS4yLS4xLTEuNS0xLjMtMi44eiIgc3R5bGU9ImZpbGw6I2ZmZiFpbXBvcnRhbnQ7c3Ryb2tlOiMwMDA7c3Ryb2tlLXdpZHRoOjI7c3Ryb2tlLW1pdGVybGltaXQ6MTA7dHJhbnNmb3JtOnNjYWxlKC42NCkiLz48L3N2Zz4=') 20 -5, pointer !important;
-
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="40" viewBox="0 0 32 40"><path d="M8 0 L8 16 L4 16 L12 24 L20 16 L16 16 L16 8 L24 8 L24 12 L32 4 L24 -4 L24 0 Z" fill="white" stroke="black" stroke-width="1"/><path d="M6 14 L6 18 L10 22 L14 22 L10 18 L10 14 Z M18 6 L18 10 L22 10 L22 6 Z" fill="white"/></svg>') 8 0, pointer !important;
 }
 
 body.hideImages img:not(#accessibilityWidget img):not(#accessibilityWidget *) {
@@ -821,7 +861,7 @@ body.readingGuide::after {
     transform: translate(-50%, -50%);
     width: 100%;
     max-width: 500px;
-    height: 5px;
+    height: 3px;
     background: var(--primary);
     pointer-events: none;
     z-index: 9997;
@@ -1009,26 +1049,264 @@ body.read-mode a:not(header a):not([role="navigation"] a):not(#accessibilityWidg
 /* Show images */
 body.read-mode img:not(#accessibilityWidget img):not(#accessibilityWidget *) {
     display: block !important;
+    max-width: 100% !important;
+    height: auto !important;
     margin: 20px auto !important;
     border-radius: 4px !important;
 }
 
 /* Show containers for layout */
-body.read-mode div:not(#accessibilityWidget):not(#accessibilityWidget *):not(.navbar-toggle):not(.navbar-brand):not([class*="ad"]):not([class*="banner"]):not(#accessibilityTrigger) {
+body.read-mode div:not(#accessibilityWidget):not(#accessibilityWidget *):not(.navbar-toggle):not(.navbar-brand):not([class*="ad"]):not([class*="banner"]) {
     display: block !important;
     background: transparent !important;
 }
 
 /* ---------------- HIGHLIGHT FOCUS ---------------- */
 body.emphasize-focus *:focus:not(#accessibilityWidget *):not(#accessibilityTrigger *) {
-    outline: 4px solid #ff6b6b !important;
-    outline-offset: 4px !important;
-    box-shadow: 0 0 0 6px rgba(255, 107, 107, 0.2) !important;
+    outline: solid 2px rgba(99, 154, 249, 1) !important;
+    outline-offset: 1px !important;
+    box-shadow: inset 0 0 0 2px rgba(255, 114, 22, 0.5) !important;
+    position: relative !important;
+    z-index: 1 !important;
+}
+
+/* Enhanced focus for interactive elements */
+body.emphasize-focus a:focus:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-focus button:focus:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-focus input:focus:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-focus textarea:focus:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-focus select:focus:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-focus [tabindex]:focus:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-focus [role="button"]:focus:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-focus [role="link"]:focus:not(#accessibilityWidget *):not(#accessibilityTrigger *) {
+    outline: solid 2px rgba(99, 154, 249, 1) !important;
+    outline-offset: 1px !important;
+    box-shadow: inset 0 0 0 2px rgba(255, 114, 22, 0.5) !important;
+    position: relative !important;
+    z-index: 100 !important;
+}
+
+/* Remove the pulse animation */
+
+/* Ensure focus is visible on all focusable elements */
+body.emphasize-focus :focus-visible:not(#accessibilityWidget *):not(#accessibilityTrigger *) {
+    outline: solid 2px rgba(99, 154, 249, 1) !important;
+    outline-offset: 1px !important;
+    box-shadow: inset 0 0 0 2px rgba(255, 114, 22, 0.5) !important;
+}
+
+/* Special focus for form elements */
+body.emphasize-focus input[type="text"]:focus:not(#accessibilityWidget *),
+body.emphasize-focus input[type="email"]:focus:not(#accessibilityWidget *),
+body.emphasize-focus input[type="password"]:focus:not(#accessibilityWidget *),
+body.emphasize-focus input[type="search"]:focus:not(#accessibilityWidget *),
+body.emphasize-focus input[type="tel"]:focus:not(#accessibilityWidget *),
+body.emphasize-focus input[type="url"]:focus:not(#accessibilityWidget *),
+body.emphasize-focus input[type="number"]:focus:not(#accessibilityWidget *),
+body.emphasize-focus textarea:focus:not(#accessibilityWidget *),
+body.emphasize-focus select:focus:not(#accessibilityWidget *) {
+    outline: solid 2px rgba(99, 154, 249, 1) !important;
+    outline-offset: 1px !important;
+    box-shadow: inset 0 0 0 2px rgba(255, 114, 22, 0.5) !important;
+}
+
+/* Focus indicator for checkboxes and radio buttons */
+body.emphasize-focus input[type="checkbox"]:focus:not(#accessibilityWidget *),
+body.emphasize-focus input[type="radio"]:focus:not(#accessibilityWidget *) {
+    outline: solid 2px rgba(99, 154, 249, 1) !important;
+    outline-offset: 1px !important;
+    box-shadow: inset 0 0 0 2px rgba(255, 114, 22, 0.5) !important;
 }
 
 /* ---------------- HIGHLIGHT HOVER ---------------- */
-body.emphasize-hover *:hover:not(#accessibilityWidget *):not(#accessibilityTrigger *):not(div):not(section):not(i):not(footer):not(a:has(i)):not(img){
-    outline: rgba(255, 114, 22, 0.5) solid 2px !important;
-    outline-offset: 1px !important;
+body.emphasize-hover *:hover:not(#accessibilityWidget *):not(#accessibilityTrigger *) {
+    outline: 3px solid #4ecdc4 !important;
+    outline-offset: 3px !important;
+    background: rgba(78, 205, 196, 0.1) !important;
 }
 
+/* ---------------- KEYBOARD SHORTCUTS OVERLAY ---------------- */
+#keyboard-shortcuts-overlay {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.95);
+    color: white;
+    padding: 30px 40px;
+    border-radius: 12px;
+    z-index: 10001;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    font-family: Arial, sans-serif;
+    max-width: 400px;
+    transition: opacity 0.3s ease;
+}
+
+#keyboard-shortcuts-overlay h3 {
+    margin: 0 0 20px 0 !important;
+    font-size: 24px !important;
+    font-weight: 700 !important;
+    color: #fff !important;
+    text-align: center !important;
+    background: transparent !important;
+    line-height: 1.3 !important;
+}
+
+#keyboard-shortcuts-overlay p {
+    margin: 10px 0 !important;
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+    color: #fff !important;
+    background: transparent !important;
+}
+
+#keyboard-shortcuts-overlay p strong {
+    display: inline-block !important;
+    background: var(--primary, #0076B4) !important;
+    color: white !important;
+    padding: 4px 12px !important;
+    border-radius: 6px !important;
+    font-weight: 700 !important;
+    margin-right: 10px !important;
+    min-width: 30px !important;
+    text-align: center !important;
+}
+
+#keyboard-shortcuts-overlay .shortcuts-note {
+    margin-top: 20px !important;
+    padding-top: 15px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+    font-size: 14px !important;
+    opacity: 0.8 !important;
+    font-style: italic !important;
+}
+
+#keyboard-shortcuts-overlay .shortcuts-close {
+    display: block !important;
+    margin: 20px auto 0 !important;
+    padding: 12px 24px !important;
+    background: var(--primary, #0076B4) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+}
+
+#keyboard-shortcuts-overlay .shortcuts-close:hover {
+    background: #005a8c !important;
+    transform: scale(1.05) !important;
+}
+
+.keyboard-shortcuts-content {
+    text-align: left !important;
+}
+
+/* ---------------- PROFILE CONNECTION ICON ---------------- */
+.profile-connected-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+.profile-connected-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+}
+
+.profile:hover .profile-connected-icon {
+    opacity: 1;
+}
+
+.profile--active .profile-connected-icon {
+    opacity: 1;
+}
+
+/* Make profile position relative for absolute positioning of icon */
+.profile {
+    position: relative;
+}
+
+/* ---------------- SCREEN READER OPTIMIZATIONS ---------------- */
+/* When Screen Reader profile is active, ensure all interactive elements have proper focus */
+body.profile-blind *:focus {
+    outline: 3px solid #0076B4 !important;
+    outline-offset: 3px !important;
+}
+
+/* Ensure text has high contrast for any remaining vision */
+body.profile-blind {
+    background: #000 !important;
+    color: #fff !important;
+}
+
+body.profile-blind *:not(#accessibilityWidget):not(#accessibilityWidget *):not(#accessibilityTrigger):not(#accessibilityTrigger *) {
+    color: #fff !important;
+    background: #000 !important;
+}
+
+/* Make sure links are clearly identifiable */
+body.profile-blind a:not(#accessibilityWidget a):not(#accessibilityTrigger a) {
+    color: #4db8ff !important;
+    text-decoration: underline !important;
+}
+
+/* Ensure buttons are clearly visible */
+body.profile-blind button:not(#accessibilityWidget button):not(#accessibilityTrigger button) {
+    border: 2px solid #fff !important;
+    background: #333 !important;
+    color: #fff !important;
+}
+
+/* ---------------- FOCUS INDICATOR TOOLTIP ---------------- */
+#focus-indicator {
+    position: fixed;
+    background: rgb(1 16 33 / 70%);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    pointer-events: none;
+    z-index: 10002;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    display: none;
+    transition: all 0.2s ease;
+    font-family: Arial, sans-serif;
+}
+
+#focus-indicator.active {
+    display: block;
+}
+
+#focus-indicator::before {
+    content: '🎯 ';
+    margin-right: 5px;
+}
+
+/* Keyboard shortcuts overlay sections */
+.shortcuts-section {
+    margin: 15px 0;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.shortcuts-section:last-of-type {
+    border-bottom: none;
+}
+
+.shortcuts-section h4 {
+    margin: 0 0 10px 0 !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #4db8ff !important;
+    background: transparent !important;
+    line-height: 1.3 !important;
+}

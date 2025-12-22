@@ -124,6 +124,17 @@
     magnifierActive: false,
     readingGuideActive: false,
     readingGuideMouseMove: null,
+    adhdFocusActive: false,
+    adhdFocusMouseMove: null,
+    keyboardNavActive: false,
+    keyboardNavListener: null,
+    focusableElements: [],
+    currentFocusIndex: -1,
+    screenReaderActive: false,
+    screenReaderSpeaking: false,
+    speechSynthesis: null,
+    focusTrackingActive: false,
+    focusTrackingListener: null,
   
     init:function(){
       // Store original computed line-height
@@ -359,6 +370,830 @@
       }
     },
   
+    // ---------------- SETUP ADHD FOCUS LISTENERS ----------------
+    setupAdhdFocusListeners:function(){
+      var self = this;
+      
+      console.log('🎯 Setting up ADHD focus listeners...');
+      
+      // Remove old listener if it exists
+      if(this.adhdFocusMouseMove){
+        document.removeEventListener('mousemove', this.adhdFocusMouseMove);
+      }
+      
+      // Create CSS rule for ADHD focus window position
+      var styleId = 'adhd-focus-style';
+      var existingStyle = document.getElementById(styleId);
+      if(existingStyle){
+        existingStyle.remove();
+      }
+      
+      var style = document.createElement('style');
+      style.id = styleId;
+      document.head.appendChild(style);
+      
+      console.log('✅ Style element created');
+      
+      // Define listener
+      this.adhdFocusMouseMove = function(e){
+        var y = e.clientY;
+        var focusHeight = 175;
+        var halfHeight = focusHeight / 2;
+        
+        // Calculate the top and bottom of the focus window
+        var focusTop = Math.max(0, y - halfHeight);
+        var focusBottom = Math.min(window.innerHeight, y + halfHeight);
+        
+        // Update the clip-path to cut out the focus area from the overlay
+        if(style.sheet){
+          // Clear existing rules
+          while(style.sheet.cssRules.length > 0){
+            style.sheet.deleteRule(0);
+          }
+          
+          // Create clip-path that covers everything EXCEPT the focus window
+          // This creates a "hole" in the overlay where the user can see clearly
+          var clipPath = 'polygon(' +
+            '0% 0%, ' +                    // Top-left corner
+            '100% 0%, ' +                  // Top-right corner
+            '100% ' + focusTop + 'px, ' +  // Right side down to focus top
+            '0% ' + focusTop + 'px, ' +    // Left side at focus top
+            '0% ' + focusBottom + 'px, ' + // Left side at focus bottom (creates the hole)
+            '100% ' + focusBottom + 'px, ' + // Right side at focus bottom
+            '100% 100%, ' +                // Right side to bottom
+            '0% 100%' +                    // Bottom-left corner
+          ')';
+          
+          style.sheet.insertRule('body.profile-adhd::before { clip-path: ' + clipPath + ' !important; }', 0);
+        }
+      };
+      
+      // Add listener
+      document.addEventListener('mousemove', this.adhdFocusMouseMove);
+      
+      // Trigger once to set initial position
+      var initialEvent = {clientY: window.innerHeight / 2};
+      this.adhdFocusMouseMove(initialEvent);
+      
+      console.log('✅ Mouse move listener added');
+    },
+  
+    // ---------------- REMOVE ADHD FOCUS LISTENERS ----------------
+    removeAdhdFocusListeners:function(){
+      if(this.adhdFocusMouseMove){
+        document.removeEventListener('mousemove', this.adhdFocusMouseMove);
+      }
+      
+      // Remove the style element
+      var styleId = 'adhd-focus-style';
+      var existingStyle = document.getElementById(styleId);
+      if(existingStyle){
+        existingStyle.remove();
+      }
+    },
+  
+    // ---------------- SETUP KEYBOARD NAVIGATION ----------------
+    setupKeyboardNavigation:function(){
+      var self = this;
+      
+      console.log('⌨️ Setting up keyboard navigation...');
+      
+      // Remove old listener if it exists
+      if(this.keyboardNavListener){
+        document.removeEventListener('keydown', this.keyboardNavListener);
+      }
+      
+      // Define keyboard shortcuts
+      this.keyboardNavListener = function(e){
+        // Ignore if typing in input fields
+        if(e.target.matches('input, textarea, select, [contenteditable]')){
+          return;
+        }
+        
+        var key = e.key.toLowerCase();
+        
+        switch(key){
+          case 'm':
+            // Jump to menus/navigation
+            e.preventDefault();
+            var nav = document.querySelector('nav, [role="navigation"], header nav');
+            if(nav){
+              nav.focus();
+              nav.scrollIntoView({behavior: 'smooth', block: 'center'});
+              self.speak('Jumped to menu navigation', true);
+              console.log('📍 Jumped to menu');
+            }
+            break;
+            
+          case 'h':
+            // Jump to next heading
+            e.preventDefault();
+            var headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            if(headings.length > 0){
+              self.currentFocusIndex = (self.currentFocusIndex + 1) % headings.length;
+              var heading = headings[self.currentFocusIndex];
+              heading.setAttribute('tabindex', '-1');
+              heading.focus();
+              heading.scrollIntoView({behavior: 'smooth', block: 'center'});
+              var headingText = heading.textContent.trim();
+              var level = heading.tagName.charAt(1);
+              self.speak('Heading level ' + level + ': ' + headingText, true);
+              console.log('📍 Jumped to heading:', headingText);
+            }
+            break;
+            
+          case 'p':
+            // Jump to next paragraph and READ IT
+            e.preventDefault();
+            var paragraphs = document.querySelectorAll('p:not(#accessibilityWidget p):not(#accessibilityTrigger p)');
+            if(paragraphs.length > 0){
+              self.currentFocusIndex = (self.currentFocusIndex + 1) % paragraphs.length;
+              var paragraph = paragraphs[self.currentFocusIndex];
+              paragraph.setAttribute('tabindex', '-1');
+              paragraph.focus();
+              paragraph.scrollIntoView({behavior: 'smooth', block: 'center'});
+              var paragraphText = paragraph.textContent.trim();
+              self.speak('Paragraph: ' + paragraphText, true);
+              console.log('📍 Reading paragraph:', paragraphText.substring(0, 50) + '...');
+            }
+            break;
+            
+          case 'r':
+            // Read all content from current position
+            e.preventDefault();
+            self.readAllContent();
+            break;
+            
+          case 's':
+            // Stop reading
+            e.preventDefault();
+            if(window.speechSynthesis){
+              window.speechSynthesis.cancel();
+              self.speak('Stopped reading', true);
+              console.log('⏹️ Stopped reading');
+            }
+            break;
+            
+          case '?':
+            // Help - repeat instructions
+            e.preventDefault();
+            if(window.speechSynthesis){
+              window.speechSynthesis.cancel();
+            }
+            self.speak('Keyboard shortcuts help. For navigation: Press M for menus, H for headings, B for buttons, F for forms, G for graphics, L for links. For reading content: Press P for paragraphs, T for text blocks, R to read all page content, or S to stop reading. Press question mark at any time to hear these instructions again.', true);
+            console.log('❓ Announced help instructions');
+            break;
+            
+          case 't':
+            // Jump to next text block (paragraphs, divs with text, spans with text)
+            e.preventDefault();
+            var textBlocks = document.querySelectorAll('p, div, span, li, td, th, blockquote, article, section');
+            var textElements = [];
+            
+            // Filter to only elements with direct text content
+            for(var i = 0; i < textBlocks.length; i++){
+              var elem = textBlocks[i];
+              // Skip widget elements
+              if(elem.closest('#accessibilityWidget') || elem.closest('#accessibilityTrigger')){
+                continue;
+              }
+              // Check if element has text
+              var text = elem.textContent.trim();
+              if(text && text.length > 20){
+                textElements.push(elem);
+              }
+            }
+            
+            if(textElements.length > 0){
+              self.currentFocusIndex = (self.currentFocusIndex + 1) % textElements.length;
+              var textElem = textElements[self.currentFocusIndex];
+              textElem.setAttribute('tabindex', '-1');
+              textElem.focus();
+              textElem.scrollIntoView({behavior: 'smooth', block: 'center'});
+              var text = textElem.textContent.trim();
+              // Limit spoken text length
+              if(text.length > 300){
+                text = text.substring(0, 300) + '... continued';
+              }
+              self.speak(text, true);
+              console.log('📍 Reading text:', text.substring(0, 50) + '...');
+            }
+            break;
+            
+          case 'f':
+            // Jump to next form
+            e.preventDefault();
+            var forms = document.querySelectorAll('form, input, textarea, select');
+            if(forms.length > 0){
+              self.currentFocusIndex = (self.currentFocusIndex + 1) % forms.length;
+              var form = forms[self.currentFocusIndex];
+              form.focus();
+              form.scrollIntoView({behavior: 'smooth', block: 'center'});
+              self.speak('Jumped to form element', true);
+              console.log('📍 Jumped to form element');
+            }
+            break;
+            
+          case 'b':
+            // Jump to next button
+            e.preventDefault();
+            var buttons = document.querySelectorAll('button, [role="button"], input[type="submit"], input[type="button"]');
+            if(buttons.length > 0){
+              self.currentFocusIndex = (self.currentFocusIndex + 1) % buttons.length;
+              var button = buttons[self.currentFocusIndex];
+              button.focus();
+              button.scrollIntoView({behavior: 'smooth', block: 'center'});
+              var buttonText = button.textContent.trim() || button.getAttribute('aria-label') || 'unlabeled button';
+              self.speak('Button: ' + buttonText, true);
+              console.log('📍 Jumped to button');
+            }
+            break;
+            
+          case 'g':
+            // Jump to next graphic/image
+            e.preventDefault();
+            var graphics = document.querySelectorAll('img, svg, canvas, [role="img"]');
+            if(graphics.length > 0){
+              self.currentFocusIndex = (self.currentFocusIndex + 1) % graphics.length;
+              var graphic = graphics[self.currentFocusIndex];
+              graphic.setAttribute('tabindex', '-1');
+              graphic.focus();
+              graphic.scrollIntoView({behavior: 'smooth', block: 'center'});
+              var altText = graphic.getAttribute('alt') || graphic.getAttribute('aria-label') || 'image';
+              self.speak('Graphic: ' + altText, true);
+              console.log('📍 Jumped to graphic');
+            }
+            break;
+            
+          case 'l':
+            // Jump to next link
+            e.preventDefault();
+            var links = document.querySelectorAll('a[href]');
+            if(links.length > 0){
+              self.currentFocusIndex = (self.currentFocusIndex + 1) % links.length;
+              var link = links[self.currentFocusIndex];
+              link.focus();
+              link.scrollIntoView({behavior: 'smooth', block: 'center'});
+              var linkText = link.textContent.trim() || link.getAttribute('aria-label') || 'unlabeled link';
+              self.speak('Link: ' + linkText, true);
+              console.log('📍 Jumped to link');
+            }
+            break;
+        }
+      };
+      
+      // Add listener
+      document.addEventListener('keydown', this.keyboardNavListener);
+      
+      // Show keyboard shortcuts overlay
+      this.showKeyboardShortcutsOverlay();
+      
+      // Announce shortcuts via audio if screen reader is active
+      if(this.screenReaderActive){
+        setTimeout(function(){
+          self.speak('Keyboard shortcuts are now active. Press M for menus, H for headings, B for buttons, F for forms, G for graphics, L for links. For reading content: Press P for paragraphs, T for text blocks, R to read all, or S to stop.', true);
+        }, 1000);
+      }
+      
+      console.log('✅ Keyboard navigation enabled');
+      console.log('📋 Shortcuts: M (menus), H (headings), F (forms), B (buttons), G (graphics), L (links), P (paragraphs), T (text), R (read all), S (stop)');
+    },
+  
+    // ---------------- REMOVE KEYBOARD NAVIGATION ----------------
+    removeKeyboardNavigation:function(){
+      if(this.keyboardNavListener){
+        document.removeEventListener('keydown', this.keyboardNavListener);
+        this.keyboardNavListener = null;
+      }
+      
+      // Remove shortcuts overlay
+      this.hideKeyboardShortcutsOverlay();
+      
+      console.log('❌ Keyboard navigation disabled');
+    },
+  
+    // ---------------- SHOW KEYBOARD SHORTCUTS OVERLAY ----------------
+    showKeyboardShortcutsOverlay:function(){
+      // Remove existing overlay if present
+      var existingOverlay = document.getElementById('keyboard-shortcuts-overlay');
+      if(existingOverlay){
+        existingOverlay.remove();
+      }
+      
+      var overlay = document.createElement('div');
+      overlay.id = 'keyboard-shortcuts-overlay';
+      overlay.innerHTML = 
+        '<div class="keyboard-shortcuts-content">' +
+          '<h3>⌨️ Keyboard Navigation Active</h3>' +
+          '<div class="shortcuts-section">' +
+            '<h4>Navigation</h4>' +
+            '<p><strong>M</strong> - Jump to Menus</p>' +
+            '<p><strong>H</strong> - Jump to Headings</p>' +
+            '<p><strong>L</strong> - Jump to Links</p>' +
+            '<p><strong>B</strong> - Jump to Buttons</p>' +
+            '<p><strong>F</strong> - Jump to Forms</p>' +
+            '<p><strong>G</strong> - Jump to Graphics</p>' +
+          '</div>' +
+          '<div class="shortcuts-section">' +
+            '<h4>Reading Content</h4>' +
+            '<p><strong>P</strong> - Read Next Paragraph</p>' +
+            '<p><strong>T</strong> - Read Next Text Block</p>' +
+            '<p><strong>R</strong> - Read All Content</p>' +
+            '<p><strong>S</strong> - Stop Reading</p>' +
+            '<p><strong>?</strong> - Hear Instructions Again</p>' +
+          '</div>' +
+          '<p class="shortcuts-note">Use Tab/Shift+Tab for normal navigation</p>' +
+          '<button class="shortcuts-close">Got it!</button>' +
+        '</div>';
+      
+      document.body.appendChild(overlay);
+      
+      // Close button
+      overlay.querySelector('.shortcuts-close').addEventListener('click', function(){
+        overlay.style.display = 'none';
+      });
+      
+      // Auto-hide after 8 seconds (longer since there's more content)
+      setTimeout(function(){
+        if(overlay && overlay.style.display !== 'none'){
+          overlay.style.opacity = '0';
+          setTimeout(function(){
+            if(overlay){
+              overlay.style.display = 'none';
+            }
+          }, 300);
+        }
+      }, 8000);
+    },
+  
+    // ---------------- HIDE KEYBOARD SHORTCUTS OVERLAY ----------------
+    hideKeyboardShortcutsOverlay:function(){
+      var overlay = document.getElementById('keyboard-shortcuts-overlay');
+      if(overlay){
+        overlay.remove();
+      }
+    },
+  
+    // ---------------- ENHANCE SCREEN READER COMPATIBILITY ----------------
+    enhanceScreenReaderCompatibility:function(){
+      console.log('🔊 Enhancing screen reader compatibility...');
+      
+      // Add ARIA labels to images without alt text
+      var images = document.querySelectorAll('img:not([alt]):not(#accessibilityWidget img):not(#accessibilityTrigger img)');
+      images.forEach(function(img){
+        img.setAttribute('alt', 'Image');
+        img.setAttribute('role', 'img');
+      });
+      
+      // Add ARIA labels to links without text
+      var links = document.querySelectorAll('a:not([aria-label]):not(#accessibilityWidget a):not(#accessibilityTrigger a)');
+      links.forEach(function(link){
+        if(!link.textContent.trim()){
+          link.setAttribute('aria-label', 'Link');
+        }
+      });
+      
+      // Add ARIA labels to buttons without text
+      var buttons = document.querySelectorAll('button:not([aria-label]):not(#accessibilityWidget button):not(#accessibilityTrigger button)');
+      buttons.forEach(function(button){
+        if(!button.textContent.trim()){
+          button.setAttribute('aria-label', 'Button');
+        }
+      });
+      
+      // Add role and aria-label to main content areas
+      var main = document.querySelector('main:not(#accessibilityWidget):not(#accessibilityTrigger)');
+      if(main && !main.getAttribute('role')){
+        main.setAttribute('role', 'main');
+      }
+      
+      // Add landmarks if missing
+      var nav = document.querySelector('nav:not(#accessibilityWidget):not(#accessibilityTrigger)');
+      if(nav && !nav.getAttribute('role')){
+        nav.setAttribute('role', 'navigation');
+      }
+      
+      var header = document.querySelector('header:not(#accessibilityWidget):not(#accessibilityTrigger)');
+      if(header && !header.getAttribute('role')){
+        header.setAttribute('role', 'banner');
+      }
+      
+      var footer = document.querySelector('footer:not(#accessibilityWidget):not(#accessibilityTrigger)');
+      if(footer && !footer.getAttribute('role')){
+        footer.setAttribute('role', 'contentinfo');
+      }
+      
+      console.log('✅ Screen reader enhancements applied');
+    },
+  
+    // ---------------- REMOVE SCREEN READER ENHANCEMENTS ----------------
+    removeScreenReaderEnhancements:function(){
+      console.log('🔇 Removing screen reader enhancements...');
+      // Note: We don't remove ARIA labels as they don't hurt when profile is off
+      // and removing them could break existing accessibility
+    },
+  
+    // ---------------- SPEAK TEXT (TEXT-TO-SPEECH) ----------------
+    speak:function(text, interrupt){
+      if(!this.screenReaderActive) return;
+      
+      // Check if speech synthesis is available
+      if(!window.speechSynthesis){
+        console.warn('⚠️ Speech synthesis not available in this browser');
+        return;
+      }
+      
+      // Cancel current speech if interrupt is true
+      if(interrupt){
+        window.speechSynthesis.cancel();
+      }
+      
+      // Create utterance
+      var utterance = new SpeechSynthesisUtterance(text);
+      utterance.rate = 1.0;
+      utterance.pitch = 1.0;
+      utterance.volume = 1.0;
+      utterance.lang = 'en-US';
+      
+      // Speak
+      window.speechSynthesis.speak(utterance);
+      
+      console.log('🔊 Speaking:', text);
+    },
+  
+    // ---------------- SETUP SCREEN READER ----------------
+    setupScreenReader:function(){
+      var self = this;
+      
+      console.log('🔊 Setting up screen reader with audio...');
+      
+      this.screenReaderActive = true;
+      
+      // Announce activation with full instructions
+      setTimeout(function(){
+        self.speak('Screen reader mode activated. Keyboard navigation enabled.', true);
+        
+        // Wait for first announcement to finish, then give instructions
+        setTimeout(function(){
+          self.speak('You now have complete access to all page content through audio. You can jump around the page using keyboard shortcuts: Press M for menus, H for headings, B for buttons, F for forms, G for graphics, and L for links. To read text content, press P for paragraphs, T for text blocks, or R to listen to everything on the page. Press S to stop reading at any time.', false);
+        }, 3000);
+      }, 500);
+      
+      // Add focus listeners to all interactive elements
+      this.addScreenReaderFocusListeners();
+      
+      // Add click listeners to announce clicks
+      this.addScreenReaderClickListeners();
+      
+      console.log('✅ Screen reader audio enabled');
+    },
+  
+    // ---------------- ADD SCREEN READER FOCUS LISTENERS ----------------
+    addScreenReaderFocusListeners:function(){
+      var self = this;
+      
+      // Get all focusable elements
+      var focusableSelector = 'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"]), [role="button"], [role="link"]';
+      
+      // Add focus listener to document for event delegation
+      document.addEventListener('focus', function(e){
+        if(!self.screenReaderActive) return;
+        
+        var target = e.target;
+        
+        // Skip if it's the widget or trigger
+        if(target.closest('#accessibilityWidget') || target.closest('#accessibilityTrigger')){
+          return;
+        }
+        
+        // Check if target matches focusable elements
+        if(target.matches(focusableSelector)){
+          var text = self.getElementDescription(target);
+          if(text){
+            self.speak(text, true);
+          }
+        }
+      }, true);
+      
+      console.log('✅ Screen reader focus listeners added');
+    },
+  
+    // ---------------- ADD SCREEN READER CLICK LISTENERS ----------------
+    addScreenReaderClickListeners:function(){
+      var self = this;
+      
+      document.addEventListener('click', function(e){
+        if(!self.screenReaderActive) return;
+        
+        var target = e.target;
+        
+        // Skip if it's the widget or trigger
+        if(target.closest('#accessibilityWidget') || target.closest('#accessibilityTrigger')){
+          return;
+        }
+        
+        // Announce clicks on interactive elements
+        if(target.matches('button, [role="button"], a, [onclick]')){
+          var text = self.getElementDescription(target);
+          if(text){
+            self.speak('Clicked: ' + text, true);
+          }
+        }
+      }, true);
+      
+      console.log('✅ Screen reader click listeners added');
+    },
+  
+    // ---------------- GET ELEMENT DESCRIPTION FOR SCREEN READER ----------------
+    getElementDescription:function(element){
+      var description = '';
+      
+      // Get element type
+      var tagName = element.tagName.toLowerCase();
+      var role = element.getAttribute('role');
+      
+      // Get text content
+      var text = element.getAttribute('aria-label') || 
+                 element.getAttribute('title') || 
+                 element.textContent.trim() ||
+                 element.getAttribute('alt') ||
+                 element.getAttribute('placeholder') ||
+                 element.getAttribute('value');
+      
+      // Build description
+      if(tagName === 'a'){
+        description = 'Link: ' + (text || 'unlabeled link');
+      } else if(tagName === 'button' || role === 'button'){
+        description = 'Button: ' + (text || 'unlabeled button');
+      } else if(tagName === 'input'){
+        var type = element.getAttribute('type') || 'text';
+        description = type.charAt(0).toUpperCase() + type.slice(1) + ' input: ' + (text || 'empty');
+      } else if(tagName === 'textarea'){
+        description = 'Text area: ' + (text || 'empty');
+      } else if(tagName === 'select'){
+        var selectedOption = element.options[element.selectedIndex];
+        description = 'Dropdown: ' + (selectedOption ? selectedOption.text : text || 'no selection');
+      } else if(tagName === 'h1' || tagName === 'h2' || tagName === 'h3' || tagName === 'h4' || tagName === 'h5' || tagName === 'h6'){
+        description = 'Heading level ' + tagName.charAt(1) + ': ' + text;
+      } else if(text){
+        description = text;
+      }
+      
+      // Limit length
+      if(description.length > 200){
+        description = description.substring(0, 200) + '... continued';
+      }
+      
+      return description;
+    },
+  
+    // ---------------- REMOVE SCREEN READER ----------------
+    removeScreenReader:function(){
+      console.log('🔇 Disabling screen reader audio...');
+      
+      this.screenReaderActive = false;
+      
+      // Stop any ongoing speech
+      if(window.speechSynthesis){
+        window.speechSynthesis.cancel();
+      }
+      
+      // Announce deactivation
+      var self = this;
+      setTimeout(function(){
+        if(window.speechSynthesis){
+          var utterance = new SpeechSynthesisUtterance('Screen reader mode deactivated');
+          window.speechSynthesis.speak(utterance);
+        }
+      }, 100);
+      
+      console.log('✅ Screen reader audio disabled');
+    },
+  
+    // ---------------- SETUP FOCUS TRACKING ----------------
+    setupFocusTracking:function(){
+      var self = this;
+      
+      console.log('🎯 Setting up focus tracking...');
+      
+      this.focusTrackingActive = true;
+      
+      // Create focus indicator tooltip
+      var focusIndicator = document.getElementById('focus-indicator');
+      if(!focusIndicator){
+        focusIndicator = document.createElement('div');
+        focusIndicator.id = 'focus-indicator';
+        document.body.appendChild(focusIndicator);
+      }
+      
+      // Remove old listener if exists
+      if(this.focusTrackingListener){
+        document.removeEventListener('focusin', this.focusTrackingListener, true);
+      }
+      
+      // Add focus tracking listener
+      this.focusTrackingListener = function(e){
+        var target = e.target;
+        
+        // Skip widget and trigger
+        if(target.closest('#accessibilityWidget') || target.closest('#accessibilityTrigger')){
+          focusIndicator.classList.remove('active');
+          return;
+        }
+        
+        // Get element description
+        var elementInfo = '';
+        var tagName = target.tagName.toLowerCase();
+        
+        if(tagName === 'a'){
+          elementInfo = 'Link: ' + (target.textContent.trim() || 'No text');
+        } else if(tagName === 'button' || target.getAttribute('role') === 'button'){
+          elementInfo = 'Button: ' + (target.textContent.trim() || target.getAttribute('aria-label') || 'No label');
+        } else if(tagName === 'input'){
+          var type = target.getAttribute('type') || 'text';
+          elementInfo = type.charAt(0).toUpperCase() + type.slice(1) + ' Input';
+        } else if(tagName === 'textarea'){
+          elementInfo = 'Text Area';
+        } else if(tagName === 'select'){
+          elementInfo = 'Dropdown';
+        } else if(['h1','h2','h3','h4','h5','h6'].indexOf(tagName) !== -1){
+          elementInfo = 'Heading ' + tagName.charAt(1);
+        } else {
+          elementInfo = tagName.charAt(0).toUpperCase() + tagName.slice(1);
+        }
+        
+        // Log focus for debugging
+        console.log('🎯 Focus on:', elementInfo);
+        
+        // Show focus indicator
+        focusIndicator.textContent = elementInfo;
+        focusIndicator.classList.add('active');
+        
+        // Position indicator near focused element
+        var rect = target.getBoundingClientRect();
+        var top = rect.top - 45;
+        var left = rect.left + (rect.width / 2);
+        
+        // Keep on screen
+        if(top < 10) top = rect.bottom + 10;
+        if(left < 10) left = 10;
+        if(left > window.innerWidth - 200) left = window.innerWidth - 200;
+        
+        focusIndicator.style.top = top + 'px';
+        focusIndicator.style.left = left + 'px';
+        focusIndicator.style.transform = 'translateX(-50%)';
+        
+        // Ensure element is visible
+        if(target.scrollIntoView){
+          target.scrollIntoView({behavior: 'smooth', block: 'center', inline: 'nearest'});
+        }
+        
+        // Auto-hide after 3 seconds
+        setTimeout(function(){
+          focusIndicator.classList.remove('active');
+        }, 3000);
+      };
+      
+      document.addEventListener('focusin', this.focusTrackingListener, true);
+      
+      // Hide indicator when focus is lost
+      document.addEventListener('focusout', function(){
+        setTimeout(function(){
+          if(!document.activeElement || document.activeElement === document.body){
+            focusIndicator.classList.remove('active');
+          }
+        }, 100);
+      }, true);
+      
+      console.log('✅ Focus tracking enabled - all focus changes will be highlighted with visual indicator');
+    },
+  
+    // ---------------- REMOVE FOCUS TRACKING ----------------
+    removeFocusTracking:function(){
+      console.log('❌ Removing focus tracking...');
+      
+      this.focusTrackingActive = false;
+      
+      if(this.focusTrackingListener){
+        document.removeEventListener('focusin', this.focusTrackingListener, true);
+        this.focusTrackingListener = null;
+      }
+      
+      // Remove focus indicator
+      var focusIndicator = document.getElementById('focus-indicator');
+      if(focusIndicator){
+        focusIndicator.classList.remove('active');
+      }
+      
+      console.log('✅ Focus tracking disabled');
+    },
+  
+    // ---------------- READ ALL CONTENT ----------------
+    readAllContent:function(){
+      if(!this.screenReaderActive){
+        console.warn('⚠️ Screen reader not active');
+        return;
+      }
+      
+      console.log('📖 Reading all page content...');
+      
+      // Stop any current speech
+      if(window.speechSynthesis){
+        window.speechSynthesis.cancel();
+      }
+      
+      // Get all readable content
+      var contentElements = document.querySelectorAll(
+        'h1, h2, h3, h4, h5, h6, p, li, td, th, blockquote, article, section, div'
+      );
+      
+      var allText = [];
+      
+      for(var i = 0; i < contentElements.length; i++){
+        var elem = contentElements[i];
+        
+        // Skip widget and trigger
+        if(elem.closest('#accessibilityWidget') || elem.closest('#accessibilityTrigger')){
+          continue;
+        }
+        
+        // Get direct text content (not nested elements)
+        var text = '';
+        for(var j = 0; j < elem.childNodes.length; j++){
+          var node = elem.childNodes[j];
+          if(node.nodeType === 3){ // Text node
+            text += node.textContent.trim() + ' ';
+          }
+        }
+        
+        // If no direct text, get all text (for elements that only have text in children)
+        if(!text.trim() && elem.textContent.trim()){
+          // Only include if element doesn't have other readable children
+          var hasReadableChildren = elem.querySelector('h1, h2, h3, h4, h5, h6, p, li');
+          if(!hasReadableChildren){
+            text = elem.textContent.trim();
+          }
+        }
+        
+        if(text.trim() && text.length > 10){
+          // Add element type for context
+          var tagName = elem.tagName.toLowerCase();
+          if(['h1','h2','h3','h4','h5','h6'].indexOf(tagName) !== -1){
+            allText.push('Heading level ' + tagName.charAt(1) + ': ' + text.trim());
+          } else if(tagName === 'li'){
+            allText.push('List item: ' + text.trim());
+          } else {
+            allText.push(text.trim());
+          }
+        }
+      }
+      
+      if(allText.length === 0){
+        this.speak('No readable content found on this page', true);
+        return;
+      }
+      
+      // Announce start
+      this.speak('Reading all page content. Press S to stop.', true);
+      
+      // Read all content with pauses
+      var self = this;
+      var currentIndex = 0;
+      
+      var readNext = function(){
+        if(currentIndex >= allText.length){
+          setTimeout(function(){
+            self.speak('Finished reading page', true);
+          }, 1000);
+          return;
+        }
+        
+        var text = allText[currentIndex];
+        var utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 1.0;
+        utterance.pitch = 1.0;
+        utterance.volume = 1.0;
+        
+        utterance.onend = function(){
+          currentIndex++;
+          setTimeout(readNext, 500); // Pause between sections
+        };
+        
+        utterance.onerror = function(e){
+          console.error('Speech error:', e);
+          currentIndex++;
+          readNext();
+        };
+        
+        window.speechSynthesis.speak(utterance);
+      };
+      
+      // Start reading after announcement
+      setTimeout(readNext, 2000);
+      
+      console.log('📖 Reading ' + allText.length + ' content blocks');
+    },
+  
     createWidget:function(){
       var self=this;
       this.widget = document.createElement('div');
@@ -444,6 +1279,13 @@
         div.className='profile'+(p.active?' profile--active':'');
         div.tabIndex=0;
         div.dataset.id=p.id;
+        div.setAttribute('role', 'switch');
+        div.setAttribute('aria-checked', p.active ? 'true' : 'false');
+        
+        // Check if this profile is connected to another
+        var isConnected = (p.id === 'motor' || p.id === 'blind');
+        var connectedIcon = isConnected ? '<div class="profile-connected-icon" title="This profile works together with ' + (p.id === 'motor' ? 'Screen Reader' : 'Keyboard Navigation') + '"><svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1075 1024"><path d="M305.308 144.2c-145.386 0-263.245 117.859-263.245 263.245v26.139c0 130.952 106.156 237.105 237.107 237.105V562.421c-71.154 0-128.836-57.683-128.836-128.838v-26.139c0-85.591 69.385-154.975 154.975-154.975h209.109c85.591 0 154.977 69.385 154.977 154.975S600.009 562.42 514.418 562.42H501.35v108.268h13.068c145.388 0 263.245-117.857 263.245-263.244S659.806 144.199 514.418 144.199H305.309zm133.424 472.345c0-85.591 69.385-154.976 154.973-154.976h26.143v-108.27h-26.143c-145.385 0-263.244 117.859-263.244 263.246S448.32 879.79 593.705 879.79h209.111c145.388 0 263.245-117.857 263.245-263.245v-13.071c0-138.167-112.005-250.174-250.173-250.174v108.27c78.372 0 141.906 63.533 141.906 141.904v13.071c0 85.591-69.386 154.977-154.977 154.977H593.706c-85.589 0-154.973-69.386-154.973-154.977z"/></svg></div>' : '';
+        
         div.innerHTML=
           '<div class="profile-content">'+
             '<i class="'+ICONS[p.id]+'"></i>'+
@@ -452,14 +1294,33 @@
               '<span class="profile-content__text">'+p.text+'</span>'+
             '</div>'+
           '</div>'+
-          '<div class="profile-description">'+p.description+'</div>';
+          '<div class="profile-description">'+p.description+'</div>'+
+          connectedIcon;
+        
         div.addEventListener('click',(function(d,pref){
           return function(){ 
+            var newState = !d.classList.contains('profile--active');
             d.classList.toggle('profile--active'); 
-            localStorage.setItem(pref.id, d.classList.contains('profile--active')); 
-            self.applyProfileEffect(pref.id,d.classList.contains('profile--active'));
+            d.setAttribute('aria-checked', newState ? 'true' : 'false');
+            localStorage.setItem(pref.id, newState); 
+            self.applyProfileEffect(pref.id, newState);
           };
         })(div,p));
+        
+        // Keyboard support
+        div.addEventListener('keydown', (function(d,pref){
+          return function(e){
+            if(e.key === 'Enter' || e.key === ' '){
+              e.preventDefault();
+              var newState = !d.classList.contains('profile--active');
+              d.classList.toggle('profile--active');
+              d.setAttribute('aria-checked', newState ? 'true' : 'false');
+              localStorage.setItem(pref.id, newState);
+              self.applyProfileEffect(pref.id, newState);
+            }
+          };
+        })(div,p));
+        
         profilesContainer.appendChild(div);
       }
       content.appendChild(profilesContainer);
@@ -540,50 +1401,17 @@
         }
   
         // Toggle
-        if (a.type === 'toggle') {
-          div.addEventListener(
-            'click',
-            (function (d, aId) {
-              return function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-
-                // Determine the new active state
-                const isActive = d.classList.contains('action-box--active');
-                const newState = !isActive;
-
-                // ----------------- MUTUAL EXCLUSIVITY -----------------
-                if (aId === 'bigBlackCursor' && newState) {
-                  const whiteEl = ACCESSIBILITY.widget.querySelector(
-                    '.action-box[data-id="bigWhiteCursor"]'
-                  );
-                  if (whiteEl) {
-                    whiteEl.classList.remove('action-box--active');
-                    localStorage.setItem('bigWhiteCursor', 'false');
-                    ACCESSIBILITY.applyActionEffect('bigWhiteCursor', false);
-                  }
-                }
-
-                if (aId === 'bigWhiteCursor' && newState) {
-                  const blackEl = ACCESSIBILITY.widget.querySelector(
-                    '.action-box[data-id="bigBlackCursor"]'
-                  );
-                  if (blackEl) {
-                    blackEl.classList.remove('action-box--active');
-                    localStorage.setItem('bigBlackCursor', 'false');
-                    ACCESSIBILITY.applyActionEffect('bigBlackCursor', false);
-                  }
-                }
-
-                // ----------------- APPLY THIS TOGGLE -----------------
-                d.classList.toggle('action-box--active', newState);
-                localStorage.setItem(aId, newState);
-                ACCESSIBILITY.applyActionEffect(aId, newState);
-              };
-            })(div, a.id)
-          );
+        if(a.type==='toggle'){
+          div.addEventListener('click',(function(d,aId){ 
+            return function(e){ 
+              e.preventDefault();
+              e.stopPropagation();
+              d.classList.toggle('action-box--active'); 
+              localStorage.setItem(aId,d.classList.contains('action-box--active')); 
+              ACCESSIBILITY.applyActionEffect(aId,d.classList.contains('action-box--active'));
+            }; 
+          })(div,a.id));
         }
-
   
         actionsContainer.appendChild(div);
       }
@@ -648,6 +1476,7 @@
   
     // ---------------- APPLY EFFECTS ----------------
     applyProfileEffect:function(id,active){
+      console.log('📋 Applying profile:', id, 'Active:', active);
       document.body.classList.toggle('profile-'+id, active);
       
       // Special handling for vision impaired profile
@@ -656,6 +1485,112 @@
           document.documentElement.style.zoom = '1.25';
         } else {
           document.documentElement.style.zoom = '';
+        }
+      }
+      
+      // Special handling for ADHD profile
+      if(id === 'adhd'){
+        console.log('🎯 ADHD profile triggered! Active:', active);
+        if(active){
+          this.setupAdhdFocusListeners();
+          this.adhdFocusActive = true;
+        } else {
+          this.removeAdhdFocusListeners();
+          this.adhdFocusActive = false;
+        }
+      }
+      
+      // Special handling for Keyboard Navigation profile (motor)
+      if(id === 'motor'){
+        console.log('⌨️ Keyboard Navigation profile triggered! Active:', active);
+        if(active){
+          this.setupKeyboardNavigation();
+          this.keyboardNavActive = true;
+          
+          // AUTO-ACTIVATE Screen Reader profile (blind)
+          document.body.classList.add('profile-blind');
+          var blindProfileEl = this.widget.querySelector('.profile[data-id="blind"]');
+          if(blindProfileEl && !blindProfileEl.classList.contains('profile--active')){
+            blindProfileEl.classList.add('profile--active');
+            blindProfileEl.setAttribute('aria-checked', 'true');
+            localStorage.setItem('blind', 'true');
+            console.log('🔗 Auto-activated Screen Reader profile');
+            
+            // Setup screen reader with audio
+            this.setupScreenReader();
+            
+            // Enhance screen reader compatibility
+            this.enhanceScreenReaderCompatibility();
+          }
+        } else {
+          this.removeKeyboardNavigation();
+          this.keyboardNavActive = false;
+          
+          // AUTO-DEACTIVATE Screen Reader profile (blind)
+          document.body.classList.remove('profile-blind');
+          var blindProfileEl = this.widget.querySelector('.profile[data-id="blind"]');
+          if(blindProfileEl && blindProfileEl.classList.contains('profile--active')){
+            blindProfileEl.classList.remove('profile--active');
+            blindProfileEl.setAttribute('aria-checked', 'false');
+            localStorage.setItem('blind', 'false');
+            console.log('🔗 Auto-deactivated Screen Reader profile');
+            
+            // Remove screen reader audio
+            this.removeScreenReader();
+            
+            // Remove screen reader enhancements
+            this.removeScreenReaderEnhancements();
+          }
+        }
+      }
+      
+      // Special handling for Screen Reader profile (blind)
+      if(id === 'blind'){
+        console.log('👁️ Screen Reader profile triggered! Active:', active);
+        if(active){
+          // Setup screen reader with audio
+          this.setupScreenReader();
+          
+          // Enhance screen reader compatibility
+          this.enhanceScreenReaderCompatibility();
+          
+          // AUTO-ACTIVATE Keyboard Navigation profile (motor)
+          document.body.classList.add('profile-motor');
+          var motorProfileEl = this.widget.querySelector('.profile[data-id="motor"]');
+          if(motorProfileEl && !motorProfileEl.classList.contains('profile--active')){
+            motorProfileEl.classList.add('profile--active');
+            motorProfileEl.setAttribute('aria-checked', 'true');
+            localStorage.setItem('motor', 'true');
+            console.log('🔗 Auto-activated Keyboard Navigation profile');
+            
+            // Setup keyboard navigation if not already active
+            if(!this.keyboardNavActive){
+              this.setupKeyboardNavigation();
+              this.keyboardNavActive = true;
+            }
+          }
+        } else {
+          // Remove screen reader audio
+          this.removeScreenReader();
+          
+          // Remove screen reader enhancements
+          this.removeScreenReaderEnhancements();
+          
+          // AUTO-DEACTIVATE Keyboard Navigation profile (motor)
+          document.body.classList.remove('profile-motor');
+          var motorProfileEl = this.widget.querySelector('.profile[data-id="motor"]');
+          if(motorProfileEl && motorProfileEl.classList.contains('profile--active')){
+            motorProfileEl.classList.remove('profile--active');
+            motorProfileEl.setAttribute('aria-checked', 'false');
+            localStorage.setItem('motor', 'false');
+            console.log('🔗 Auto-deactivated Keyboard Navigation profile');
+            
+            // Remove keyboard navigation if active
+            if(this.keyboardNavActive){
+              this.removeKeyboardNavigation();
+              this.keyboardNavActive = false;
+            }
+          }
         }
       }
     },
@@ -840,7 +1775,13 @@
           break;
           
         case 'emphasizeFocus':
-          document.body.classList.toggle('emphasize-focus', !!value);
+          if(value){
+            document.body.classList.add('emphasize-focus');
+            this.setupFocusTracking();
+          } else {
+            document.body.classList.remove('emphasize-focus');
+            this.removeFocusTracking();
+          }
           break;
           
         case 'emphasizeHover':
@@ -861,73 +1802,38 @@
           this.applyProfileEffect(p.id,true);
         }
       }
-
-      // ---- CURSOR MUTUAL EXCLUSION (STATE LEVEL) ----
-      if (localStorage.getItem('bigBlackCursor') === 'true') {
-        localStorage.setItem('bigWhiteCursor', 'false');
-      }
-
       
       // Actions
-      for (var j = 0; j < ACTIONS.length; j++) {
-        var a = ACTIONS[j];
-        var el = this.widget.querySelector('.action-box[data-id="' + a.id + '"]');
-        if (!el) continue;
-
-        /* ---------------- TOGGLE ACTIONS ---------------- */
-        if (a.type === 'toggle') {
-
-          // 🔥 NORMALIZE CURSOR STATE FIRST (this is what you were missing)
-          var blackOn = localStorage.getItem('bigBlackCursor') === 'true';
-          var whiteOn = localStorage.getItem('bigWhiteCursor') === 'true';
-
-          // If both somehow true → black wins
-          if (blackOn && whiteOn) {
-            localStorage.setItem('bigWhiteCursor', 'false');
-            whiteOn = false;
-          }
-
-          // ❌ block white cursor activation entirely if black is on
-          if (a.id === 'bigWhiteCursor' && blackOn) {
-            el.classList.remove('action-box--active');
-            this.applyActionEffect('bigWhiteCursor', false);
-            return; // ⬅️ IMPORTANT: exit this iteration
-          }
-
-          var isActive = localStorage.getItem(a.id) === 'true';
-
-          if (isActive) {
-            el.classList.add('action-box--active');
-            this.applyActionEffect(a.id, true);
-          } else {
-            el.classList.remove('action-box--active');
-            this.applyActionEffect(a.id, false);
-          }
-        }
-
+      for(var j=0;j<ACTIONS.length;j++){
+        var a=ACTIONS[j];
+        var el=this.widget.querySelector('.action-box[data-id="'+a.id+'"]');
+        if(!el) continue;
         
-
-        /* ---------------- RANGE ACTIONS ---------------- */
-        if (a.type === 'range') {
-          var val = localStorage.getItem(a.id);
-          if (val !== null) {
-            var numVal = parseFloat(val);
-            el.querySelector('.range__base').innerText = numVal + '%';
-            a.value = numVal;
-            this.applyActionEffect(a.id, numVal);
+        if(a.type==='toggle'){
+          if(localStorage.getItem(a.id)==='true'){
+            el.classList.add('action-box--active');
+            this.applyActionEffect(a.id,true);
           }
         }
-
-        /* ---------------- COLOR ACTIONS ---------------- */
-        if (a.type === 'color') {
-          var val = localStorage.getItem(a.id);
-          if (val) {
-            document.body.style.setProperty('--' + a.id, val);
-            this.applyActionEffect(a.id, val);
+        
+        if(a.type==='range'){
+          var val=localStorage.getItem(a.id);
+          if(val!==null){
+            var numVal = parseFloat(val);
+            el.querySelector('.range__base').innerText=numVal+'%';
+            a.value=numVal;
+            this.applyActionEffect(a.id,numVal);
+          }
+        }
+        
+        if(a.type==='color'){
+          var val=localStorage.getItem(a.id);
+          if(val){
+            document.body.style.setProperty('--'+a.id,val);
+            this.applyActionEffect(a.id,val);
           }
         }
       }
-
     },
   
     // ---------------- RESTORE LANGUAGE ----------------
@@ -1020,6 +1926,30 @@
       if(this.readingGuideActive){
         this.removeReadingGuideListeners();
         this.readingGuideActive = false;
+      }
+      
+      // Remove ADHD focus listeners if active
+      if(this.adhdFocusActive){
+        this.removeAdhdFocusListeners();
+        this.adhdFocusActive = false;
+      }
+      
+      // Remove keyboard navigation if active
+      if(this.keyboardNavActive){
+        this.removeKeyboardNavigation();
+        this.keyboardNavActive = false;
+      }
+      
+      // Remove screen reader if active
+      if(this.screenReaderActive){
+        this.removeScreenReader();
+        this.screenReaderActive = false;
+      }
+      
+      // Remove focus tracking if active
+      if(this.focusTrackingActive){
+        this.removeFocusTracking();
+        this.focusTrackingActive = false;
       }
       
       // Reset all action boxes UI
