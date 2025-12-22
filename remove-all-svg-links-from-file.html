@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<body>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+        // Select all 'svg' elements
+        const svgs = document.querySelectorAll('svg, path, img');
+    
+        svgs.forEach(svgElement => {
+            // Remove the main xmlns attribute
+           svgElement.removeAttribute('xmlns');
+    
+           svgElement.removeAttribute('src');
+    
+           svgElement.removeAttribute('d');
+    
+            // Remove the xlink namespace attribute if it exists
+            svgElement.removeAttribute('xmlns:xlink')
+        });
+    });
+    
+    </script>
+</body>
+</html>

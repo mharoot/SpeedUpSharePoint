@@ -28,8 +28,7 @@
 
 <link rel="manifest" href="./assets/images/site.webmanifest">
 
-<link rel="stylesheet" href="./assets/css/font-awesome-6.4.0-all.min.css">
-<link rel="stylesheet" href="./assets/css/style.css">
+<link rel="stylesheet" href="./assets/css/master.min.css">
 
 <base id="dynamic-base" href="./">
 </head>
@@ -443,8 +442,22 @@
   </div>
 </footer>
 
+<!-- Accessibility Trigger -->
+<div id="accessibilityWidgetContainer"></div>
 
 
-<script src="./assets/js/main.js"></script>
+<div id="google_translate_element"></div>
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'en,es,de,pt,fr,it,nl,pl,ja,zh-CN,zh-TW,ar,ru,he,uk,tr,cs,hu,sl,sk,no,sv,fi,ro,ga,el,sr,bs,hr,lb,sq,da'
+    }, 'google_translate_element');
+  }
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+<script src="./assets/js/master.min.js"></script>
+
 </body>
 </html>
