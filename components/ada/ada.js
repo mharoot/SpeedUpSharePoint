@@ -139,6 +139,12 @@
     widgetFocusTrap: null,
   
     init:function(){
+      // Check if user has permanently disabled the widget
+      if(localStorage.getItem('accessibility-widget-disabled') === 'true'){
+        console.log('🚫 Accessibility widget is disabled by user preference');
+        return; // Don't initialize anything
+      }
+      
       // Store original computed line-height
       this.originalLineHeight = window.getComputedStyle(document.body).lineHeight;
       
@@ -1559,6 +1565,60 @@
         actionsContainer.appendChild(div);
       }
       content.appendChild(actionsContainer);
+      
+      // ---------------- DISABLE WIDGET BUTTON ----------------
+      var disableSection = document.createElement('div');
+      disableSection.className = 'disable-widget-section';
+      disableSection.innerHTML = 
+        '<div class="disable-widget-warning">' +
+          '<p><strong>⚠️ Don\'t need accessibility features?</strong></p>' +
+          '<p>You can permanently hide this widget. This will remove the accessibility button from all pages until you clear your browser data.</p>' +
+        '</div>' +
+        '<button class="disable-widget-btn" aria-label="Permanently disable accessibility widget">' +
+          '<i class="fa-solid fa-ban" aria-hidden="true"></i> Disable Accessibility Widget' +
+        '</button>';
+      
+      content.appendChild(disableSection);
+      
+      // Disable widget button handler
+      var disableBtn = disableSection.querySelector('.disable-widget-btn');
+      disableBtn.addEventListener('click', function(){
+        var confirmMessage = 
+          'Are you sure you want to permanently disable the accessibility widget?\n\n' +
+          '⚠️ This will:\n' +
+          '• Hide the accessibility button on all pages\n' +
+          '• Remove all accessibility features\n' +
+          '• Persist until you clear browser data\n\n' +
+          'You can re-enable it by clearing your browser\'s localStorage or cache.';
+        
+        if(confirm(confirmMessage)){
+          // Set the disabled flag
+          localStorage.setItem('accessibility-widget-disabled', 'true');
+          
+          // Close the widget
+          self.widget.classList.remove('accessibilityOpen');
+          self.removeWidgetFocusTrap();
+          
+          // Hide the trigger
+          var trigger = document.getElementById('accessibilityTrigger');
+          if(trigger){
+            trigger.style.display = 'none';
+          }
+          
+          // Show confirmation
+          alert('✅ Accessibility widget has been disabled.\n\nTo re-enable it, clear your browser data or localStorage.');
+          
+          console.log('🚫 Accessibility widget disabled by user');
+        }
+      });
+      
+      // Keyboard support for disable button
+      disableBtn.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          disableBtn.click();
+        }
+      });
     },
   
     // ---------------- CHANGE LANGUAGE ----------------
