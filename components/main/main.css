@@ -885,3 +885,12 @@ body.read-mode div:not(#accessibilityWidget):not(#accessibilityWidget *):not(.na
   display: flex !important;
   background: var(--primary) !important;
 }
+
+
+#authority-icons, #authority{
+  background-color: #011021; color: #fefcc8;
+}
+
+#authority-icons{
+  margin-top:32px;
+}
