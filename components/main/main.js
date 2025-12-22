@@ -30,26 +30,6 @@ function scrollToHero() {
   closeMenu();
 }
 
-// Define the scrollToHero function globally
-function scrollToHeroThisIsDifferent() {
-  const topbar = document.querySelector(".topbar");
-  const home = document.getElementById("home");
-  if (!topbar || !home) return;
-
-  const offset = topbar.offsetHeight;
-
-  // If not on the homepage, redirect first
-  if (!window.location.pathname.endsWith("/index.html") && window.location.pathname !== basePath) {
-    window.location.href = window.location.origin + basePath + "#home";
-    return;
-  }
-
-  window.scrollTo({ top: home.offsetTop - offset, behavior: "smooth" });
-
-  // Close menu if open
-  closeMenu();
-}
-
 // Utility function to update links for GitHub Pages or localhost
 function updateLinks() {
   document.querySelectorAll('a[href^="/"]').forEach(link => {
@@ -65,16 +45,83 @@ const sidebar = document.getElementById("sidebar");
 const overlay = document.getElementById("overlay");
 const toggleBtn = document.getElementById("menuToggle");
 
-function openMenu() {
-  sidebar?.classList.add("open");
-  overlay?.classList.add("show");
-  if (toggleBtn) toggleBtn.textContent = "✕";
+// ---------------- FOCUS TRAP FUNCTION ----------------
+function trapFocus(element) {
+  const focusableElements = element.querySelectorAll(
+    'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+  );
+  
+  if (focusableElements.length === 0) return;
+  
+  const firstElement = focusableElements[0];
+  const lastElement = focusableElements[focusableElements.length - 1];
+  
+  function handleKeydown(e) {
+    if (e.key !== 'Tab') return;
+    
+    if (e.shiftKey && document.activeElement === firstElement) {
+      e.preventDefault();
+      lastElement.focus();
+    } else if (!e.shiftKey && document.activeElement === lastElement) {
+      e.preventDefault();
+      firstElement.focus();
+    }
+  }
+  
+  element.addEventListener('keydown', handleKeydown);
+  
+  // Store cleanup function
+  element._focusTrapCleanup = () => {
+    element.removeEventListener('keydown', handleKeydown);
+  };
+  
+  // Focus first element
+  firstElement.focus();
 }
 
+// ---------------- OPEN MENU WITH ARIA ----------------
+function openMenu() {
+  sidebar?.classList.add("open");
+  sidebar?.setAttribute("aria-hidden", "false");
+  overlay?.classList.add("show");
+  overlay?.setAttribute("aria-hidden", "false");
+  overlay?.setAttribute("tabindex", "0");
+  overlay?.setAttribute("aria-label", "Close menu overlay");
+  
+  if (toggleBtn) {
+    toggleBtn.textContent = "✕";
+    toggleBtn.setAttribute("aria-expanded", "true");
+    toggleBtn.setAttribute("aria-label", "Close navigation menu");
+  }
+  
+  // Trap focus in sidebar
+  if (sidebar) {
+    trapFocus(sidebar);
+  }
+}
+
+// ---------------- CLOSE MENU WITH ARIA ----------------
 function closeMenu() {
   sidebar?.classList.remove("open");
+  sidebar?.setAttribute("aria-hidden", "true");
   overlay?.classList.remove("show");
-  if (toggleBtn) toggleBtn.textContent = "☰";
+  overlay?.setAttribute("aria-hidden", "true");
+  overlay?.removeAttribute("tabindex");
+  overlay?.removeAttribute("aria-label");
+  
+  if (toggleBtn) {
+    toggleBtn.textContent = "☰";
+    toggleBtn.setAttribute("aria-expanded", "false");
+    toggleBtn.setAttribute("aria-label", "Open navigation menu");
+  }
+  
+  // Clean up focus trap
+  if (sidebar && sidebar._focusTrapCleanup) {
+    sidebar._focusTrapCleanup();
+  }
+  
+  // Return focus to toggle button
+  toggleBtn?.focus();
 }
 
 // Wait for DOM content to load
@@ -87,14 +134,192 @@ document.addEventListener("DOMContentLoaded", function () {
 
   updateLinks();
 
+  // ---------------- FIX #3: ADD ARIA ATTRIBUTES ----------------
+  // Add ARIA to menu toggle
+  if (toggleBtn) {
+    toggleBtn.setAttribute('aria-label', 'Open navigation menu');
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    toggleBtn.setAttribute('aria-controls', 'sidebar');
+  }
+  
+  // Add ARIA to sidebar
+  if (sidebar) {
+    sidebar.setAttribute('role', 'navigation');
+    sidebar.setAttribute('aria-label', 'Mobile navigation');
+    sidebar.setAttribute('aria-hidden', 'true');
+  }
+  
+  // Add ARIA to overlay
+  if (overlay) {
+    overlay.setAttribute('aria-hidden', 'true');
+  }
+
+  // ---------------- FIX #10: ADD ARIA LABELS TO NAVIGATION ----------------
+  // Main navigation
+  const topnav = document.querySelector('.topnav');
+  if (topnav) {
+    topnav.setAttribute('role', 'navigation');
+    topnav.setAttribute('aria-label', 'Main navigation');
+  }
+  
+  // Footer navigation
+  const footerNav = document.querySelector('.footer-nav');
+  if (footerNav) {
+    footerNav.setAttribute('role', 'navigation');
+    footerNav.setAttribute('aria-label', 'Legal navigation');
+  }
+
+  // ---------------- FIX #5: ADD ARIA-HIDDEN TO ALL ICONS ----------------
+  // Add aria-hidden="true" to all Font Awesome icons
+  document.querySelectorAll('i[class*="fa-"]').forEach(icon => {
+    icon.setAttribute('aria-hidden', 'true');
+  });
+  
+  // Service icons
+  document.querySelectorAll('.service i, .principle i, .icon-item i').forEach(icon => {
+    icon.setAttribute('aria-hidden', 'true');
+  });
+  
+  // Contact icons
+  document.querySelectorAll('.contact-box i').forEach(icon => {
+    icon.setAttribute('aria-hidden', 'true');
+  });
+  
+  // Social media icons
+  document.querySelectorAll('footer i[class*="fa-"]').forEach(icon => {
+    icon.setAttribute('aria-hidden', 'true');
+  });
+
+  // ---------------- FIX #4: MAKE IMAGES KEYBOARD ACCESSIBLE ----------------
+  // Topbar logo
+  const topbarLogo = document.querySelector('.topbar img');
+  if (topbarLogo) {
+    topbarLogo.setAttribute('tabindex', '0');
+    topbarLogo.setAttribute('role', 'button');
+    topbarLogo.setAttribute('aria-label', 'Scroll to home section');
+    topbarLogo.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        scrollToHero();
+      }
+    });
+  }
+  
+  // Sidebar logo
+  const sidebarLogo = document.querySelector('.sidebar-logo');
+  if (sidebarLogo) {
+    sidebarLogo.setAttribute('tabindex', '0');
+    sidebarLogo.setAttribute('role', 'button');
+    sidebarLogo.setAttribute('aria-label', 'Scroll to home section');
+    sidebarLogo.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        scrollToHero();
+      }
+    });
+  }
+  
+  // Menu titles (clickable text)
+  document.querySelectorAll('.menu_title').forEach(title => {
+    title.setAttribute('tabindex', '0');
+    title.setAttribute('role', 'button');
+    title.setAttribute('aria-label', 'Scroll to home section');
+    title.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        scrollToHero();
+      }
+    });
+  });
+  
+  // Contact box logo
+  const contactLogo = document.querySelector('#contact img');
+  if (contactLogo) {
+    contactLogo.setAttribute('tabindex', '0');
+    contactLogo.setAttribute('role', 'button');
+    contactLogo.setAttribute('aria-label', 'Scroll to home section');
+    contactLogo.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        scrollToHero();
+      }
+    });
+  }
+
+  // ---------------- FIX #8: ADD SKIP TO MAIN CONTENT LINK ----------------
+  const skipLink = document.createElement('a');
+  skipLink.href = '#content';
+  skipLink.className = 'skip-link';
+  skipLink.textContent = 'Skip to main content';
+  skipLink.style.cssText = `
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary, #011021);
+    color: var(--secondary, #fefcc8);
+    padding: 8px 16px;
+    text-decoration: none;
+    z-index: 10000;
+    font-weight: bold;
+    transition: top 0.2s ease;
+  `;
+  
+  skipLink.addEventListener('focus', function() {
+    this.style.top = '0';
+  });
+  
+  skipLink.addEventListener('blur', function() {
+    this.style.top = '-40px';
+  });
+  
+  document.body.insertBefore(skipLink, document.body.firstChild);
+  
+  // Wrap main content in <main> tag if not already present
+  let mainElement = document.querySelector('main');
+  if (!mainElement) {
+    mainElement = document.createElement('main');
+    mainElement.id = 'content';
+    mainElement.setAttribute('role', 'main');
+    
+    // Move all sections into main
+    const sections = document.querySelectorAll('section:not(#accessibilityWidget):not(#accessibilityTrigger)');
+    sections.forEach(section => {
+      mainElement.appendChild(section);
+    });
+    
+    // Insert main after header
+    const header = document.querySelector('header');
+    if (header && header.nextSibling) {
+      header.parentNode.insertBefore(mainElement, header.nextSibling);
+    }
+  }
+
+  // Menu toggle handler
   toggleBtn?.addEventListener("click", () => {
     sidebar.classList.contains("open") ? closeMenu() : openMenu();
   });
 
+  // ---------------- FIX #9: KEYBOARD ACCESSIBLE OVERLAY CLOSE ----------------
+  // Overlay click handler
   overlay?.addEventListener("click", closeMenu);
+  
+  // Overlay keyboard handler
+  overlay?.addEventListener("keydown", (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      closeMenu();
+    }
+  });
+  
+  // Escape key handler for closing sidebar
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sidebar?.classList.contains('open')) {
+      closeMenu();
+    }
+  });
 
   // Attach scrollToHero to all logos
-  document.querySelectorAll('.topbar img, .sidebar-logo, .menu_title').forEach(img => {
+  document.querySelectorAll('.topbar img, .sidebar-logo, .menu_title, #contact img').forEach(img => {
     img.addEventListener("click", scrollToHero);
   });
 
@@ -159,35 +384,31 @@ document.addEventListener("DOMContentLoaded", function () {
     const heroSection = document.getElementById("home");
     if (heroSection) {
       // Are we on the homepage?
-    const isHomePage =
-      window.location.pathname === basePath ||
-      window.location.pathname === basePath + "index.html";
+      const isHomePage =
+        window.location.pathname === basePath ||
+        window.location.pathname === basePath + "index.html";
 
-    if (isHomePage) {
-      heroSection.classList.add("hero-enabled");
+      if (isHomePage) {
+        heroSection.classList.add("hero-enabled");
 
-      const imagePath =
-        basePath === "/"
-          ? "/assets/images/speed-up-sharepoint-hero-image.jpg"
-          : "/SpeedUpSharePoint/assets/images/speed-up-sharepoint-hero-image.jpg";
+        const imagePath =
+          basePath === "/"
+            ? "/assets/images/speed-up-sharepoint-hero-image.jpg"
+            : "/SpeedUpSharePoint/assets/images/speed-up-sharepoint-hero-image.jpg";
 
-      heroSection.style.backgroundImage = `
-        linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
-        url("${imagePath}")
-      `;
-    } else {
-      // Remove hero background on non-home pages
-      heroSection.style.backgroundImage = "none";
+        heroSection.style.backgroundImage = `
+          linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.55)),
+          url("${imagePath}")
+        `;
+      } else {
+        // Remove hero background on non-home pages
+        heroSection.style.backgroundImage = "none";
+      }
     }
-    }
-
-    
-      
   }
 
   updateAssets();
 });
-
 
 // ------------------------------------------------------------
 // FIX: Handle direct hash loads & back/forward navigation
@@ -229,8 +450,6 @@ window.addEventListener("hashchange", () => {
   scrollToHashWithOffset(window.location.hash);
 });
 
-
-
 // Debounce helper: runs function after user stops resizing
 function debounce(func, wait = 150) {
   let timeout;
@@ -248,16 +467,13 @@ function handleSidebarResize() {
     if (sidebar?.classList.contains("open")) {
       closeMenu();
     }
-  } 
-  // Optional: mobile side scrolling adjustments could go here
+  }
 }
 
 // Attach resize event with debounce
 window.addEventListener("resize", debounce(handleSidebarResize, 200));
 
-// ------------------------
 // Optional: reset scroll position if sidebar content changes
-// (keeps scrollable sidebar usable on resize)
 function resetSidebarScroll() {
   if (sidebar) {
     sidebar.scrollTop = 0;

@@ -136,6 +136,7 @@
     focusTrackingActive: false,
     focusTrackingListener: null,
     translating: false,
+    widgetFocusTrap: null,
   
     init:function(){
       // Store original computed line-height
@@ -199,11 +200,52 @@
       var trigger = document.createElement('div');
       trigger.id='accessibilityTrigger';
       trigger.className='accessibility-no-scale';
-      trigger.innerHTML='<i class="fa-solid fa-wheelchair fa-lg"></i>';
+      trigger.setAttribute('role', 'button');
+      trigger.setAttribute('aria-label', 'Open accessibility settings');
+      trigger.setAttribute('aria-expanded', 'false');
+      trigger.setAttribute('tabindex', '0');
+      trigger.innerHTML='<i class="fa-solid fa-wheelchair fa-lg" aria-hidden="true"></i>';
       document.body.appendChild(trigger);
+      
       var self=this;
+      
+      // Click handler
       trigger.addEventListener('click', function(){ 
-        self.widget.classList.toggle('accessibilityOpen'); 
+        var isOpen = self.widget.classList.toggle('accessibilityOpen');
+        trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        trigger.setAttribute('aria-label', isOpen ? 'Close accessibility settings' : 'Open accessibility settings');
+        
+        if(isOpen){
+          self.setupWidgetFocusTrap();
+          // Focus first element in widget (close button)
+          setTimeout(function(){
+            var firstFocusable = self.widget.querySelector('.accessibilityClose');
+            if(firstFocusable) firstFocusable.focus();
+          }, 100);
+        } else {
+          self.removeWidgetFocusTrap();
+        }
+      });
+      
+      // Keyboard handler (Enter or Space)
+      trigger.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          var isOpen = self.widget.classList.toggle('accessibilityOpen');
+          trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+          trigger.setAttribute('aria-label', isOpen ? 'Close accessibility settings' : 'Open accessibility settings');
+          
+          if(isOpen){
+            self.setupWidgetFocusTrap();
+            // Focus first element in widget (close button)
+            setTimeout(function(){
+              var firstFocusable = self.widget.querySelector('.accessibilityClose');
+              if(firstFocusable) firstFocusable.focus();
+            }, 100);
+          } else {
+            self.removeWidgetFocusTrap();
+          }
+        }
       });
     },
   
@@ -548,7 +590,7 @@
           case 't':
             // Jump to next text block (paragraphs, divs with text, spans with text)
             e.preventDefault();
-            var textBlocks = document.querySelectorAll('p, div, span, li, td, th, blockquote, article, section');
+            var textBlocks = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, div, span, li, td, th, blockquote, article, section, header');
             var textElements = [];
             
             // Filter to only elements with direct text content
@@ -576,8 +618,17 @@
               if(text.length > 300){
                 text = text.substring(0, 300) + '... continued';
               }
-              self.speak(text, true);
-              console.log('📍 Reading text:', text.substring(0, 50) + '...');
+              
+              // Add context for headings
+              var tagName = textElem.tagName.toLowerCase();
+              if(['h1','h2','h3','h4','h5','h6'].indexOf(tagName) !== -1){
+                var level = tagName.charAt(1);
+                self.speak('Heading level ' + level + ': ' + text, true);
+                console.log('📍 Reading heading:', text.substring(0, 50) + '...');
+              } else {
+                self.speak(text, true);
+                console.log('📍 Reading text:', text.substring(0, 50) + '...');
+              }
             }
             break;
             
@@ -1105,7 +1156,7 @@
       
       // Get all readable content
       var contentElements = document.querySelectorAll(
-        'h1, h2, h3, h4, h5, h6, p, li, td, th, blockquote, article, section, div'
+        'header, h1, h2, h3, h4, h5, h6, p, li, td, th, blockquote, article, section, div'
       );
       
       var allText = [];
@@ -1195,6 +1246,55 @@
       console.log('📖 Reading ' + allText.length + ' content blocks');
     },
   
+    // ---------------- SETUP WIDGET FOCUS TRAP ----------------
+    setupWidgetFocusTrap:function(){
+      var self = this;
+      
+      console.log('🔒 Setting up widget focus trap...');
+      
+      // Remove old listener if exists
+      if(this.widgetFocusTrap){
+        document.removeEventListener('keydown', this.widgetFocusTrap);
+      }
+      
+      this.widgetFocusTrap = function(e){
+        if(e.key !== 'Tab') return;
+        if(!self.widget.classList.contains('accessibilityOpen')) return;
+        
+        // Get all focusable elements in widget
+        var focusableElements = self.widget.querySelectorAll(
+          'button:not([disabled]), [tabindex]:not([tabindex="-1"]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled])'
+        );
+        
+        if(focusableElements.length === 0) return;
+        
+        var firstElement = focusableElements[0];
+        var lastElement = focusableElements[focusableElements.length - 1];
+        
+        if(e.shiftKey && document.activeElement === firstElement){
+          e.preventDefault();
+          lastElement.focus();
+        } else if(!e.shiftKey && document.activeElement === lastElement){
+          e.preventDefault();
+          firstElement.focus();
+        }
+      };
+      
+      document.addEventListener('keydown', this.widgetFocusTrap);
+      
+      console.log('✅ Widget focus trap enabled');
+    },
+  
+    // ---------------- REMOVE WIDGET FOCUS TRAP ----------------
+    removeWidgetFocusTrap:function(){
+      if(this.widgetFocusTrap){
+        document.removeEventListener('keydown', this.widgetFocusTrap);
+        this.widgetFocusTrap = null;
+      }
+      
+      console.log('🔓 Widget focus trap removed');
+    },
+  
     createWidget:function(){
       var self=this;
       this.widget = document.createElement('div');
@@ -1203,14 +1303,14 @@
       this.widget.style.maxWidth='550px';
       this.widget.style.width='95%';
       this.widget.innerHTML=
-        '<div class="accessibilityClose"><i class="fa-solid fa-xmark"></i></div>'+
+        '<div class="accessibilityClose" role="button" tabindex="0" aria-label="Close accessibility settings"><i class="fa-solid fa-xmark" aria-hidden="true"></i></div>'+
         '<div class="accessibilityHeader">'+
           '<div class="language-dropdown">'+
-            '<button class="language-dropdown__button"><span class="current-flag">🇺🇸</span> <span class="current-language">English (US)</span> <i class="fa-solid fa-chevron-down"></i></button>'+
+            '<button class="language-dropdown__button"><span class="current-flag">🇺🇸</span> <span class="current-language">English (US)</span> <i class="fa-solid fa-chevron-down" aria-hidden="true"></i></button>'+
             '<div class="language-dropdown__menu"></div>'+
           '</div>'+
           '<div class="reset-button">'+
-            '<button class="reset-button__btn"><i class="fa-solid fa-rotate-left"></i> Reset</button>'+
+            '<button class="reset-button__btn"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Reset</button>'+
           '</div>'+
           '<span class="accessibilityHeader__title">Accessibility</span>'+
         '</div>'+
@@ -1218,8 +1318,50 @@
       document.body.appendChild(this.widget);
   
       // Close button
-      this.widget.querySelector('.accessibilityClose').addEventListener('click', function(){ 
-        self.widget.classList.remove('accessibilityOpen'); 
+      var closeBtn = this.widget.querySelector('.accessibilityClose');
+      closeBtn.addEventListener('click', function(){ 
+        self.widget.classList.remove('accessibilityOpen');
+        self.removeWidgetFocusTrap();
+        // Update trigger ARIA state
+        var trigger = document.getElementById('accessibilityTrigger');
+        if(trigger){
+          trigger.setAttribute('aria-expanded', 'false');
+          trigger.setAttribute('aria-label', 'Open accessibility settings');
+          // Return focus to trigger
+          trigger.focus();
+        }
+      });
+      
+      // Keyboard support for close button
+      closeBtn.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){
+          e.preventDefault();
+          self.widget.classList.remove('accessibilityOpen');
+          self.removeWidgetFocusTrap();
+          // Update trigger ARIA state
+          var trigger = document.getElementById('accessibilityTrigger');
+          if(trigger){
+            trigger.setAttribute('aria-expanded', 'false');
+            trigger.setAttribute('aria-label', 'Open accessibility settings');
+            // Return focus to trigger
+            trigger.focus();
+          }
+        }
+      });
+  
+      // Escape key to close widget
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape' && self.widget.classList.contains('accessibilityOpen')){
+          e.preventDefault();
+          self.widget.classList.remove('accessibilityOpen');
+          self.removeWidgetFocusTrap();
+          var trigger = document.getElementById('accessibilityTrigger');
+          if(trigger){
+            trigger.setAttribute('aria-expanded', 'false');
+            trigger.setAttribute('aria-label', 'Open accessibility settings');
+            trigger.focus();
+          }
+        }
       });
   
       // Reset button
@@ -1289,7 +1431,7 @@
         
         div.innerHTML=
           '<div class="profile-content">'+
-            '<i class="'+ICONS[p.id]+'"></i>'+
+            '<i class="'+ICONS[p.id]+'" aria-hidden="true"></i>'+
             '<div>'+
               '<span class="profile-content__name">'+p.title+'</span>'+
               '<span class="profile-content__text">'+p.text+'</span>'+
@@ -1335,14 +1477,14 @@
         div.className='action-box';
         div.dataset.id=a.id;
         div.tabIndex=0;
-        div.innerHTML='<div class="action__content"><i class="'+ICONS[a.id]+'"></i> <span>'+a.title+'</span></div>';
+        div.innerHTML='<div class="action__content"><i class="'+ICONS[a.id]+'" aria-hidden="true"></i> <span>'+a.title+'</span></div>';
   
         // Range
         if(a.type==='range'){
           var rangeDiv=document.createElement('div');
           rangeDiv.className='range';
-          var minus=document.createElement('button'); minus.innerHTML='<i class="fa-solid fa-minus"></i>';
-          var plus=document.createElement('button'); plus.innerHTML='<i class="fa-solid fa-plus"></i>';
+          var minus=document.createElement('button'); minus.innerHTML='<i class="fa-solid fa-minus" aria-hidden="true"></i>';
+          var plus=document.createElement('button'); plus.innerHTML='<i class="fa-solid fa-plus" aria-hidden="true"></i>';
           var base=document.createElement('div'); base.className='range__base'; base.innerText=a.value+'%';
   
           (function(range,baseEl){
@@ -1386,7 +1528,7 @@
           (function(aId){
             var cancelBtn=document.createElement('button'); 
             cancelBtn.className='color-picker__cancel'; 
-            cancelBtn.innerHTML='<i class="fa-solid fa-xmark"></i>';
+            cancelBtn.innerHTML='<i class="fa-solid fa-xmark" aria-hidden="true"></i>';
             cancelBtn.title='Cancel/Reset Color';
             cancelBtn.addEventListener('click',function(){ 
               localStorage.removeItem(aId); 

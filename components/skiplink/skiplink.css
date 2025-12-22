@@ -1,0 +1,59 @@
+/* ============================================
+   SKIP LINK - WCAG 2.1 Compliant
+   ============================================ */
+
+/* Method 1: Off-screen positioning (recommended) */
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    z-index: 10000;
+  }
+  
+  .skip-link:focus {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    background: var(--primary, #011021);
+    color: var(--secondary, #fefcc8);
+    padding: 12px 20px;
+    text-decoration: none;
+    z-index: 10000;
+    font-weight: bold;
+    font-size: 16px;
+    border: 2px solid var(--secondary, #fefcc8);
+    outline: 3px solid rgba(254, 252, 200, 0.5);
+    outline-offset: 2px;
+  }
+  
+  /* Method 2: Slide-down from top (alternative) */
+  .skip-link-slide {
+    position: absolute;
+    top: -50px;
+    left: 0;
+    background: var(--primary, #011021);
+    color: var(--secondary, #fefcc8);
+    padding: 12px 20px;
+    text-decoration: none;
+    z-index: 10000;
+    font-weight: bold;
+    transition: top 0.3s ease;
+  }
+  
+  .skip-link-slide:focus {
+    top: 0;
+    outline: 3px solid rgba(254, 252, 200, 0.5);
+    outline-offset: 2px;
+  }
+  
+  /* Ensure skip link is first in focus order */
+  body > .skip-link:first-child {
+    /* This ensures skip link is truly first */
+    order: -1;
+  }

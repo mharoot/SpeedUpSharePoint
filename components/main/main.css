@@ -1,6 +1,5 @@
 :root {
   --primary: #011021;
-  --titleColor:var(--primary);
   --secondary: #fefcc8;
 }
 
@@ -886,5 +885,3 @@ body.read-mode div:not(#accessibilityWidget):not(#accessibilityWidget *):not(.na
   display: flex !important;
   background: var(--primary) !important;
 }
-
-
