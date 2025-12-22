@@ -630,8 +630,8 @@ body #accessibilityTrigger * {
 /* ---------------- RESPONSIVE ---------------- */
 @media (max-width: 961px) {
     #accessibilityTrigger {
-        width: 26.4px;
-        height: 26.4px;
+        width: 35px;
+        height: 35px;
         font-size: 8.8px;
     }
 }
