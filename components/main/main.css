@@ -1,5 +1,6 @@
 :root {
   --primary: #011021;
+  --titleColor:var(--primary);
   --secondary: #fefcc8;
 }
 
@@ -496,7 +497,7 @@ footer a {
 .experience-note {
   margin-top: 0.75rem;
   font-size: 0.95rem;
-  color: #4b5563; /* muted slate */
+  color: #374151; /* Changed from #4b5563 - now passes 4.5:1 */
   font-style: italic;
   line-height: 1.5;
 }
