@@ -3,130 +3,180 @@
 
   <url>
     <loc>https://www.speedupsharepoint.com/</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
   <!-- Use Case Pages -->
   <url>
     <loc>https://www.speedupsharepoint.com/pages/use-case/architecting-sharepoint-lists-for-performance-and-reliability.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.speedupsharepoint.com/pages/use-case/mitigating-power-automate-throttling-in-large-sharepoint-environments.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.speedupsharepoint.com/pages/use-case/optimizing-large-sharepoint-lists-beyond-the-5000-item-threshold.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://www.speedupsharepoint.com/pages/use-case/power-automate-throttling-failures.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
 
   <!-- Authority Pages -->
   <url>
     <loc>https://www.speedupsharepoint.com/pages/authority/index.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://www.speedupsharepoint.com/pages/authority/how-we-design-sharepoint-at-scale.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://www.speedupsharepoint.com/pages/authority/hybrid-sharepoint-sql-high-performance-asset-delivery.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://www.speedupsharepoint.com/pages/authority/our-performance-first-methodology.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://www.speedupsharepoint.com/pages/authority/compliance-aware-sharepoint-architecture.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://www.speedupsharepoint.com/pages/authority/enterprise-sharepoint-architecture-for-performance-security-and-scale.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://www.speedupsharepoint.com/pages/authority/sharepoint-performance-risks-banking-finance.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://www.speedupsharepoint.com/pages/authority/sharepoint-scaling-limitations-law-firms.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://www.speedupsharepoint.com/pages/authority/why-sharepoint-search-slows-down-enterprise.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
 
   <!-- FAQ Pages -->
   <url>
     <loc>https://www.speedupsharepoint.com/pages/faq/index.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://www.speedupsharepoint.com/pages/faq/can-sharepoint-be-used-as-a-database.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://www.speedupsharepoint.com/pages/faq/why-does-sharepoint-slow-down-over-time.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://www.speedupsharepoint.com/pages/faq/when-should-you-migrate-off-sharepoint-lists.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://www.speedupsharepoint.com/pages/faq/why-does-sharepoint-break-at-50k-items.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://www.speedupsharepoint.com/pages/faq/why-do-my-power-automate-flows-fail-due-to-throttling.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://www.speedupsharepoint.com/pages/faq/how-can-i-prevent-sharepoint-list-view-threshold-errors-on-large-lists.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
     <loc>https://www.speedupsharepoint.com/pages/faq/is-it-safe-to-use-sharepoint-lists-as-a-database.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
 
   <!-- Legal Pages -->
   <url>
     <loc>https://www.speedupsharepoint.com/pages/privacy-policy.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
 
   <url>
     <loc>https://www.speedupsharepoint.com/pages/terms-conditions.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
 
   <url>
     <loc>https://www.speedupsharepoint.com/pages/nda.html</loc>
+    <lastmod>2025-12-23T07:26:39Z</lastmod>
+    <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
 
