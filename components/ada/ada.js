@@ -159,11 +159,18 @@
     },
 
     initializeGoogleTranslate:function(){
-      var script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+      // Don't load the script - it's already in the HTML
+      // Just define the callback function
+      
+      var self = this;
       
       window.googleTranslateElementInit = function() {
+        // Check if already initialized
+        if(document.querySelector('.goog-te-combo')){
+          console.log('⚠️ Google Translate element already exists');
+          return;
+        }
+        
         new google.translate.TranslateElement({
           pageLanguage: 'en',
           autoDisplay: false
@@ -172,7 +179,11 @@
         console.log('✅ Google Translate loaded successfully');
       };
       
-      document.head.appendChild(script);
+      // If Google Translate library is already loaded, initialize it now
+      if(typeof google !== 'undefined' && google.translate){
+        window.googleTranslateElementInit();
+      }
+      // Otherwise, the callback will be called automatically when the script loads
     },
 
     setupTriggerListeners:function(){
