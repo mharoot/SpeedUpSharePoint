@@ -162,12 +162,16 @@
       // Don't load the script - it's already in the HTML
       // Just define the callback function
       
-      var self = this;
-      
       window.googleTranslateElementInit = function() {
         // Check if already initialized
         if(document.querySelector('.goog-te-combo')){
           console.log('⚠️ Google Translate element already exists');
+          return;
+        }
+        
+        // Make sure the constructor exists
+        if(typeof google === 'undefined' || !google.translate || !google.translate.TranslateElement){
+          console.warn('⚠️ Google Translate not ready yet');
           return;
         }
         
@@ -179,11 +183,8 @@
         console.log('✅ Google Translate loaded successfully');
       };
       
-      // If Google Translate library is already loaded, initialize it now
-      if(typeof google !== 'undefined' && google.translate){
-        window.googleTranslateElementInit();
-      }
-      // Otherwise, the callback will be called automatically when the script loads
+      // Don't try to initialize immediately - let the script call the callback
+      console.log('✅ Google Translate callback defined, waiting for script to load...');
     },
 
     setupTriggerListeners:function(){
