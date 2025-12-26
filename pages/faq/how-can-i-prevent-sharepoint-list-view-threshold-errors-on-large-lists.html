@@ -175,6 +175,417 @@
 
 </footer>
 
-<script src="./../../assets/js/master.min.js"></script>
+ <!-- Accessibility Trigger Button -->
+<div id="accessibilityTrigger" class="accessibility-no-scale" role="button" aria-label="Open accessibility settings" aria-expanded="false" tabindex="0">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" width="1.25em" height="1.25em" style="vertical-align: -.075em;" aria-hidden="true">
+    <path d="M224 96c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zM152.5 247.2c12.4-4.7 18.7-18.5 14-30.9s-18.5-18.7-30.9-14C75.1 225.1 32 283.5 32 352c0 88.4 71.6 160 160 160c61.2 0 114.3-34.3 141.2-84.7c6.2-11.7 1.8-26.2-9.9-32.5s-26.2-1.8-32.5 9.9C272 440 234.8 464 192 464c-61.9 0-112-50.1-112-112c0-47.9 30.1-88.8 72.5-104.8zM291.8 176l-1.9-9.7c-4.5-22.3-24-38.3-46.8-38.3c-30.1 0-52.7 27.5-46.8 57l23.1 115.5c6 29.9 32.2 51.4 62.8 51.4h5.1c.4 0 .8 0 1.3 0h94.1c6.7 0 12.6 4.1 15 10.4L434 459.2c6 16.1 23.8 24.6 40.1 19.1l48-16c16.8-5.6 25.8-23.7 20.2-40.5s-23.7-25.8-40.5-20.2l-18.7 6.2-25.5-68c-11.7-31.2-41.6-51.9-74.9-51.9H314.2l-9.6-48H368c17.7 0 32-14.3 32-32s-14.3-32-32-32H291.8z" fill="currentColor"/>
+  </svg>
+</div>
+
+<!-- Accessibility Widget -->
+<div id="accessibilityWidget" class="accessibility-no-scale">
+  <div class="accessibilityClose" role="button" tabindex="0" aria-label="Close accessibility settings">
+    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+  </div>
+  
+  <div class="accessibilityHeader">
+    <div class="language-dropdown">
+      <button class="language-dropdown__button">
+        <span class="current-flag">🇺🇸</span> 
+        <span class="current-language">English (US)</span> 
+        <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+      </button>
+      <div class="language-dropdown__menu"></div>
+    </div>
+    
+    <div class="reset-button">
+      <button class="reset-button__btn">
+        <i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Reset
+      </button>
+    </div>
+    
+    <span class="accessibilityHeader__title">Accessibility</span>
+  </div>
+  
+  <div class="accessibilityContent">
+    <!-- Profiles Container -->
+    <div class="profiles-container">
+      <!-- Seizure Safe Profile -->
+      <div class="profile" tabindex="0" data-id="seizures" role="switch" aria-checked="false">
+        <div class="profile-content">
+          <i class="fa-solid fa-brain" aria-hidden="true"></i>
+          <div>
+            <span class="profile-content__name">Seizure Safe</span>
+            <span class="profile-content__text">Clear flashes & colors</span>
+          </div>
+        </div>
+        <div class="profile-description">Eliminates flashing content</div>
+      </div>
+
+      <!-- Vision Impaired Profile -->
+      <div class="profile" tabindex="0" data-id="vision" role="switch" aria-checked="false">
+        <div class="profile-content">
+          <i class="fa-solid fa-eye" aria-hidden="true"></i>
+          <div>
+            <span class="profile-content__name">Vision Impaired</span>
+            <span class="profile-content__text">Enhances visuals</span>
+          </div>
+        </div>
+        <div class="profile-description">Adjusts site for visual impairments</div>
+      </div>
+
+      <!-- ADHD Friendly Profile -->
+      <div class="profile" tabindex="0" data-id="adhd" role="switch" aria-checked="false">
+        <div class="profile-content">
+          <i class="fa-solid fa-lightbulb" aria-hidden="true"></i>
+          <div>
+            <span class="profile-content__name">ADHD Friendly</span>
+            <span class="profile-content__text">More focus</span>
+          </div>
+        </div>
+        <div class="profile-description">Reduces distractions</div>
+      </div>
+
+      <!-- Cognitive Disability Profile -->
+      <div class="profile" tabindex="0" data-id="cognitive" role="switch" aria-checked="false">
+        <div class="profile-content">
+          <i class="fa-solid fa-book" aria-hidden="true"></i>
+          <div>
+            <span class="profile-content__name">Cognitive Disability</span>
+            <span class="profile-content__text">Assists with reading</span>
+          </div>
+        </div>
+        <div class="profile-description">Helps cognitive focus</div>
+      </div>
+
+      <!-- Keyboard Navigation Profile -->
+      <div class="profile" tabindex="0" data-id="motor" role="switch" aria-checked="false">
+        <div class="profile-content">
+          <i class="fa-solid fa-keyboard" aria-hidden="true"></i>
+          <div>
+            <span class="profile-content__name">Keyboard Navigation</span>
+            <span class="profile-content__text">Use keyboard</span>
+          </div>
+        </div>
+        <div class="profile-description">Full keyboard operation</div>
+        <div class="profile-connected-icon" title="This profile works together with Screen Reader">
+          <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1075 1024">
+            <path d="M305.308 144.2c-145.386 0-263.245 117.859-263.245 263.245v26.139c0 130.952 106.156 237.105 237.107 237.105V562.421c-71.154 0-128.836-57.683-128.836-128.838v-26.139c0-85.591 69.385-154.975 154.975-154.975h209.109c85.591 0 154.977 69.385 154.977 154.975S600.009 562.42 514.418 562.42H501.35v108.268h13.068c145.388 0 263.245-117.857 263.245-263.244S659.806 144.199 514.418 144.199H305.309zm133.424 472.345c0-85.591 69.385-154.976 154.973-154.976h26.143v-108.27h-26.143c-145.385 0-263.244 117.859-263.244 263.246S448.32 879.79 593.705 879.79h209.111c145.388 0 263.245-117.857 263.245-263.245v-13.071c0-138.167-112.005-250.174-250.173-250.174v108.27c78.372 0 141.906 63.533 141.906 141.904v13.071c0 85.591-69.386 154.977-154.977 154.977H593.706c-85.589 0-154.973-69.386-154.973-154.977z"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Screen Reader Profile -->
+      <div class="profile" tabindex="0" data-id="blind" role="switch" aria-checked="false">
+        <div class="profile-content">
+          <i class="fa-solid fa-wheelchair" aria-hidden="true"></i>
+          <div>
+            <span class="profile-content__name">Screen Reader</span>
+            <span class="profile-content__text">Optimize for screen-readers</span>
+          </div>
+        </div>
+        <div class="profile-description">Screen-reader compatibility</div>
+        <div class="profile-connected-icon" title="This profile works together with Keyboard Navigation">
+          <svg fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1075 1024">
+            <path d="M305.308 144.2c-145.386 0-263.245 117.859-263.245 263.245v26.139c0 130.952 106.156 237.105 237.107 237.105V562.421c-71.154 0-128.836-57.683-128.836-128.838v-26.139c0-85.591 69.385-154.975 154.975-154.975h209.109c85.591 0 154.977 69.385 154.977 154.975S600.009 562.42 514.418 562.42H501.35v108.268h13.068c145.388 0 263.245-117.857 263.245-263.244S659.806 144.199 514.418 144.199H305.309zm133.424 472.345c0-85.591 69.385-154.976 154.973-154.976h26.143v-108.27h-26.143c-145.385 0-263.244 117.859-263.244 263.246S448.32 879.79 593.705 879.79h209.111c145.388 0 263.245-117.857 263.245-263.245v-13.071c0-138.167-112.005-250.174-250.173-250.174v108.27c78.372 0 141.906 63.533 141.906 141.904v13.071c0 85.591-69.386 154.977-154.977 154.977H593.706c-85.589 0-154.973-69.386-154.973-154.977z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions Container -->
+    <div class="actions-container">
+      <!-- Content Scaling -->
+      <div class="action-box" data-id="zoom" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-magnifying-glass-plus" aria-hidden="true"></i> 
+          <span>Content Scaling</span>
+        </div>
+        <div class="range">
+          <button><i class="fa-solid fa-minus" aria-hidden="true"></i></button>
+          <div class="range__base">0%</div>
+          <button><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+        </div>
+      </div>
+
+      <!-- Readable Font -->
+      <div class="action-box" data-id="readableFont" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-font" aria-hidden="true"></i> 
+          <span>Readable Font</span>
+        </div>
+      </div>
+
+      <!-- Highlight Titles -->
+      <div class="action-box" data-id="emphasizeTitles" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-heading" aria-hidden="true"></i> 
+          <span>Highlight Titles</span>
+        </div>
+      </div>
+
+      <!-- Highlight Links -->
+      <div class="action-box" data-id="emphasizeLinks" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-link" aria-hidden="true"></i> 
+          <span>Highlight Links</span>
+        </div>
+      </div>
+
+      <!-- Text Magnifier -->
+      <div class="action-box" data-id="magnifier" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-search" aria-hidden="true"></i> 
+          <span>Text Magnifier</span>
+        </div>
+      </div>
+
+      <!-- Adjust Font Size -->
+      <div class="action-box" data-id="fontSize" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-text-height" aria-hidden="true"></i> 
+          <span>Adjust Font Size</span>
+        </div>
+        <div class="range">
+          <button><i class="fa-solid fa-minus" aria-hidden="true"></i></button>
+          <div class="range__base">0%</div>
+          <button><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+        </div>
+      </div>
+
+      <!-- Adjust Line Height -->
+      <div class="action-box" data-id="lineHeight" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-arrows-up-down" aria-hidden="true"></i> 
+          <span>Adjust Line Height</span>
+        </div>
+        <div class="range">
+          <button><i class="fa-solid fa-minus" aria-hidden="true"></i></button>
+          <div class="range__base">0%</div>
+          <button><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+        </div>
+      </div>
+
+      <!-- Adjust Letter Spacing -->
+      <div class="action-box" data-id="letterSpacing" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-text-width" aria-hidden="true"></i> 
+          <span>Adjust Letter Spacing</span>
+        </div>
+        <div class="range">
+          <button><i class="fa-solid fa-minus" aria-hidden="true"></i></button>
+          <div class="range__base">0%</div>
+          <button><i class="fa-solid fa-plus" aria-hidden="true"></i></button>
+        </div>
+      </div>
+
+      <!-- Dark Contrast -->
+      <div class="action-box" data-id="darkContrast" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-adjust" aria-hidden="true"></i> 
+          <span>Dark Contrast</span>
+        </div>
+      </div>
+
+      <!-- Light Contrast -->
+      <div class="action-box" data-id="lightContrast" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-sun" aria-hidden="true"></i> 
+          <span>Light Contrast</span>
+        </div>
+      </div>
+
+      <!-- High Contrast -->
+      <div class="action-box" data-id="highContrast" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-eye-dropper" aria-hidden="true"></i> 
+          <span>High Contrast</span>
+        </div>
+      </div>
+
+      <!-- High Saturation -->
+      <div class="action-box" data-id="highSaturation" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-palette" aria-hidden="true"></i> 
+          <span>High Saturation</span>
+        </div>
+      </div>
+
+      <!-- Monochrome -->
+      <div class="action-box" data-id="monochrome" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-circle-half-stroke" aria-hidden="true"></i> 
+          <span>Monochrome</span>
+        </div>
+      </div>
+
+      <!-- Title Color -->
+      <div class="action-box" data-id="titleColor" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-fill-drip" aria-hidden="true"></i> 
+          <span>Title Color</span>
+        </div>
+        <div class="color-picker">
+          <button class="color-picker__selection" style="background-color: #0076B4;"></button>
+          <button class="color-picker__selection" style="background-color: #7A549C;"></button>
+          <button class="color-picker__selection" style="background-color: #C83733;"></button>
+          <button class="color-picker__selection" style="background-color: #D07021;"></button>
+          <button class="color-picker__selection" style="background-color: #26999F;"></button>
+          <button class="color-picker__selection" style="background-color: #4D7831;"></button>
+          <button class="color-picker__selection" style="background-color: #ffffff;"></button>
+          <button class="color-picker__selection" style="background-color: #000000;"></button>
+          <button class="color-picker__cancel" title="Cancel/Reset Color">
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Text Color -->
+      <div class="action-box" data-id="textColor" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-palette" aria-hidden="true"></i> 
+          <span>Text Color</span>
+        </div>
+        <div class="color-picker">
+          <button class="color-picker__selection" style="background-color: #0076B4;"></button>
+          <button class="color-picker__selection" style="background-color: #7A549C;"></button>
+          <button class="color-picker__selection" style="background-color: #C83733;"></button>
+          <button class="color-picker__selection" style="background-color: #D07021;"></button>
+          <button class="color-picker__selection" style="background-color: #26999F;"></button>
+          <button class="color-picker__selection" style="background-color: #4D7831;"></button>
+          <button class="color-picker__selection" style="background-color: #ffffff;"></button>
+          <button class="color-picker__selection" style="background-color: #000000;"></button>
+          <button class="color-picker__cancel" title="Cancel/Reset Color">
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Background Color -->
+      <div class="action-box" data-id="backgroundColor" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-fill" aria-hidden="true"></i> 
+          <span>Background Color</span>
+        </div>
+        <div class="color-picker">
+          <button class="color-picker__selection" style="background-color: #0076B4;"></button>
+          <button class="color-picker__selection" style="background-color: #7A549C;"></button>
+          <button class="color-picker__selection" style="background-color: #C83733;"></button>
+          <button class="color-picker__selection" style="background-color: #D07021;"></button>
+          <button class="color-picker__selection" style="background-color: #26999F;"></button>
+          <button class="color-picker__selection" style="background-color: #4D7831;"></button>
+          <button class="color-picker__selection" style="background-color: #ffffff;"></button>
+          <button class="color-picker__selection" style="background-color: #000000;"></button>
+          <button class="color-picker__cancel" title="Cancel/Reset Color">
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mute Sounds -->
+      <div class="action-box" data-id="mute" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-volume-xmark" aria-hidden="true"></i> 
+          <span>Mute Sounds</span>
+        </div>
+      </div>
+
+      <!-- Hide Images -->
+      <div class="action-box" data-id="hideImages" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-eye-slash" aria-hidden="true"></i> 
+          <span>Hide Images</span>
+        </div>
+      </div>
+
+      <!-- Read Mode -->
+      <div class="action-box" data-id="readMode" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-book-open" aria-hidden="true"></i> 
+          <span>Read Mode</span>
+        </div>
+      </div>
+
+      <!-- Reading Guide -->
+      <div class="action-box" data-id="readingGuide" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-ruler" aria-hidden="true"></i> 
+          <span>Reading Guide</span>
+        </div>
+      </div>
+
+      <!-- Stop Animations -->
+      <div class="action-box" data-id="stopAnimations" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-stopwatch" aria-hidden="true"></i> 
+          <span>Stop Animations</span>
+        </div>
+      </div>
+
+      <!-- Highlight Hover -->
+      <div class="action-box" data-id="emphasizeHover" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-hand-pointer" aria-hidden="true"></i> 
+          <span>Highlight Hover</span>
+        </div>
+      </div>
+
+      <!-- Highlight Focus -->
+      <div class="action-box" data-id="emphasizeFocus" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-crosshairs" aria-hidden="true"></i> 
+          <span>Highlight Focus</span>
+        </div>
+      </div>
+
+      <!-- Big Black Cursor -->
+      <div class="action-box" data-id="bigBlackCursor" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-mouse" aria-hidden="true"></i> 
+          <span>Big Black Cursor</span>
+        </div>
+      </div>
+
+      <!-- Big White Cursor -->
+      <div class="action-box" data-id="bigWhiteCursor" tabindex="0">
+        <div class="action__content">
+          <i class="fa-solid fa-mouse-pointer" aria-hidden="true"></i> 
+          <span>Big White Cursor</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Disable Widget Section -->
+    <div class="disable-widget-section">
+      <div class="disable-widget-warning">
+        <p><strong>⚠️ Don't need accessibility features?</strong></p>
+        <p>You can permanently hide this widget. This will remove the accessibility button from all pages until you clear your browser data.</p>
+      </div>
+      <button class="disable-widget-btn" aria-label="Permanently disable accessibility widget">
+        <i class="fa-solid fa-ban" aria-hidden="true"></i> Disable Accessibility Widget
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Text Magnifier Popup -->
+<div id="text-magnifier-popup"></div>
+
+<!-- Google Translate Element -->
+<div id="google_translate_element" style="display: none;"></div>
+
+  <!-- <div id="google_translate_element"></div> -->
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,es,de,pt,fr,it,nl,pl,ja,zh-CN,zh-TW,ar,ru,he,uk,tr,cs,hu,sl,sk,no,sv,fi,ro,ga,el,sr,bs,hr,lb,sq,da'
+      }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript"
+    src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+  <script src="./../../assets/js/master.min.js"></script>
 </body>
 </html>
