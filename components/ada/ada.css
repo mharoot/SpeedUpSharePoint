@@ -1133,10 +1133,28 @@ body.emphasize-focus input[type="radio"]:focus:not(#accessibilityWidget *) {
 }
 
 /* ---------------- HIGHLIGHT HOVER ---------------- */
-body.emphasize-hover *:hover:not(#accessibilityWidget *):not(#accessibilityTrigger *) {
-    outline: 3px solid #4ecdc4 !important;
-    outline-offset: 3px !important;
-    background: rgba(78, 205, 196, 0.1) !important;
+body.emphasize-hover h1:hover:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-hover h2:hover:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-hover h3:hover:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-hover h4:hover:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-hover h5:hover:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-hover h6:hover:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-hover p:hover:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-hover span:hover:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-hover a:hover:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-hover img:hover:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-hover button:hover:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-hover input:hover:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-hover textarea:hover:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-hover select:hover:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-hover li:hover:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-hover label:hover:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-hover strong:hover:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-hover em:hover:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-hover b:hover:not(#accessibilityWidget *):not(#accessibilityTrigger *),
+body.emphasize-hover i:not([class*="fa-"]):hover:not(#accessibilityWidget *):not(#accessibilityTrigger *) {
+  outline: 2px solid rgba(255,114,22,0.5) !important;
+  outline-offset: 1px !important;
 }
 
 /* ---------------- KEYBOARD SHORTCUTS OVERLAY ---------------- */
