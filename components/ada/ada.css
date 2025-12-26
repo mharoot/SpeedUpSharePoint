@@ -154,8 +154,8 @@ body #accessibilityTrigger * {
 /* ---------------- CLOSE & HEADER ---------------- */
 .accessibilityClose {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 0px;
+    right: 0px;
     width: 32px;
     height: 32px;
     display: flex;
@@ -189,16 +189,22 @@ body #accessibilityTrigger * {
     align-items: center;
     justify-content: center;
     position: relative;
+    height:90px;
 }
 
 .accessibilityHeader__title {
     flex: 1;
 }
 
+.accessibilityHeader__title{
+    position: relative;
+    top:-18px;
+}
+
 /* Reset Button */
 .reset-button {
     position: absolute;
-    right: 60px;
+    left: 180px;
     top: 50%;
     transform: translateY(-50%);
 }
@@ -207,7 +213,7 @@ body #accessibilityTrigger * {
     background: rgba(255,255,255,0.2);
     border: none;
     color: white;
-    padding: 8px 12px;
+    padding: 10px 46.70px;
     border-radius: 6px;
     cursor: pointer;
     font-size: 14px;
