@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+  <title>Speed Up SharePoint | Law Firm Cost Calculator</title>
+  <meta name="description" content="Calculate the financial impact of SharePoint performance issues on your law firm. See how hours lost translate to real costs.">
+  <meta name="robots" content="index, follow">
+
+  <meta name="theme-color" content="#011021">
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="16x16" href="https://speedupsharepoint.com/assets/images/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://speedupsharepoint.com/assets/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="https://speedupsharepoint.com/assets/images/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="128x128" href="https://speedupsharepoint.com/assets/images/favicon-128.png">
+  <link rel="icon" type="image/png" sizes="196x196" href="https://speedupsharepoint.com/assets/images/favicon-196x196.png">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+
+  <meta property="og:image" content="https://speedupsharepoint.com/assets/images/SpeedUpSharePointLogoSquare.png">
+  <meta property="og:image:width" content="382">
+  <meta property="og:image:height" content="382">
+
+  <meta name="application-name" content="Speed Up SharePoint">
+  <meta name="msapplication-TileColor" content="#011021">
+  <meta name="msapplication-TileImage" content="https://speedupsharepoint.com/assets/images/mstile-144x144.png">
+
+  <link rel="manifest" href="https://speedupsharepoint.com/assets/images/site.webmanifest">
+
+  <link rel="stylesheet" href="/assets/css/master.min.css">
+
+  <base id="dynamic-base" href="./">
+
+  <style>
+    /* Calculator-specific styles only */
+    .calculator-intro {
+      max-width: 900px;
+      margin: 0 auto 40px;
+      text-align: center;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    .form-section {
+      padding: 30px;
+      background: #f8f9fa;
+      border-radius: 12px;
+      max-width: 1200px;
+      margin: 0 auto 40px;
+    }
+
+    .input-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .input-group {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s;
+    }
+
+    .input-group:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+
+    .input-group h3 {
+      color: var(--primary);
+      margin-bottom: 15px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .input-row {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .input-row label {
+      font-size: 13px;
+      color: #495057;
+      font-weight: 500;
+    }
+
+    .input-row input[type="number"] {
+      padding: 10px 12px;
+      border: 2px solid #dee2e6;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: border-color 0.2s;
+    }
+
+    .input-row input[type="number"]:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .table-section {
+      padding: 30px;
+      overflow-x: auto;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .table-section table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .table-section thead {
+      background: var(--primary);
+      color: var(--secondary);
+    }
+
+    .table-section th {
+      padding: 16px 12px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .table-section td {
+      padding: 14px 12px;
+      border-bottom: 1px solid #e9ecef;
+      font-size: 14px;
+    }
+
+    .table-section tbody tr:hover {
+      background: #f8f9fa;
+    }
+
+    .hours-cell {
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .cost-cell {
+      font-family: 'Courier New', monospace;
+      color: #495057;
+    }
+
+    .total-cell {
+      font-weight: 600;
+      color: #28a745;
+    }
+
+    .annual-cell {
+      font-weight: 700;
+      color: #dc3545;
+      font-size: 15px;
+    }
+
+    /* Mobile responsive table */
+    @media (max-width: 768px) {
+      .form-section {
+        padding: 20px;
+      }
+
+      .input-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .table-section {
+        padding: 20px 10px;
+      }
+
+      .table-section table,
+      .table-section thead,
+      .table-section tbody,
+      .table-section th,
+      .table-section td,
+      .table-section tr {
+        display: block;
+      }
+
+      .table-section thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+      }
+
+      .table-section tr {
+        margin-bottom: 20px;
+        border: 2px solid var(--primary);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .table-section td {
+        border: none;
+        position: relative;
+        padding: 12px 12px 12px 45%;
+        text-align: right;
+        border-bottom: 1px solid #e9ecef;
+      }
+
+      .table-section td:last-child {
+        border-bottom: none;
+      }
+
+      .table-section td:before {
+        content: attr(data-label);
+        position: absolute;
+        left: 12px;
+        width: 40%;
+        padding-right: 10px;
+        white-space: nowrap;
+        font-weight: 600;
+        text-align: left;
+        color: var(--primary);
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .table-section tr td:first-child {
+        background: var(--primary);
+        color: var(--secondary);
+        font-weight: 700;
+        font-size: 16px;
+        text-align: center;
+        padding: 16px;
+      }
+
+      .table-section tr td:first-child:before {
+        content: '';
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <span class="menu_title">Speed Up SharePoint</span>
+    <img loading="lazy" src="/assets/images/SpeedUpSharePointLogoRectangle.png" alt="Speed Up SharePoint" title="Speed Up SharePoint"
+      onclick="scrollToHero()">
+    <button id="menuToggle" class="menu-toggle">☰</button>
+    <nav class="topnav">
+      <a href="/#about">About</a>
+      <a href="/#services">Services</a>
+      <a href="/#experience">Experience</a>
+      <a href="/#use-case">Use Case</a>
+      <a href="/#authority">Authority</a>
+      <a href="/pages/faq/">FAQ</a>
+      <a href="/#principles">Principles</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+
+  <div id="overlay" class="overlay"></div>
+
+  <div id="sidebar" class="sidebar">
+    <span class="menu_title">Speed Up SharePoint</span>
+    <img loading="lazy" src="/assets/images/SpeedUpSharePointLogoRectangle.png" alt="Speed Up SharePoint" title="Speed Up SharePoint"
+      class="sidebar-logo" onclick="scrollToHero()">
+    <a href="/#about">About</a>
+    <a href="/#services">Services</a>
+    <a href="/#experience">Experience</a>
+    <a href="/#use-case">Use Case</a>
+    <a href="/#authority">Authority</a>
+    <a href="/pages/faq/">FAQ</a>
+    <a href="/#principles">Principles</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <!-- Hero -->
+  <header id="home">
+    <h1>Law Firm Productivity Cost Calculator</h1>
+    <p>
+      Document management inefficiencies cost law firms millions annually. Calculate the real financial impact 
+      of hours lost per month due to slow SharePoint performance, inefficient search, and workflow bottlenecks.
+    </p>
+    <a href="#calculator" class="cta">Calculate Your Costs</a>
+  </header>
+
+  <section class="cta-section">
+    <div class="cta-container">
+      <p class="cta-text">
+        Enterprise teams typically see measurable performance gains within weeks.
+        Schedule a technical review to identify architectural bottlenecks and next steps.
+      </p>
+      <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ18mxeShyJ4O46I87fWDMOBoV23MlZ45c8mztTE5M53H9hxZXWNwnVz9FB5r9IcskZDjBnX_N1m?gv=true" 
+        class="cta-button" 
+        target="_blank">
+        Schedule Technical Review
+      </a>
+    </div>
+  </section>
+
+ <!-- Calculator Section -->
+  <section id="calculator">
+    <h2>Calculate Your Productivity Loss</h2>
+    <p class="calculator-intro">
+      Enter your firm's staff counts and average hourly rates below. The calculator will show you the 
+      monthly and annual cost impact of productivity loss due to SharePoint performance issues.
+    </p>
+
+    <div class="form-section">
+      <div class="input-grid">
+        <div class="input-group">
+          <h3>Associates</h3>
+          <div class="input-row">
+            <label for="associatesCount">Number of Associates</label>
+            <input type="number" id="associatesCount" value="710" min="0">
+            
+            <label for="associatesRate">Hourly Rate ($)</label>
+            <input type="number" id="associatesRate" value="135" min="0" step="0.01">
+          </div>
+        </div>
+
+        <div class="input-group">
+          <h3>Partners</h3>
+          <div class="input-row">
+            <label for="partnersCount">Number of Partners</label>
+            <input type="number" id="partnersCount" value="475" min="0">
+            
+            <label for="partnersRate">Hourly Rate ($)</label>
+            <input type="number" id="partnersRate" value="385" min="0" step="0.01">
+          </div>
+        </div>
+
+        <div class="input-group">
+          <h3>Paralegals</h3>
+          <div class="input-row">
+            <label for="paralegalsCount">Number of Paralegals</label>
+            <input type="number" id="paralegalsCount" value="305" min="0">
+            
+            <label for="paralegalsRate">Hourly Rate ($)</label>
+            <input type="number" id="paralegalsRate" value="58" min="0" step="0.01">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-section">
+      <table>
+        <thead>
+          <tr>
+            <th>Hours Lost / Month</th>
+            <th>Associates</th>
+            <th>Partners</th>
+            <th>Paralegals</th>
+            <th>Total Monthly Cost</th>
+            <th>Annualized Cost</th>
+          </tr>
+        </thead>
+        <tbody id="costTableBody">
+          <!-- Table rows will be generated by JavaScript -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <p>Call or email today for a technical consultation. Enterprise bottlenecks won't fix themselves.</p>
+    <div class="contact-box">
+      <div>
+        <img src="/assets/images/SpeedUpSharePointLogoSquare.png" alt="Speed Up SharePoint" title="Speed Up SharePoint"
+          onclick="window.location.href='#home'">
+      </div>
+      <div>
+        <a href="tel:+18182091548">
+          <i class="fas fa-phone"></i><br>
+          (818) 209-1548
+        </a>
+      </div>
+      <div>
+        <a href="mailto:support@speedupsharepoint.com">
+          <i class="fas fa-envelope"></i><br>
+          support@speedupsharepoint.com
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    © 2025 <span onclick="window.location.href='#home'">Speed Up SharePoint</span>. All Rights Reserved.
+
+    <nav class="footer-nav">
+      <a href="/pages/privacy-policy.html">Privacy Policy</a> |
+      <a href="/pages/terms-conditions.html">Terms &amp; Conditions</a> |
+      <a href="/pages/sitemap.html">Sitemap</a> |
+      <a href="/pages/nda.html">NDA</a>
+    </nav>
+
+    <!-- Principal Architect LinkedIn -->
+    <a href="https://www.linkedin.com/in/michael-harootoonyan-b77064313/" target="_blank" rel="noopener">
+      <i class="fab fa-linkedin"></i>
+    </a>
+    <span>Principal Architect</span>
+
+    <!-- Company Social Media Links -->
+    <div class="footer-company-social">
+      <a href="https://www.instagram.com/speedupsharepoint?igsh=NWxxNHgzeWhiOTB4&utm_source=qr" target="_blank"
+        rel="noopener">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="https://x.com/speedupsp?s=21" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="https://www.facebook.com/profile.php?id=61585423434447&mibextid=wwXIfr" target="_blank" rel="noopener">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="https://www.linkedin.com/company/speed-up-sharepoint/" target="_blank" rel="noopener">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </div>
+
+    <div class="trust-signals">
+      <span>Security-first architecture</span>
+      <span>Enterprise-scale delivery</span>
+      <span>NDA available upon request</span>
+    </div>
+  </footer>
+
+  <script>
+    // Menu Toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('show');
+    });
+
+    overlay.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      overlay.classList.remove('show');
+    });
+
+    // Close sidebar when clicking a link
+    document.querySelectorAll('.sidebar a').forEach(link => {
+      link.addEventListener('click', () => {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('show');
+      });
+    });
+
+    // Calculator Functions
+    function formatCurrency(amount) {
+      if (amount >= 1000000) {
+        return '$' + (amount / 1000000).toFixed(2) + 'M';
+      }
+      return '$' + amount.toLocaleString('en-US', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      });
+    }
+
+    function updateTable() {
+      const associatesCount = parseFloat(document.getElementById('associatesCount').value) || 0;
+      const associatesRate = parseFloat(document.getElementById('associatesRate').value) || 0;
+      const partnersCount = parseFloat(document.getElementById('partnersCount').value) || 0;
+      const partnersRate = parseFloat(document.getElementById('partnersRate').value) || 0;
+      const paralegalsCount = parseFloat(document.getElementById('paralegalsCount').value) || 0;
+      const paralegalsRate = parseFloat(document.getElementById('paralegalsRate').value) || 0;
+
+      const tbody = document.getElementById('costTableBody');
+      tbody.innerHTML = '';
+
+      for (let hours = 1; hours <= 8; hours++) {
+        const associatesCost = hours * associatesCount * associatesRate;
+        const partnersCost = hours * partnersCount * partnersRate;
+        const paralegalsCost = hours * paralegalsCount * paralegalsRate;
+        const totalMonthlyCost = associatesCost + partnersCost + paralegalsCost;
+        const annualizedCost = totalMonthlyCost * 12;
+
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td data-label="Hours Lost" class="hours-cell">${hours} hr${hours > 1 ? 's' : ''}</td>
+          <td data-label="Associates" class="cost-cell">${formatCurrency(associatesCost)}</td>
+          <td data-label="Partners" class="cost-cell">${formatCurrency(partnersCost)}</td>
+          <td data-label="Paralegals" class="cost-cell">${formatCurrency(paralegalsCost)}</td>
+          <td data-label="Total Monthly" class="total-cell">${formatCurrency(totalMonthlyCost)}</td>
+          <td data-label="Annualized" class="annual-cell">${formatCurrency(annualizedCost)}</td>
+        `;
+        tbody.appendChild(row);
+      }
+    }
+
+    // Add event listeners to all inputs
+    document.querySelectorAll('input[type="number"]').forEach(input => {
+      input.addEventListener('input', updateTable);
+    });
+
+    // Initial table generation
+    updateTable();
+  </script>
+
+</body>
+
+</html>
