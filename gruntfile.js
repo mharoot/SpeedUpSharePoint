@@ -35,6 +35,7 @@ module.exports = function (grunt) {
                             // './components/faq/faq.js',
                             // './components/font-awesome/font-awesome.js',
                             './components/main/main.js',
+                            './components/cost-calculator/law.js',
                         ],
                     }
                 }
