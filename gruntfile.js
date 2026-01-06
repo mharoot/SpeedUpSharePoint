@@ -19,6 +19,7 @@ module.exports = function (grunt) {
                             './components/faq/faq.css',
                             './components/font-awesome/font-awesome.css',
                             './components/main/main.css',
+                            './components/cost-calculator/cost-calculator.css',
                         ],
                     } 
                 } 

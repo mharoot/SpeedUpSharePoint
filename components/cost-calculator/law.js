@@ -42,8 +42,8 @@ function updateTable() {
 }
 
 // MAIN
-function costCalculatLawMain(){
-    if (window.location.href.search("cost-calculator/law/")===-1){
+function costCalculateLawMain(){
+    if (document.querySelector('#cost-calculator-law') === null){
         return 0;
     }
 
@@ -57,4 +57,4 @@ function costCalculatLawMain(){
     console.log('law calulator enabled!')
 }
 
-costCalculatLawMain();
+costCalculateLawMain();
