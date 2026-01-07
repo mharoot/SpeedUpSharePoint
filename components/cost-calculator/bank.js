@@ -1,15 +1,4 @@
-// Calculator Functions
-function formatCurrency(amount) {
-    if (amount >= 1000000) {
-        return '$' + (amount / 1000000).toFixed(2) + 'M';
-    }
-    return '$' + amount.toLocaleString('en-US', {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-    });
-}
-
-function updateTable() {
+function updateBankTable() {
     // Get all input values
     const ibAnalystsCount = parseFloat(document.getElementById('ibAnalystsCount').value) || 0;
     const ibAnalystsRate = parseFloat(document.getElementById('ibAnalystsRate').value) || 0;
@@ -89,11 +78,11 @@ function costCalculateBankMain(){
 
     // Add event listeners to all inputs
     document.querySelectorAll('input[type="number"]').forEach(input => {
-        input.addEventListener('input', updateTable);
+        input.addEventListener('input', updateBankTable);
     });
 
     // Initial table generation
-    updateTable();
+    updateBankTable();
     console.log('bank calculator enabled!')
 }
 

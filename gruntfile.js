@@ -36,8 +36,10 @@ module.exports = function (grunt) {
                             // './components/faq/faq.js',
                             // './components/font-awesome/font-awesome.js',
                             './components/main/main.js',
-                            './components/cost-calculator/law.js',
+                            './components/cost-calculator/format-currency.js',
                             './components/cost-calculator/bank.js',
+                            './components/cost-calculator/insurance.js',
+                            './components/cost-calculator/law.js',
                         ],
                     }
                 }

@@ -1,16 +1,4 @@
-
-// Calculator Functions
-function formatCurrency(amount) {
-    if (amount >= 1000000) {
-    return '$' + (amount / 1000000).toFixed(2) + 'M';
-    }
-    return '$' + amount.toLocaleString('en-US', {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-    });
-}
-
-function updateTable() {
+function updateLawTable() {
     const associatesCount = parseFloat(document.getElementById('associatesCount').value) || 0;
     const associatesRate = parseFloat(document.getElementById('associatesRate').value) || 0;
     const partnersCount = parseFloat(document.getElementById('partnersCount').value) || 0;
@@ -49,11 +37,11 @@ function costCalculateLawMain(){
 
     // Add event listeners to all inputs
     document.querySelectorAll('input[type="number"]').forEach(input => {
-        input.addEventListener('input', updateTable);
+        input.addEventListener('input', updateLawTable);
     });
 
     // Initial table generation
-    updateTable();
+    updateLawTable();
     console.log('law calulator enabled!')
 }
 
