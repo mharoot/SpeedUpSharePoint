@@ -479,3 +479,29 @@ function resetSidebarScroll() {
     sidebar.scrollTop = 0;
   }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("figure.architecture-diagram").forEach(figure => {
+    const link = figure.querySelector("a[href]");
+    const figcaption = figure.querySelector("figcaption");
+
+    if (!link || !figcaption) return;
+
+    const href = link.getAttribute("href");
+
+    figcaption.style.cursor = "pointer";
+    figcaption.setAttribute("role", "link");
+    figcaption.setAttribute("tabindex", "0");
+
+    figcaption.addEventListener("click", () => {
+      window.open(href, "_blank");
+    });
+
+    figcaption.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        window.open(href, "_blank");
+      }
+    });
+  });
+});
