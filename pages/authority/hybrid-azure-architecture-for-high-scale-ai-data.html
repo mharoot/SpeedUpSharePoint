@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
 
-<title>Site Map | Speed Up SharePoint</title>
-<meta name="description" content="Complete site map of Speed Up SharePoint. Explore all pages, sections, and resources available on our website.">
+<title>Hybrid Azure Architecture for High-Scale AI & Data</title>
+<meta name="description" content="Understand SharePoint's architectural constraints and how a hybrid SQL + Blob approach enables AI workflows at enterprise scale with 50-250x performance gains.">
 <meta name="robots" content="index, follow">
 
 <meta name="theme-color" content="#011021">
@@ -38,7 +38,8 @@
 
 <!-- Topbar -->
 <div class="topbar">
-  <img loading="lazy" src="./../assets/images/SpeedUpSharePointLogoRectangle.png" alt="Speed Up SharePoint" title="Speed Up SharePoint" onclick="scrollToHero()">
+<span class="menu_title">Speed Up SharePoint</span>
+  <img loading="lazy" src="./../../assets/images/SpeedUpSharePointLogoRectangle.png" alt="Speed Up SharePoint" title="Speed Up SharePoint" onclick="scrollToHero()">
   <button id="menuToggle" class="menu-toggle">☰</button>
   <nav class="topnav">
     <a href="#about">About</a>
@@ -56,7 +57,7 @@
 
 <div id="sidebar" class="sidebar">
   <span class="menu_title">Speed Up SharePoint</span>
-  <img loading="lazy" src="./../assets/images/SpeedUpSharePointLogoRectangle.png"  alt="Speed Up SharePoint" title="Speed Up SharePoint" class="sidebar-logo" onclick="scrollToHero()">
+  <img loading="lazy" src="./../../assets/images/SpeedUpSharePointLogoRectangle.png" alt="Speed Up SharePoint" title="Speed Up SharePoint" class="sidebar-logo" onclick="scrollToHero()">
   <a href="#about">About</a>
   <a href="#services">Services</a>
   <a href="#experience">Experience</a>
@@ -69,18 +70,17 @@
 
 <!-- Hero -->
 <header id="home">
-  <h1>Site Map | Speed Up SharePoint</h1>
+  <h1>Hybrid Azure Architecture for High-Scale AI & Data</h1>
   <p>
-    Explore all pages and sections of Speed Up SharePoint. Navigate easily to the resources and services we provide for enterprise SharePoint performance and optimization.
+    SharePoint is a collaboration tool, not a high-performance data lake. Enable AI workflows at scale with hybrid SQL + Blob architecture.
   </p>
   <a href="#contact" class="cta">Contact Us</a>
 </header>
 
-<!-- Call to Action -->
 <section class="cta-section">
   <div class="cta-container">
     <p class="cta-text">
-      Use this site map to quickly find the information and pages you need about SharePoint optimization and enterprise solutions.
+      SharePoint slowness surfaces once AI workflows and peak-hour access patterns stabilize.
     </p>
     <a href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ18mxeShyJ4O46I87fWDMOBoV23MlZ45c8mztTE5M53H9hxZXWNwnVz9FB5r9IcskZDjBnX_N1m?gv=true" 
         class="cta-button" 
@@ -90,57 +90,163 @@
   </div>
 </section>
 
-<!-- Site Map Content -->
-<section id="content" class="site-map">
-  <h2>Website Structure</h2>
+<section id="content">
+<div class="content-wrapper">
+  <h2>The "Wall": SharePoint's Architectural Constraints</h2>
+
+  <p>
+    While SharePoint Online is excellent for co-authoring, it hits critical performance "walls" 
+    once libraries exceed 5,000 items or move into the millions. To enable AI workflows like 
+    metadata extraction, pitchbook indexing, and vector search at scale, organizations must 
+    bypass these architectural bottlenecks using a hybrid SQL + Blob approach.
+  </p>
+
+  <h3>SharePoint's Hard Limits</h3>
   <ul>
-    <li><a href="/">Home</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li>
-      <a href="#use-case">Use Case</a>
-      <ul>
-        <li><a href="/pages/use-case/architecting-sharepoint-lists-for-performance-and-reliability.html">Architecting SharePoint Lists for Performance and Reliability</a></li>
-        <li><a href="/pages/use-case/mitigating-power-automate-throttling-in-large-sharepoint-environments.html">Mitigating Power Automate Throttling in Large SharePoint Environments</a></li>
-        <li><a href="/pages/use-case/optimizing-large-sharepoint-lists-beyond-the-5000-item-threshold.html">Optimizing Large SharePoint Lists Beyond the 5000-Item Threshold</a></li>
-        <li><a href="/pages/use-case/power-automate-throttling-failures.html">Power Automate Throttling Failures</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#authority">Authority</a>
-      <ul>
-        <li><a href="/pages/authority/index.html">Authority Page</a></li>
-        <li><a href="/pages/authority/hybrid-azure-architecture-for-high-scale-ai-data.html">Hybrid Azure Architecture for High-Scale AI & Data</a></li>
-        <li><a href="/pages/authority/how-we-design-sharepoint-at-scale.html">How We Design SharePoint at Scale</a></li>
-        <li><a href="/pages/authority/hybrid-sharepoint-sql-high-performance-asset-delivery.html">Hybrid SharePoint SQL & High-Performance Asset Delivery</a></li>
-        <li><a href="/pages/authority/our-performance-first-methodology.html">Our Performance-First Methodology</a></li>
-        <li><a href="/pages/authority/compliance-aware-sharepoint-architecture.html">Compliance-Aware SharePoint Architecture</a></li>
-        <li><a href="/pages/authority/enterprise-sharepoint-architecture-for-performance-security-and-scale.html">Enterprise SharePoint Architecture for Performance, Security, and Scale</a></li>
-        <li><a href="/pages/authority/sharepoint-performance-risks-banking-finance.html">Hidden SharePoint Performance Risks in Banking & Finance</a></li>
-        <li><a href="/pages/authority/sharepoint-scaling-limitations-law-firms.html">When SharePoint Stops Scaling for Law Firms</a></li>
-        <li><a href="/pages/authority/why-sharepoint-search-slows-down-enterprise.html">Why SharePoint Search Slows Down in Enterprise Environments</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="/pages/faq/">FAQ</a>
-      <ul>
-        <li><a href="/pages/faq/index.html">FAQ Page</a></li>
-        <li><a href="/pages/faq/can-sharepoint-be-used-as-a-database.html">Can SharePoint Be Used as a Database?</a></li>
-        <li><a href="/pages/faq/why-does-sharepoint-slow-down-over-time.html">Why Does SharePoint Slow Down Over Time?</a></li>
-        <li><a href="/pages/faq/when-should-you-migrate-off-sharepoint-lists.html">When Should You Migrate Off SharePoint Lists?</a></li>
-        <li><a href="/pages/faq/why-does-sharepoint-break-at-50k-items.html">Why Does SharePoint Break at 50k Items?</a></li>
-        <li><a href="/pages/faq/why-do-my-power-automate-flows-fail-due-to-throttling.html">Power Automate Throttling Failures</a></li>
-        <li><a href="/pages/faq/how-can-i-prevent-sharepoint-list-view-threshold-errors-on-large-lists.html">Large List View Threshold Remediation</a></li>
-        <li><a href="/pages/faq/is-it-safe-to-use-sharepoint-lists-as-a-database.html">Is it safe to use SharePoint lists as a database?</a></li>
-      </ul>
-    </li>
-    <li><a href="#principles">Principles</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="/pages/privacy-policy.html">Privacy Policy</a></li>
-    <li><a href="/pages/terms-conditions.html">Terms and Conditions</a></li>
-    <li><a href="/pages/nda.html">NDA</a></li>
+    <li><strong>The 5,000 Item View Threshold:</strong> Beyond 5,000 items, un-indexed queries fail</li>
+    <li><strong>The 30 Million Item Limit:</strong> SPO caps containers at 30M items</li>
+    <li><strong>API Throttling (The AI Killer):</strong> SPO limits REST API requests to ~2,400/min per tenant</li>
   </ul>
+
+  <h3>Why Hybrid Architecture Wins</h3>
+  <p>
+    SQL handles millions of rows natively without arbitrary limits, offering 50-200x faster 
+    performance for complex joins. Azure SQL and Blob Storage have no practical limits, 
+    supporting billions of rows and unlimited objects. This architecture supports 10,000+ 
+    requests/second—a 250x increase in throughput essential for feeding AI pipelines.
+  </p>
+
+  <h3>Architectural Reality</h3>
+  <p>
+    The mid-migration phase is the "Goldilocks" zone to sanity-check architecture. 
+    Implementing a Hybrid Azure Architecture ensures that your AI adoption isn't throttled 
+    by the very system meant to store its intelligence.
+  </p>
+   <h2>Performance Benchmarks: SPO vs. Hybrid Architecture</h2>
+    <p>
+      The following table outlines the realistic multipliers gained by offloading metadata to SQL 
+      and files to Blob Storage. These benchmarks reflect real-world enterprise implementations 
+      across operations critical to AI and data-intensive workflows.
+    </p>
+
+    <div class="table-section">
+      <table>
+        <thead>
+          <tr>
+            <th>Operation</th>
+            <th>SharePoint</th>
+            <th>Hybrid Architecture</th>
+            <th>Performance Multiplier</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Large Dataset Queries</strong></td>
+            <td>5–15 seconds</td>
+            <td>0.1–0.5 seconds</td>
+            <td><strong>15–50x Faster</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Vector / AI Search</strong></td>
+            <td>10–30 seconds</td>
+            <td>0.2–1.0 seconds</td>
+            <td><strong>20–100x Faster</strong></td>
+          </tr>
+          <tr>
+            <td><strong>File Downloads (Large)</strong></td>
+            <td>50–80 MB/s</td>
+            <td>400–600 MB/s</td>
+            <td><strong>5–8x Faster</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Bulk File Retrieval</strong></td>
+            <td>10–20 files/sec</td>
+            <td>200–400 files/sec</td>
+            <td><strong>10–20x Faster</strong></td>
+          </tr>
+          <tr>
+            <td><strong>API Read Throughput</strong></td>
+            <td>2,400 req/min</td>
+            <td>600,000 req/min</td>
+            <td><strong>250x Faster</strong></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <br>
+    <h2>High-Speed AI Data Extraction & Vector Search</h2>
+    <p>
+      Traditional SPO search is optimized for keywords, not high-dimensional AI vectors. 
+      In this hybrid model, we use SQL with Vector Extensions to avoid the HTTP/REST overhead 
+      of SharePoint and utilize optimized indexing. Extracting metadata from historical pitchbooks 
+      (deal size, industry, close rates) becomes a sub-second operation rather than a multi-second 
+      crawl that risks throttling.
+    </p>
+
+    <h2>How the Architecture Works</h2>
+    <p>
+      SharePoint continues to serve as the user-facing collaboration platform where teams 
+      upload, edit, and manage documents with familiar permissions and workflows. Behind the scenes, 
+      event-driven automation captures every file change and routes data strategically: structured 
+      metadata flows into SQL for lightning-fast queries, while file binaries move to Blob Storage 
+      for high-speed retrieval.
+    </p>
+
+    <h3>The Data Flow</h3>
+    <ul>
+      <li><strong>Collaboration Layer:</strong> Users work entirely within SharePoint's interface</li>
+      <li><strong>Automated Sync:</strong> File events trigger background processes that extract and route data</li>
+      <li><strong>Query Layer:</strong> Metadata lives in SQL for analytics, reporting, and AI workloads</li>
+      <li><strong>Storage Layer:</strong> Sensitive files stay in SharePoint; high-volume assets move to Blob</li>
+    </ul>
+
+    <h3>What This Enables</h3>
+    <ul>
+      <li><strong>Enterprise Analytics:</strong> Power BI dashboards query SQL, not SharePoint APIs</li>
+      <li><strong>AI Workflows:</strong> Vector search and model training operate without throttling</li>
+      <li><strong>Scalable Delivery:</strong> High-volume file access bypasses SharePoint's bandwidth limits</li>
+      <li><strong>Preserved Security:</strong> Permissions-sensitive content remains protected in SharePoint</li>
+    </ul>
+
+    <h2>Storage & Cost Efficiency</h2>
+    <p>
+      Beyond performance, the fiscal argument for migration is significant. As AI models require 
+      more "grounding" data, storage costs in SPO become prohibitive. For a 10TB system with 
+      50M documents, the hybrid approach offers a ~75% reduction in monthly spend.
+    </p>
+
+    <div class="table-section">
+      <table>
+        <thead>
+          <tr>
+            <th>Storage Type</th>
+            <th>Cost per GB/Month</th>
+            <th>10TB Monthly Cost</th>
+            <th>Annual Savings</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>SharePoint Online</strong></td>
+            <td>~$0.20</td>
+            <td>$2,048</td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td><strong>Azure Blob (Cool Tier)</strong></td>
+            <td>~$0.01</td>
+            <td>$102</td>
+            <td><strong>$23,352/year</strong></td>
+          </tr>
+          <tr>
+            <td colspan="4" style="text-align: center; background-color: #f0f0f0;">
+              <strong>Total Cost Reduction: ~75%</strong>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>
 </section>
 
 <!-- Contact -->
@@ -149,7 +255,7 @@
   <p>Call or email today for a technical consultation. Enterprise bottlenecks won’t fix themselves.</p>
   <div class="contact-box">
     <div>
-      <img loading="lazy" src="./../assets/images/SpeedUpSharePointLogoSquare.png" alt="Speed Up SharePoint" title="Speed Up SharePoint" onclick="scrollToHero()">
+      <img loading="lazy" src="./../../assets/images/SpeedUpSharePointLogoSquare.png" alt="Speed Up SharePoint" title="Speed Up SharePoint" onclick="scrollToHero()">
     </div>
     <div>
       <a href="tel:+18182091548">
@@ -169,7 +275,7 @@
 <!-- Footer -->
 <footer>
   © 2025 <span onclick="scrollToHero()">Speed Up SharePoint</span>. All Rights Reserved.
-  
+
   <nav class="footer-nav">
     <a href="/pages/privacy-policy.html">Privacy Policy</a> |
     <a href="/pages/terms-conditions.html">Terms &amp; Conditions</a> |
@@ -177,26 +283,16 @@
     <a href="/pages/nda.html">NDA</a>
   </nav>
 
-  <!-- Principal Architect LinkedIn -->
   <a href="https://www.linkedin.com/in/michael-harootoonyan-b77064313/" target="_blank" rel="noopener">
     <i class="fab fa-linkedin"></i>
   </a>
   <span>Principal Architect</span>
 
-  <!-- Company Social Media Links -->
   <div class="footer-company-social">
-    <a href="https://www.instagram.com/speedupsharepoint?igsh=NWxxNHgzeWhiOTB4&utm_source=qr" target="_blank" rel="noopener">
-      <i class="fab fa-instagram"></i>
-    </a>
-    <a href="https://x.com/speedupsp?s=21" target="_blank" rel="noopener">
-      <i class="fab fa-twitter"></i>
-    </a>
-    <a href="https://www.facebook.com/profile.php?id=61585423434447&mibextid=wwXIfr" target="_blank" rel="noopener">
-      <i class="fab fa-facebook-f"></i>
-    </a>
-    <a href="https://www.linkedin.com/company/speed-up-sharepoint/" target="_blank" rel="noopener">
-      <i class="fab fa-linkedin-in"></i>
-    </a>
+    <a href="https://www.instagram.com/speedupsharepoint?igsh=NWxxNHgzeWhiOTB4&utm_source=qr" target="_blank"><i class="fab fa-instagram"></i></a>
+    <a href="https://x.com/speedupsp?s=21" target="_blank"><i class="fab fa-twitter"></i></a>
+    <a href="https://www.facebook.com/profile.php?id=61585423434447&mibextid=wwXIfr" target="_blank"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://www.linkedin.com/company/speed-up-sharepoint/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
   </div>
 
   <div class="trust-signals">
@@ -617,6 +713,6 @@
   <script type="text/javascript"
     src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
-  <script src="./../assets/js/master.min.js"></script>
+  <script src="./../../assets/js/master.min.js"></script>
 </body>
 </html>
